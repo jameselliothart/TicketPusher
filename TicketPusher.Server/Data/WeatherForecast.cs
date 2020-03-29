@@ -4,6 +4,7 @@ namespace TicketPusher.Server.Data
 {
     public class WeatherForecast
     {
+        //test comment
         public DateTime Date { get; set; }
 
         public int TemperatureC { get; set; }
