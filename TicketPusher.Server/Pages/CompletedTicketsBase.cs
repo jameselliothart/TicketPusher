@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 namespace TicketPusher.Server.Pages
 {
 	
-	public class CounterBase : ComponentBase
+	public class CompletedTicketsBase : ComponentBase
 	{		
 		public int currentCount = 0;
 
