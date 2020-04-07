@@ -10,6 +10,6 @@ namespace TicketPusher.Domain.Tickets
         {
         }
 
-        public static DateTime Instance { get => instance; }
+        public static DateTime Instance => instance;
     }
 }
