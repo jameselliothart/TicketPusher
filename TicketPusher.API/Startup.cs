@@ -33,6 +33,8 @@ namespace TicketPusher.API
             {
                 options.UseNpgsql(Configuration.GetConnectionString("TicketPusherDb"));
             });
+
+            services.AddScoped<ITicketPusherRepository, TicketPusherRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

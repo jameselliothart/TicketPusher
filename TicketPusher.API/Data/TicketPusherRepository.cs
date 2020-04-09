@@ -8,11 +8,12 @@ using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Data
 {
-    public class TicketPusherRepository : IDisposable
+
+    public class TicketPusherRepository : ITicketPusherRepository, IDisposable
     {
         private readonly TicketPusherContext _context;
         private string _readConnectionString;
-        public NpgsqlConnection _reads => new NpgsqlConnection(_readConnectionString);
+        private NpgsqlConnection _reads => new NpgsqlConnection(_readConnectionString);
 
         public TicketPusherRepository(TicketPusherContext context, IConfiguration configuration)
         {
@@ -22,7 +23,7 @@ namespace TicketPusher.API.Data
 
         public void CreateTicket(Ticket ticket)
         {
-            if (ticket.Id == Guid.Empty) 
+            if (ticket.Id == Guid.Empty)
                 throw new ArgumentException($"Ticket Id {ticket.Id} cannot be empty");
             if (ticket == null)
                 throw new ArgumentNullException(nameof(ticket));
