@@ -17,6 +17,8 @@ namespace TicketPusher.API.Data
             {
                 x.ToTable("Ticket").HasKey(k => k.Id);
                 x.Property(p => p.Id).HasColumnName("TicketId");
+                x.Property(p => p.Owner).IsRequired();
+                x.Property(p => p.Description).IsRequired();
             });
         }
     }
