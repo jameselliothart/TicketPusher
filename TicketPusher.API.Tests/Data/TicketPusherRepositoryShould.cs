@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TicketPusher.API.Data;
 using TicketPusher.Domain.Tickets;
 using Xunit;
@@ -21,6 +23,14 @@ namespace TicketPusher.API.Tests.Data
             connectionForTests = $"host=localhost;database={_databaseName};user id=postgres;password=docker;";
             connectionForCleanup = $"host=localhost;database=postgres;user id=postgres;password=docker;";
 
+            var configBuilder = new ConfigurationBuilder();
+            var settings = new Dictionary<string, string>
+                {
+                    {"ConnectionStrings:TicketPusherDb", $"{connectionForTests}"}
+                };
+            configBuilder.AddInMemoryCollection(settings);
+            IConfiguration config = configBuilder.Build();
+
             var options = new DbContextOptionsBuilder<TicketPusherContext>()
                 .UseNpgsql(connectionForTests)
                 .Options;
@@ -28,9 +38,8 @@ namespace TicketPusher.API.Tests.Data
             context = new TicketPusherContext(options);
             context.Database.Migrate();
 
-            repository = new TicketPusherRepository(context);
+            repository = new TicketPusherRepository(context, config);
         }
-        // zspnlcyp / c2PKfjpC
 
         public void Dispose()
         {
@@ -73,6 +82,22 @@ namespace TicketPusher.API.Tests.Data
             // Assert
             var ticketFromRepo = _db.context.Tickets.FirstOrDefault(t => t.Id == ticketId);
             Assert.Equal(ticket, ticketFromRepo);
+        }
+
+        [Fact]
+        public void RetrieveATicket()
+        {
+            // Arrange
+            var ticketId = Guid.NewGuid();
+            var ticket = new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
+            _db.context.Tickets.Add(ticket);
+            _db.context.SaveChanges();
+
+            // Act
+            TicketDto ticketDto = _db.repository.GetTicket(ticketId);
+
+            // Assert
+            Assert.Equal(ticketId, ticketDto.Id);
         }
 
     }
