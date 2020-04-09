@@ -22,7 +22,7 @@ namespace TicketPusher.API.Data
             _context.Tickets.Add(ticket);
         }
 
-        public void RemoteTicket(Ticket ticket)
+        public void RemoveTicket(Ticket ticket)
         {
             _context.Tickets.Remove(ticket);
         }
