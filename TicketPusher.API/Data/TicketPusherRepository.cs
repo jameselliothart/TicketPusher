@@ -3,7 +3,7 @@ using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Data
 {
-    public class TicketPusherRepository
+    public class TicketPusherRepository : IDisposable
     {
         private readonly TicketPusherContext _context;
 
@@ -22,9 +22,20 @@ namespace TicketPusher.API.Data
             _context.Tickets.Add(ticket);
         }
 
+        public void RemoteTicket(Ticket ticket)
+        {
+            _context.Tickets.Remove(ticket);
+        }
+
         public int SaveChanges()
         {
             return _context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            _context?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
