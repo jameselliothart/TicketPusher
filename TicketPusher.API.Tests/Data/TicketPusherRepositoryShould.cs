@@ -12,27 +12,27 @@ namespace TicketPusher.API.Tests.Data
     public class DatabaseFixture : IDisposable
     {
         private readonly string _databaseName;
-        private readonly string connectionForTests;
-        private readonly string connectionForCleanup;
+        private readonly string _connectionForTests;
+        private readonly string _connectionForCleanup;
         public TicketPusherContext context { get; private set; }
         public TicketPusherRepository repository { get; private set; }
         public DatabaseFixture()
         {
             _databaseName = Guid.NewGuid().ToString();
 
-            connectionForTests = $"host=localhost;database={_databaseName};user id=postgres;password=docker;";
-            connectionForCleanup = $"host=localhost;database=postgres;user id=postgres;password=docker;";
+            _connectionForTests = $"host=localhost;database={_databaseName};user id=postgres;password=docker;";
+            _connectionForCleanup = $"host=localhost;database=postgres;user id=postgres;password=docker;";
 
             var configBuilder = new ConfigurationBuilder();
             var settings = new Dictionary<string, string>
                 {
-                    {"ConnectionStrings:TicketPusherDb", $"{connectionForTests}"}
+                    {"ConnectionStrings:TicketPusherDb", $"{_connectionForTests}"}
                 };
             configBuilder.AddInMemoryCollection(settings);
             IConfiguration config = configBuilder.Build();
 
             var options = new DbContextOptionsBuilder<TicketPusherContext>()
-                .UseNpgsql(connectionForTests)
+                .UseNpgsql(_connectionForTests)
                 .Options;
 
             context = new TicketPusherContext(options);
@@ -45,7 +45,7 @@ namespace TicketPusher.API.Tests.Data
         {
             // need to switch the context to a new database to drop the temp one
             var options = new DbContextOptionsBuilder<TicketPusherContext>()
-                .UseNpgsql(connectionForCleanup)
+                .UseNpgsql(_connectionForCleanup)
                 .Options;
             context = new TicketPusherContext(options);
 
@@ -72,15 +72,14 @@ namespace TicketPusher.API.Tests.Data
         public void CreateATicket()
         {
             // Arrange
-            var ticketId = Guid.NewGuid();
-            var ticket = new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
+            var ticket = CreateTestTicket();
 
             // Act
             _db.repository.CreateTicket(ticket);
             _db.repository.SaveChanges();
 
             // Assert
-            var ticketFromRepo = _db.context.Tickets.FirstOrDefault(t => t.Id == ticketId);
+            var ticketFromRepo = _db.context.Tickets.FirstOrDefault(t => t.Id == ticket.Id);
             Assert.Equal(ticket, ticketFromRepo);
         }
 
@@ -88,16 +87,21 @@ namespace TicketPusher.API.Tests.Data
         public void RetrieveATicket()
         {
             // Arrange
-            var ticketId = Guid.NewGuid();
-            var ticket = new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
+            var ticket = CreateTestTicket();
             _db.context.Tickets.Add(ticket);
             _db.context.SaveChanges();
 
             // Act
-            TicketDto ticketDto = _db.repository.GetTicket(ticketId);
+            TicketDto ticketDto = _db.repository.GetTicket(ticket.Id);
 
             // Assert
-            Assert.Equal(ticketId, ticketDto.Id);
+            Assert.Equal(ticket.Id, ticketDto.Id);
+        }
+
+        private Ticket CreateTestTicket()
+        {
+            var ticketId = Guid.NewGuid();
+            return new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
         }
 
     }
