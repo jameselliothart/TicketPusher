@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using TicketPusher.Domain.Tickets;
@@ -32,14 +33,14 @@ namespace TicketPusher.API.Data
             _context.Tickets.Add(ticket);
         }
 
-        public Ticket GetTicket(Guid ticketId)
+        public async Task<Ticket> GetTicketAsync(Guid ticketId)
         {
-            return _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
+            return await _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefaultAsync();
         }
 
-        public List<Ticket> GetAllTickets()
+        public async Task<List<Ticket>> GetAllTicketsAsync()
         {
-            return _context.Tickets.ToList();
+            return await _context.Tickets.ToListAsync();
         }
 
         public void RemoveTicket(Ticket ticket)

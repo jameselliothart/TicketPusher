@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using TicketPusher.API.Data;
@@ -84,7 +85,7 @@ namespace TicketPusher.API.Tests.Data
         }
 
         [Fact]
-        public void RetrieveATicket()
+        public async Task RetrieveATicket()
         {
             // Arrange
             var ticket = CreateTestTicket();
@@ -92,7 +93,7 @@ namespace TicketPusher.API.Tests.Data
             _db.context.SaveChanges();
 
             // Act
-            Ticket ticketFromRepo = _db.repository.GetTicket(ticket.Id);
+            Ticket ticketFromRepo = await _db.repository.GetTicketAsync(ticket.Id);
 
             // Assert
             Assert.Equal(ticket, ticketFromRepo);
