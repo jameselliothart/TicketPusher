@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
@@ -46,9 +47,14 @@ namespace TicketPusher.API.Data
             _context.Tickets.Remove(ticket);
         }
 
-        public int SaveChanges()
+        public bool SaveChanges()
         {
-            return _context.SaveChanges();
+            return _context.SaveChanges() > 0;
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return (await _context.SaveChangesAsync() > 0);
         }
 
         public void Dispose()
