@@ -23,10 +23,10 @@ namespace TicketPusher.API.Data
 
         public void CreateTicket(Ticket ticket)
         {
-            if (ticket.Id == Guid.Empty)
-                throw new ArgumentException($"Ticket Id {ticket.Id} cannot be empty");
             if (ticket == null)
                 throw new ArgumentNullException(nameof(ticket));
+            if (ticket.Id == Guid.Empty)
+                throw new ArgumentException($"Ticket Id {ticket.Id} cannot be empty");
 
             _context.Tickets.Add(ticket);
         }
