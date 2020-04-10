@@ -8,7 +8,7 @@ namespace TicketPusher.API.Data
     {
         void CreateTicket(Ticket ticket);
         List<TicketDto> GetAllTickets();
-        TicketDto GetTicket(Guid ticketId);
+        Ticket GetTicket(Guid ticketId);
         void RemoveTicket(Ticket ticket);
         int SaveChanges();
     }

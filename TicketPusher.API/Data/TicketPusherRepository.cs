@@ -31,19 +31,9 @@ namespace TicketPusher.API.Data
             _context.Tickets.Add(ticket);
         }
 
-        public TicketDto GetTicket(Guid ticketId)
+        public Ticket GetTicket(Guid ticketId)
         {
-            string sql = @"
-                SELECT ""TicketId"" as Id, ""Owner"", ""Description"", ""SubmitDate"", ""DueDate""
-                FROM ""Ticket""
-                WHERE ""TicketId"" = @TicketId";
-
-            using var connection = _reads;
-            TicketDto ticket = connection.Query<TicketDto>(sql,
-                new { TicketId = ticketId })
-                .FirstOrDefault();
-
-            return ticket;
+            return _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
         }
 
         public List<TicketDto> GetAllTickets()

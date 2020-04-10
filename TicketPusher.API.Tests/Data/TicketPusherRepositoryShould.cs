@@ -92,10 +92,10 @@ namespace TicketPusher.API.Tests.Data
             _db.context.SaveChanges();
 
             // Act
-            TicketDto ticketDto = _db.repository.GetTicket(ticket.Id);
+            Ticket ticketFromRepo = _db.repository.GetTicket(ticket.Id);
 
             // Assert
-            Assert.Equal(ticket.Id, ticketDto.Id);
+            Assert.Equal(ticket, ticketFromRepo);
         }
 
         private Ticket CreateTestTicket()
