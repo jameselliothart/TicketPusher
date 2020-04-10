@@ -36,16 +36,9 @@ namespace TicketPusher.API.Data
             return _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
         }
 
-        public List<TicketDto> GetAllTickets()
+        public List<Ticket> GetAllTickets()
         {
-            string sql = @"
-                SELECT ""TicketId"" as Id, ""Owner"", ""Description"", ""SubmitDate"", ""DueDate""
-                FROM ""Ticket""";
-
-            using var connection = _reads;
-            List<TicketDto> tickets = connection.Query<TicketDto>(sql).ToList();
-
-            return tickets;
+            return _context.Tickets.ToList();
         }
 
         public void RemoveTicket(Ticket ticket)

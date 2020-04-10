@@ -7,7 +7,7 @@ namespace TicketPusher.API.Data
     public interface ITicketPusherRepository
     {
         void CreateTicket(Ticket ticket);
-        List<TicketDto> GetAllTickets();
+        List<Ticket> GetAllTickets();
         Ticket GetTicket(Guid ticketId);
         void RemoveTicket(Ticket ticket);
         int SaveChanges();
