@@ -12,13 +12,13 @@ namespace TicketPusher.API.Data
     public class TicketPusherRepository : ITicketPusherRepository, IDisposable
     {
         private readonly TicketPusherContext _context;
-        private string _readConnectionString;
-        private NpgsqlConnection _reads => new NpgsqlConnection(_readConnectionString);
+        private readonly NpgsqlConnection _reads;
 
         public TicketPusherRepository(TicketPusherContext context, IConfiguration configuration)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
-            _readConnectionString = configuration.GetConnectionString("TicketPusherDb");
+            var readConnectionString = configuration.GetConnectionString("TicketPusherDb");
+            _reads = new NpgsqlConnection(readConnectionString);
         }
 
         public void CreateTicket(Ticket ticket)
