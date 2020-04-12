@@ -14,21 +14,23 @@ namespace TicketPusher.API.Tests.Tickets
     public class GetTicketQueryHandlerShould : IClassFixture<MapperFixture>
     {
         private readonly MapperFixture _mapper;
+        private readonly ITicketPusherRepository _repository;
 
         public GetTicketQueryHandlerShould(MapperFixture mapper)
         {
             _mapper = mapper;
+            _repository = new InMemoryRepository();
         }
 
         [Fact]
         public async Task GetTicketById()
         {
             // Arrange
-            ITicketPusherRepository repo = new InMemoryRepository();
             var ticket = TicketTestData.DefaultTicket();
-            repo.CreateTicket(ticket);
+            _repository.CreateTicket(ticket);
+
             var expected = _mapper.Instance.Map<TicketDto>(ticket);
-            var sutQueryHandler = new GetTicketQueryHandler(repo, _mapper.Instance);
+            var sutQueryHandler = new GetTicketQueryHandler(_repository, _mapper.Instance);
 
             // Act
             var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
