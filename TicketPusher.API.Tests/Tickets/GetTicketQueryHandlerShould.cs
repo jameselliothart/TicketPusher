@@ -11,26 +11,27 @@ using Xunit;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketQueryHandlerShould
+    public class GetTicketQueryHandlerShould : IClassFixture<MapperFixture>
     {
+        private readonly MapperFixture _mapper;
+
+        public GetTicketQueryHandlerShould(MapperFixture mapper)
+        {
+            _mapper = mapper;
+        }
+
         [Fact]
         public async Task GetTicketById()
         {
             // Arrange
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile(new TicketMapper());
-            });
-            var mapper = config.CreateMapper();
             ITicketPusherRepository repo = new InMemoryRepository();
             var ticket = TicketTestData.DefaultTicket();
             repo.CreateTicket(ticket);
-            var expected = mapper.Map<TicketDto>(ticket);
-            var sutQueryHandler = new GetTicketQueryHandler(repo, mapper);
-            CancellationToken token = new CancellationToken();
+            var expected = _mapper.Instance.Map<TicketDto>(ticket);
+            var sutQueryHandler = new GetTicketQueryHandler(repo, _mapper.Instance);
 
             // Act
-            var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), token);
+            var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
