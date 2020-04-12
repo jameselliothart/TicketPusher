@@ -23,7 +23,7 @@ namespace TicketPusher.API.Tests.Tickets
             });
             var mapper = config.CreateMapper();
             ITicketPusherRepository repo = new InMemoryRepository();
-            var ticket = CreateTestTicket();
+            var ticket = TicketTestData.DefaultTicket();
             repo.CreateTicket(ticket);
             var expected = mapper.Map<TicketDto>(ticket);
             var sutQueryHandler = new GetTicketQueryHandler(repo, mapper);
@@ -34,12 +34,6 @@ namespace TicketPusher.API.Tests.Tickets
 
             // Assert
             actual.Should().BeEquivalentTo(expected);
-        }
-
-        private Ticket CreateTestTicket()
-        {
-            var ticketId = Guid.NewGuid();
-            return new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
         }
     }
 }

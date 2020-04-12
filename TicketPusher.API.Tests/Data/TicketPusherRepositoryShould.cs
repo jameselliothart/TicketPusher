@@ -21,8 +21,8 @@ namespace TicketPusher.API.Tests.Data
         public void CreateATicket()
         {
             // Arrange
-            var ticket = CreateTestTicket();
-
+            var ticket = TicketTestData.DefaultTicket();
+            
             // Act
             _db.repository.CreateTicket(ticket);
             _db.repository.SaveChanges();
@@ -36,7 +36,7 @@ namespace TicketPusher.API.Tests.Data
         public async Task RetrieveATicket()
         {
             // Arrange
-            var ticket = CreateTestTicket();
+            var ticket = TicketTestData.DefaultTicket();
             _db.context.Tickets.Add(ticket);
             _db.context.SaveChanges();
 
@@ -45,12 +45,6 @@ namespace TicketPusher.API.Tests.Data
 
             // Assert
             Assert.Equal(ticket, ticketFromRepo);
-        }
-
-        private Ticket CreateTestTicket()
-        {
-            var ticketId = Guid.NewGuid();
-            return new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
         }
 
     }
