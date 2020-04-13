@@ -6,12 +6,12 @@ using Xunit;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public abstract class QueryHandlerTest : IClassFixture<MapperFixture>
+    public abstract class QueryHandlerTestSetup : IClassFixture<MapperFixture>
     {
         protected readonly MapperFixture _mapper;
         protected readonly DbContextOptions<TicketPusherContext> _dbContextOptions;
 
-        public QueryHandlerTest(MapperFixture mapper)
+        public QueryHandlerTestSetup(MapperFixture mapper)
         {
             _mapper = mapper;
             var connStringBuilder = new SqliteConnectionStringBuilder { DataSource = ":memory:" };

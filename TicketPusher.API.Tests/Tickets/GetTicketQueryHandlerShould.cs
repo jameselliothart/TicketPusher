@@ -9,7 +9,7 @@ using TicketPusher.API.Tickets.Queries;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketQueryHandlerShould : QueryHandlerTest, IClassFixture<MapperFixture>
+    public class GetTicketQueryHandlerShould : QueryHandlerTestSetup, IClassFixture<MapperFixture>
     {
         public GetTicketQueryHandlerShould(MapperFixture mapper) : base(mapper)
         {
