@@ -9,15 +9,10 @@ using TicketPusher.API.Tickets.Queries;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketQueryHandlerShould : IClassFixture<MapperFixture>
+    public class GetTicketQueryHandlerShould : QueryHandlerTest, IClassFixture<MapperFixture>
     {
-        private readonly MapperFixture _mapper;
-        private readonly ITicketPusherRepository _repository;
-
-        public GetTicketQueryHandlerShould(MapperFixture mapper)
+        public GetTicketQueryHandlerShould(MapperFixture mapper) : base(mapper)
         {
-            _mapper = mapper;
-            _repository = new InMemoryRepository();
         }
 
         [Fact]
