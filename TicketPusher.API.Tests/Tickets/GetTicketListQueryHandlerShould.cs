@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
 using TicketPusher.API.Tickets.Queries;
@@ -21,20 +22,24 @@ namespace TicketPusher.API.Tests.Tickets
         {
             // Arrange
             var seed = TicketTestData.TicketList().ToList();
-            foreach (var ticket in seed)
-            {
-                _repository.CreateTicket(ticket);
-            }
-            await _repository.SaveChangesAsync();
-
             var expected = _mapper.Instance.Map<IEnumerable<TicketDto>>(seed);
-            var sutQueryHandler = new GetTicketListQueryHandler(_repository, _mapper.Instance);
+            using (var context = new TicketPusherContext(_dbContextOptions))
+            {
+                context.Tickets.AddRange(seed);
+                context.SaveChanges();
+            }
 
-            // Act
-            var actual = await sutQueryHandler.Handle(new GetTicketListQuery(), new CancellationToken());
+            using (var context = new TicketPusherContext(_dbContextOptions))
+            {
+                var repository = new TicketPusherRepository(context);
+                var sutQueryHandler = new GetTicketListQueryHandler(repository, _mapper.Instance);
 
-            // Assert
-            actual.Should().BeEquivalentTo(expected);
+                // Act
+                var actual = await sutQueryHandler.Handle(new GetTicketListQuery(), new CancellationToken());
+
+                // Assert
+                actual.Should().BeEquivalentTo(expected);
+            }
         }
     }
 }

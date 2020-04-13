@@ -20,16 +20,24 @@ namespace TicketPusher.API.Tests.Tickets
         {
             // Arrange
             var ticket = TicketTestData.DefaultTicket();
-            _repository.CreateTicket(ticket);
-
             var expected = _mapper.Instance.Map<TicketDto>(ticket);
-            var sutQueryHandler = new GetTicketQueryHandler(_repository, _mapper.Instance);
+            using (var context = new TicketPusherContext(_dbContextOptions))
+            {
+                context.Tickets.Add(ticket);
+                context.SaveChanges();
+            }
 
-            // Act
-            var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
+            using (var context = new TicketPusherContext(_dbContextOptions))
+            {
+                var repository = new TicketPusherRepository(context);
+                var sutQueryHandler = new GetTicketQueryHandler(repository, _mapper.Instance);
 
-            // Assert
-            actual.Should().BeEquivalentTo(expected);
+                // Act
+                var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
+
+                // Assert
+                actual.Should().BeEquivalentTo(expected);
+            }
         }
     }
 }
