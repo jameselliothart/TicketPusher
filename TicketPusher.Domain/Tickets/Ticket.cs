@@ -10,8 +10,8 @@ namespace TicketPusher.Domain.Tickets
         public DateTime SubmitDate { get; private set; }
         public DateTime DueDate { get; private set; }
         
-        public Ticket(Guid id, string owner, string description, DateTime submitDate, DateTime dueDate)
-            : base(id)
+        public Ticket(string owner, string description, DateTime submitDate, DateTime dueDate)
+            : base()
         {
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
             Description = description ?? throw new ArgumentNullException(nameof(Description));

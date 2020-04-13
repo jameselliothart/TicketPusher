@@ -7,8 +7,7 @@ namespace TicketPusher.API.Tests.Utils
     {
         public static Ticket DefaultTicket()
         {
-            var ticketId = Guid.NewGuid();
-            return new Ticket(ticketId, "owner", "desc", DateTime.Now, NoSetDate.Instance);
+            return new Ticket("owner", "desc", DateTime.Now, NoSetDate.Instance);
         }
     }
 }

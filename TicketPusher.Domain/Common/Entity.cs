@@ -9,12 +9,7 @@ namespace TicketPusher.Domain.Common
 
         protected Entity()
         {
-        }
-
-        protected Entity(Guid id)
-            : this()
-        {
-            Id = id;
+            Id = Guid.NewGuid();
         }
 
         public override bool Equals(object obj)
