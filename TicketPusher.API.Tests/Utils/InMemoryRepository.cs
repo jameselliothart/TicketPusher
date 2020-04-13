@@ -17,7 +17,7 @@ namespace TicketPusher.API.Tests.Utils
 
         public Task<List<Ticket>> GetAllTicketsAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(_tickets);
         }
 
         public Task<Ticket> GetTicketAsync(Guid ticketId)
@@ -32,12 +32,12 @@ namespace TicketPusher.API.Tests.Utils
 
         public bool SaveChanges()
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public Task<bool> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
     }
 }
