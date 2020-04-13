@@ -26,7 +26,6 @@ namespace TicketPusher.API.Tests.Utils
                     {"ConnectionStrings:TicketPusherDb", $"{_connectionForTests}"}
                 };
             configBuilder.AddInMemoryCollection(settings);
-            IConfiguration config = configBuilder.Build();
 
             var options = new DbContextOptionsBuilder<TicketPusherContext>()
                 .UseNpgsql(_connectionForTests)
@@ -35,7 +34,7 @@ namespace TicketPusher.API.Tests.Utils
             context = new TicketPusherContext(options);
             context.Database.Migrate();
 
-            repository = new TicketPusherRepository(context, config);
+            repository = new TicketPusherRepository(context);
         }
 
         public void Dispose()
