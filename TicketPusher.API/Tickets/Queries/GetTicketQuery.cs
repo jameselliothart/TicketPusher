@@ -1,8 +1,7 @@
 using System;
 using MediatR;
-using TicketPusher.Domain.Tickets;
 
-namespace TicketPusher.API.Tickets
+namespace TicketPusher.API.Tickets.Queries
 {
     public class GetTicketQuery : IRequest<TicketDto>
     {

@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using TicketPusher.API.Data;
-using TicketPusher.Domain.Tickets;
 
-namespace TicketPusher.API.Tickets
+namespace TicketPusher.API.Tickets.Queries
 {
     public class GetTicketQueryHandler : IRequestHandler<GetTicketQuery, TicketDto>
     {

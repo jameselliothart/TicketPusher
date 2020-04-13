@@ -1,13 +1,11 @@
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
-using TicketPusher.Domain.Tickets;
 using FluentAssertions;
 using Xunit;
+using TicketPusher.API.Tickets.Queries;
 
 namespace TicketPusher.API.Tests.Tickets
 {
