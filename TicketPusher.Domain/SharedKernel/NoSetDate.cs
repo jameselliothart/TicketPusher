@@ -1,6 +1,6 @@
 using System;
 
-namespace TicketPusher.Domain.Tickets
+namespace TicketPusher.Domain.SharedKernel
 {
     public class NoSetDate
     {
