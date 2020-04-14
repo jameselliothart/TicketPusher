@@ -12,11 +12,11 @@ namespace TicketPusher.API.Tickets
 {
     [ApiController]
     [Route("api/tickets")]
-    public sealed class TicketController : ControllerBase
+    public sealed class TicketsController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public TicketController(IMediator mediator)
+        public TicketsController(IMediator mediator)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
