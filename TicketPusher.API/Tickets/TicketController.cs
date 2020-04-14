@@ -41,8 +41,7 @@ namespace TicketPusher.API.Tickets
         [HttpPost]
         public async Task<ActionResult<TicketDto>> CreateTicket([FromBody] SubmitTicketDto ticket)
         {
-            var dueDate = ticket.DueDate ?? NoSetDate.Instance;
-            var command = new SubmitTicketCommand(ticket.Owner, ticket.Description, dueDate);
+            var command = new SubmitTicketCommand(ticket.Owner, ticket.Description, ticket.DueDate);
             var result = await _mediator.Send(command);
             
             return CreatedAtAction(nameof(GetTicket),
