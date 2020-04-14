@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TicketPusher.Domain.SharedKernel;
 using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tests.Utils

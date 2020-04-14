@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using TicketPusher.Domain.Tickets;
+using TicketPusher.Domain.SharedKernel;
 
 namespace TicketPusher.API.Tickets.Commands
 {
