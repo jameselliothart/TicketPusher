@@ -5,6 +5,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using TicketPusher.API.Data;
 using System.Linq;
+using System;
 
 namespace TicketPusher.API.Tests.Utils
 {
@@ -39,6 +40,25 @@ namespace TicketPusher.API.Tests.Utils
                     .GetRequiredService<TicketPusherContext>();
                 ticketPusherDb.Database.EnsureCreated();
             });
+        }
+
+        public static Action<IWebHostBuilder> BuildWebHost(Action<TicketPusherContext> setupAction)
+        {
+            return builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    var serviceProvider = services.BuildServiceProvider();
+
+                    using (var scope = serviceProvider.CreateScope())
+                    {
+                        var db = scope.ServiceProvider
+                            .GetRequiredService<TicketPusherContext>();
+
+                        setupAction(db);
+                    }
+                });
+            };
         }
     }
 }

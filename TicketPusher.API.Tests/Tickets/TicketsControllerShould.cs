@@ -19,7 +19,9 @@ namespace TicketPusher.API.Tests.Tickets
         public TicketsControllerShould(WebApplicationFixture factory)
         {
             _factory = factory;
-            _client = factory.CreateClient();
+            _client = _factory
+                .WithWebHostBuilder(WebApplicationFixture.BuildWebHost(db => {}))
+                .CreateClient();
         }
 
         [Fact]
@@ -44,23 +46,13 @@ namespace TicketPusher.API.Tests.Tickets
         {
             // Arrange
             var ticket = TicketTestData.DefaultTicket();
-            var client = _factory.WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureServices(services =>
+            var client = _factory.WithWebHostBuilder(
+                WebApplicationFixture.BuildWebHost(db =>
                 {
-                    var serviceProvider = services.BuildServiceProvider();
-
-                    using (var scope = serviceProvider.CreateScope())
-                    {
-                        var db = scope.ServiceProvider
-                            .GetRequiredService<TicketPusherContext>();
-
-                        db.Tickets.Add(ticket);
-                        db.SaveChanges();
-                    }
-                });
-            })
-            .CreateClient();
+                    db.Tickets.Add(ticket);
+                    db.SaveChanges();
+                }))
+                .CreateClient();
 
             // Act
             var httpResponse = await client.GetAsync($"/api/tickets/{ticket.Id}");
