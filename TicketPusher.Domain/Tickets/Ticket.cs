@@ -1,5 +1,6 @@
 using System;
 using TicketPusher.Domain.Common;
+using TicketPusher.Domain.CompletedTickets;
 
 namespace TicketPusher.Domain.Tickets
 {
@@ -17,6 +18,11 @@ namespace TicketPusher.Domain.Tickets
             Description = description ?? throw new ArgumentNullException(nameof(Description));
             SubmitDate = submitDate;
             DueDate = dueDate;
+        }
+
+        public CompletedTicket Close()
+        {
+            return new CompletedTicket();
         }
 
         public void SetDueDate (DateTime dueDate)
