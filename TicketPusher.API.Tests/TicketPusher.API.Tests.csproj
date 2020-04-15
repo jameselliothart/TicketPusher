@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TicketPusher.API\TicketPusher.API.csproj" />
+    <ProjectReference Include="..\TicketPusher.Domain.Tests\TicketPusher.Domain.Tests.csproj" />
   </ItemGroup>
 
 </Project>

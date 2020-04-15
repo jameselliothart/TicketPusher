@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using TicketPusher.API.Tests.Utils;
+using TicketPusher.Domain.Tests.Utils;
 using TicketPusher.Domain.Tickets;
 using Xunit;
 

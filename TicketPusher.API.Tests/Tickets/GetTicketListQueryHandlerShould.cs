@@ -7,6 +7,7 @@ using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
 using TicketPusher.API.Tickets.Queries;
+using TicketPusher.Domain.Tests.Utils;
 using Xunit;
 
 namespace TicketPusher.API.Tests.Tickets
