@@ -11,12 +11,16 @@ namespace TicketPusher.Domain.Tests
 {
     public class TicketShould
     {
+        public Ticket sutTicket { get; private set; }
+
+        public TicketShould()
+        {
+            sutTicket = TicketTestData.DefaultTicket();
+        }
+
         [Fact]
         public void ReturnCompletedItem_WhenClosed()
         {
-            // Arrange
-            var sutTicket = TicketTestData.DefaultTicket();
-
             // Act
             var actual = sutTicket.Close();
 
@@ -27,8 +31,6 @@ namespace TicketPusher.Domain.Tests
         [Fact]
         public void RetainInformationInCompletedTicket_WhenClosed()
         {
-            var sutTicket = TicketTestData.DefaultTicket();
-
             var actual = sutTicket.Close();
 
             using (new AssertionScope())
