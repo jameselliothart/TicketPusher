@@ -7,27 +7,25 @@ namespace TicketPusher.Domain.Tickets
     public class Ticket : Entity
     {
         public string Owner { get; private set; }
-        public string Description { get; private set; }
-        public DateTime SubmitDate { get; private set; }
-        public DateTime DueDate { get; private set; }
+        public TicketDetails TicketDetails { get; private set; }
+
+        private Ticket() {}
         
-        public Ticket(string owner, string description, DateTime submitDate, DateTime dueDate)
+        public Ticket(string owner, TicketDetails ticketDetails)
             : base()
         {
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
-            Description = description ?? throw new ArgumentNullException(nameof(Description));
-            SubmitDate = submitDate;
-            DueDate = dueDate;
+            TicketDetails = ticketDetails ?? throw new ArgumentNullException(nameof(ticketDetails));
         }
 
         public CompletedTicket Close()
         {
-            return new CompletedTicket();
+            return new CompletedTicket(new TicketDetails("foo", DateTime.Now, DateTime.Now));
         }
 
         public void SetDueDate (DateTime dueDate)
         {
-            DueDate = dueDate;
+            TicketDetails = new TicketDetails(TicketDetails.Description, TicketDetails.SubmitDate, dueDate);
         }
 
     }

@@ -7,7 +7,17 @@ namespace TicketPusher.API.Tickets
     {
         public TicketMapper()
         {
-            CreateMap<Ticket, TicketDto>();
+            CreateMap<Ticket, TicketDto>()
+                .ForMember(
+                    dest => dest.Description,
+                    opt => opt.MapFrom(src => src.TicketDetails.Description))
+                .ForMember(
+                    dest => dest.SubmitDate,
+                    opt => opt.MapFrom(src => src.TicketDetails.SubmitDate))
+                .ForMember(
+                    dest => dest.DueDate,
+                    opt => opt.MapFrom(src => src.TicketDetails.DueDate))
+                ;
         }
     }
 }

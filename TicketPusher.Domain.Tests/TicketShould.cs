@@ -24,17 +24,17 @@ namespace TicketPusher.Domain.Tests
             Assert.IsType<CompletedTicket>(actual);
         }
 
-        [Fact(Skip = "TODO after refactoring existing logic")]
+        [Fact]
         public void RetainInformationInCompletedTicket_WhenClosed()
         {
             var sutTicket = TicketTestData.DefaultTicket();
 
             var actual = sutTicket.Close();
 
-            // using (new AssertionScope())
-            // {
-            //     actual.Description.Should().Be(sutTicket.Description);
-            // }
+            using (new AssertionScope())
+            {
+                actual.TicketDetails.Should().Equals(sutTicket.TicketDetails);
+            }
         }
     }
 }

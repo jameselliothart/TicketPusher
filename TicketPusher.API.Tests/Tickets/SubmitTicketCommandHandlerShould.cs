@@ -35,7 +35,7 @@ namespace TicketPusher.API.Tests.Tickets
             // Assert
             using (var context = new TicketPusherContext(_dbContextOptions))
             {
-                var ticketFromDb = context.Tickets.Where(t => t.Description == command.Description).Single();
+                var ticketFromDb = context.Tickets.Where(t => t.TicketDetails.Description == command.Description).Single();
                 ticketFromDb.Should().NotBeNull();
             }
         }

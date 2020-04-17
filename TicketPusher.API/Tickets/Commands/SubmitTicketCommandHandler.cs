@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using TicketPusher.API.Data;
+using TicketPusher.Domain.Common;
 using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tickets.Commands
@@ -22,7 +23,7 @@ namespace TicketPusher.API.Tickets.Commands
         }
         public async Task<TicketDto> Handle(SubmitTicketCommand request, CancellationToken cancellationToken)
         {
-            var ticket = new Ticket(request.Owner, request.Description, DateTime.Now, request.DueDate);
+            var ticket = new Ticket(request.Owner, new TicketDetails(request.Description, DateTime.Now, request.DueDate));
             _repository.CreateTicket(ticket);
             await _repository.SaveChangesAsync();
             return _mapper.Map<TicketDto>(ticket);

@@ -15,10 +15,15 @@ namespace TicketPusher.API.Data
         {
             modelBuilder.Entity<Ticket>(x =>
             {
-                x.ToTable("Ticket").HasKey(k => k.Id);
-                x.Property(p => p.Id).HasColumnName("TicketId");
-                x.Property(p => p.Owner).IsRequired();
-                x.Property(p => p.Description).IsRequired();
+                x.ToTable("tickets").HasKey(k => k.Id);
+                x.Property(p => p.Id).HasColumnName("ticket_id");
+                x.Property(p => p.Owner).HasColumnName("owner").IsRequired();
+                x.OwnsOne(p => p.TicketDetails, p =>
+                {
+                    p.Property(pp => pp.Description).HasColumnName("description").IsRequired();
+                    p.Property(pp => pp.SubmitDate).HasColumnName("submit_date");
+                    p.Property(pp => pp.DueDate).HasColumnName("due_date");
+                });
             });
         }
     }
