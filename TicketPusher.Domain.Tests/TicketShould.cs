@@ -1,4 +1,6 @@
 using System;
+using FluentAssertions;
+using FluentAssertions.Execution;
 using TicketPusher.Domain.CompletedTickets;
 using TicketPusher.Domain.SharedKernel;
 using TicketPusher.Domain.Tests.Utils;
@@ -20,6 +22,19 @@ namespace TicketPusher.Domain.Tests
 
             // Assert
             Assert.IsType<CompletedTicket>(actual);
+        }
+
+        [Fact(Skip = "TODO after refactoring existing logic")]
+        public void RetainInformationInCompletedTicket_WhenClosed()
+        {
+            var sutTicket = TicketTestData.DefaultTicket();
+
+            var actual = sutTicket.Close();
+
+            // using (new AssertionScope())
+            // {
+            //     actual.Description.Should().Be(sutTicket.Description);
+            // }
         }
     }
 }
