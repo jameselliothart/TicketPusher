@@ -15,7 +15,6 @@ namespace TicketPusher.Domain.CompletedTickets
             Resolution = resolution;
         }
 
-
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return CompletionDate;
