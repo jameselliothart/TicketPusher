@@ -39,5 +39,22 @@ namespace TicketPusher.Domain.Tests
                 sutTicket.Owner.Should().Be(actual.Owner);
             }
         }
+
+        [Fact]
+        public void SetResolutionToEmptyString_WhenClosedWithoutValue()
+        {
+            var actual = sutTicket.Close();
+
+            actual.CompletedDetails.Resolution.Should().Be(string.Empty);
+        }
+
+        [Fact]
+        public void SetResolutionToValue_WhenClosedWithValue()
+        {
+            var resolution = "Did it.";
+            var actual = sutTicket.Close(resolution);
+
+            actual.CompletedDetails.Resolution.Should().Be(resolution);
+        }
     }
 }
