@@ -33,7 +33,8 @@ namespace TicketPusher.Domain.Tests
 
             using (new AssertionScope())
             {
-                actual.TicketDetails.Should().Equals(sutTicket.TicketDetails);
+                sutTicket.TicketDetails.Should().Be(actual.TicketDetails);
+                sutTicket.Owner.Should().Be(actual.Owner);
             }
         }
     }

@@ -20,7 +20,7 @@ namespace TicketPusher.Domain.Tickets
 
         public CompletedTicket Close()
         {
-            return new CompletedTicket(new TicketDetails("foo", DateTime.Now, DateTime.Now));
+            return new CompletedTicket(Owner, TicketDetails);
         }
 
         public void SetDueDate (DateTime dueDate)
