@@ -12,6 +12,7 @@ namespace TicketPusher.Domain.CompletedTickets
         private CompletedTicket() {}
 
         public CompletedTicket(string owner, TicketDetails ticketDetails, CompletedDetails completedDetails)
+            : base()
         {
             CompletedDetails = completedDetails ?? throw new ArgumentNullException(nameof(completedDetails));
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
