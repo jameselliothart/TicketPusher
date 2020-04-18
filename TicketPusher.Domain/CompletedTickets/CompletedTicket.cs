@@ -1,22 +1,25 @@
 using System;
 using TicketPusher.Domain.Common;
+using TicketPusher.Domain.Projects;
 
 namespace TicketPusher.Domain.CompletedTickets
 {
     public class CompletedTicket : Entity
     {
         public string Owner { get; private set; }
+        public Project Project { get; private set; }
         public TicketDetails TicketDetails { get; private set; }
         public CompletedDetails CompletedDetails { get; private set; }
 
         private CompletedTicket() {}
 
-        public CompletedTicket(string owner, TicketDetails ticketDetails, CompletedDetails completedDetails)
+        public CompletedTicket(string owner, Project project, TicketDetails ticketDetails, CompletedDetails completedDetails)
             : base()
         {
-            CompletedDetails = completedDetails ?? throw new ArgumentNullException(nameof(completedDetails));
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
+            Project = project ?? throw new ArgumentNullException(nameof(project));
             TicketDetails = ticketDetails ?? throw new ArgumentNullException(nameof(ticketDetails));
+            CompletedDetails = completedDetails ?? throw new ArgumentNullException(nameof(completedDetails));
         }
 
     }

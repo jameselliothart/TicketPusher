@@ -37,6 +37,7 @@ namespace TicketPusher.Domain.Tests
             {
                 sutTicket.TicketDetails.Should().Be(actual.TicketDetails);
                 sutTicket.Owner.Should().Be(actual.Owner);
+                sutTicket.Project.Should().Be(actual.Project);
             }
         }
 
