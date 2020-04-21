@@ -30,13 +30,26 @@ namespace TicketPusher.API.Tests.Tickets
         [Fact]
         public async Task CreateATicket()
         {
+            // Arrange
+            var project = TicketTestData.DefaultProject;
+            var client = _factory.WithWebHostBuilder(
+                WebApplicationFixture.BuildWebHost(db =>
+                {
+                    db.Projects.Add(project);
+                    db.SaveChanges();
+                }))
+                .CreateClient();
             var submitTicketDto = new SubmitTicketDto()
                 {
                     Owner = "Unassigned",
-                    Description = $"{Guid.NewGuid()}"
+                    Description = $"{Guid.NewGuid()}",
+                    ProjectId = project.Id
                 };
-            var httpResponse = await _client.PostAsync("/api/tickets", submitTicketDto.JsonContent());
 
+            // Act
+            var httpResponse = await client.PostAsync("/api/tickets", submitTicketDto.JsonContent());
+
+            // Assert
             httpResponse.EnsureSuccessStatusCode();
 
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
