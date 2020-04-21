@@ -7,6 +7,8 @@ using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
 using TicketPusher.API.Tickets.Commands;
+using TicketPusher.Domain.Projects;
+using TicketPusher.Domain.Tests.Utils;
 using Xunit;
 
 namespace TicketPusher.API.Tests.Tickets
@@ -27,6 +29,8 @@ namespace TicketPusher.API.Tests.Tickets
             {
                 var repository = new TicketPusherRepository(context);
                 var handler = new SubmitTicketCommandHandler(repository, _mapper.Instance);
+                context.Projects.Add(TicketTestData.DefaultProject);
+                await context.SaveChangesAsync();
 
                 // Act
                 await handler.Handle(command, new CancellationToken());
@@ -50,6 +54,8 @@ namespace TicketPusher.API.Tests.Tickets
             {
                 var repository = new TicketPusherRepository(context);
                 var handler = new SubmitTicketCommandHandler(repository, _mapper.Instance);
+                context.Projects.Add(TicketTestData.DefaultProject);
+                await context.SaveChangesAsync();
 
                 // Act
                 var result = await handler.Handle(command, new CancellationToken());
@@ -62,7 +68,8 @@ namespace TicketPusher.API.Tests.Tickets
 
         private SubmitTicketCommand DefaultSubmitTicketCommand()
         {
-            return new SubmitTicketCommand("Unassigned", $"{Guid.NewGuid().ToString()}", DateTime.Now.AddDays(7));
+            var project = TicketTestData.DefaultProject;
+            return new SubmitTicketCommand("Unassigned", $"{Guid.NewGuid().ToString()}", DateTime.Now.AddDays(7), project.Id);
         }
     }
 }

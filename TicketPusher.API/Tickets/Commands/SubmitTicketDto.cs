@@ -11,5 +11,7 @@ namespace TicketPusher.API.Tickets.Commands
         [Required]
         public string Description { get; set; }
         public DateTime DueDate { get; set; } = NoSetDate.Instance;
+        [Required]
+        public Guid ProjectId { get; set; }
     }
 }

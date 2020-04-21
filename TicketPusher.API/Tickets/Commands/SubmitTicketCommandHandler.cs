@@ -24,7 +24,8 @@ namespace TicketPusher.API.Tickets.Commands
         }
         public async Task<TicketDto> Handle(SubmitTicketCommand request, CancellationToken cancellationToken)
         {
-            var ticket = new Ticket(request.Owner, new Project("None"), new TicketDetails(request.Description, DateTime.Now, request.DueDate));
+            var project = await _repository.GetProjectAsync(request.ProjectId);
+            var ticket = new Ticket(request.Owner, project, new TicketDetails(request.Description, DateTime.Now, request.DueDate));
             _repository.CreateTicket(ticket);
             await _repository.SaveChangesAsync();
             return _mapper.Map<TicketDto>(ticket);
