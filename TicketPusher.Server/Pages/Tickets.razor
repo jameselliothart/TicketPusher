@@ -27,7 +27,7 @@ else
             @foreach (var ticket in tickets)
             {
                 <tr>
-                    <td>@ticket.Id</td>
+                    <td title="@ticket.Id">@ticket.Id.ToString().Split("-")[0]</td>
                     <td>@ticket.Owner</td>
                     <td>@ticket.Description</td>
                     <td>@ticket.SubmitDate.ToShortDateString()</td>
