@@ -6,6 +6,7 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using TicketPusher.Domain.Projects;
 using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Data
@@ -59,6 +60,11 @@ namespace TicketPusher.API.Data
         {
             _context?.Dispose();
             GC.SuppressFinalize(this);
+        }
+
+        public async Task<Project> GetProjectAsync(Guid projectId)
+        {
+            return await _context.Projects.Where(p => p.Id == projectId).FirstOrDefaultAsync();
         }
     }
 }

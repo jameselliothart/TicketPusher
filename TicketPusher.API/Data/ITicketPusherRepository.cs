@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TicketPusher.Domain.Projects;
 using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Data
@@ -13,5 +14,6 @@ namespace TicketPusher.API.Data
         void RemoveTicket(Ticket ticket);
         bool SaveChanges();
         Task<bool> SaveChangesAsync();
+        Task<Project> GetProjectAsync(Guid projectId);
     }
 }
