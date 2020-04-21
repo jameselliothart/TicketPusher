@@ -9,16 +9,27 @@ namespace TicketPusher.Domain.Tests.Utils
 {
     public class TicketTestData
     {
+        private static Project _defaultProject;
+        public static Project DefaultProject
+        {
+            get
+            {
+                if (_defaultProject == null)
+                    _defaultProject = new Project("None");
+                return _defaultProject;
+            }
+        }
+
         public static Ticket DefaultTicket()
         {
             var ticketDetails = new TicketDetails("desc", DateTime.Now, NoSetDate.Instance);
-            var project = new Project("None");
+            var project = DefaultProject;
             return new Ticket("owner", project, ticketDetails);
         }
 
         public static IEnumerable<Ticket> TicketList()
         {
-            var project = new Project("None");
+            var project = DefaultProject;
             DateTime[] dueDates = {NoSetDate.Instance, DateTime.Now.AddDays(7), DateTime.Now.AddMonths(1)};
             for (int i = 0; i < dueDates.Length; i++)
             {
