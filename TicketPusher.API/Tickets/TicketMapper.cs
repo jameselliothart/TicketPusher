@@ -17,6 +17,9 @@ namespace TicketPusher.API.Tickets
                 .ForMember(
                     dest => dest.DueDate,
                     opt => opt.MapFrom(src => src.TicketDetails.DueDate))
+                .ForMember(
+                    dest => dest.ProjectId,
+                    opt => opt.MapFrom(src => src.Project.Id))
                 ;
         }
     }

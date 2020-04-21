@@ -32,12 +32,12 @@ namespace TicketPusher.API.Data
 
         public async Task<Ticket> GetTicketAsync(Guid ticketId)
         {
-            return await _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefaultAsync();
+            return await _context.Tickets.Where(t => t.Id == ticketId).Include(t => t.Project).FirstOrDefaultAsync();
         }
 
         public async Task<List<Ticket>> GetAllTicketsAsync()
         {
-            return await _context.Tickets.ToListAsync();
+            return await _context.Tickets.Include(t => t.Project).ToListAsync();
         }
 
         public void RemoveTicket(Ticket ticket)
