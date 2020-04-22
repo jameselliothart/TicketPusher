@@ -60,6 +60,24 @@ namespace TicketPusher.API.Tests.Tickets
         }
 
         [Fact]
+        public async Task ReturnNotFound_WhenSubmittingTicket_GivenInvalidProject()
+        {
+            // Arrange
+            var submitTicketDto = new SubmitTicketDto()
+                {
+                    Owner = "Unassigned",
+                    Description = $"{Guid.NewGuid()}",
+                    ProjectId = Guid.NewGuid()
+                };
+
+            // Act
+            var httpResponse = await _client.PostAsync("/api/tickets", submitTicketDto.JsonContent());
+
+            // Assert
+            httpResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        }
+
+        [Fact]
         public async Task RetrieveATicket()
         {
             // Arrange
