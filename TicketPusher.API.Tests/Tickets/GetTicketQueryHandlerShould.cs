@@ -11,6 +11,7 @@ using CSharpFunctionalExtensions;
 using System;
 using TicketPusher.API.Utils;
 using TicketPusher.Domain.Tickets;
+using FluentAssertions.Execution;
 
 namespace TicketPusher.API.Tests.Tickets
 {
@@ -59,7 +60,11 @@ namespace TicketPusher.API.Tests.Tickets
                 var actual = await sutQueryHandler.Handle(new GetTicketQuery(invalidId), new CancellationToken());
 
                 // Assert
-                actual.Error.Should().Be(Errors.General.NotFound());
+                using (new AssertionScope())
+                {
+                    actual.Error.Should().Be(Errors.General.NotFound());
+                    actual.Error.Message.Should().Be($"'{nameof(Ticket)}' not found for Id '{invalidId}'");
+                }
             }
         }
     }
