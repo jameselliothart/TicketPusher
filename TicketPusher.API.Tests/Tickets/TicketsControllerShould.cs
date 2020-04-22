@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -78,6 +79,19 @@ namespace TicketPusher.API.Tests.Tickets
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
             var ticketDto = JsonConvert.DeserializeObject<TicketDto>(stringResponse);
             Assert.Equal(ticket.Id, ticketDto.Id);
+        }
+
+        [Fact]
+        public async Task ReturnNotFound_WhenTicketNotFound()
+        {
+            // Arrange
+            var invalidId = Guid.NewGuid();
+
+            // Act
+            var httpResponse = await _client.GetAsync($"/api/tickets/{invalidId}");
+
+            // Assert
+            httpResponse.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]

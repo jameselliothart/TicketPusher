@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TicketPusher.API.Tickets.Commands;
 using TicketPusher.API.Tickets.Queries;
+using TicketPusher.API.Utils;
 using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tickets
@@ -34,8 +35,14 @@ namespace TicketPusher.API.Tickets
         {
             var query = new GetTicketQuery(id);
             var result = await _mediator.Send(query);
-            if (result.IsFailure) return NotFound();
-            return Ok(result.Value);
+
+            if (result.IsSuccess)
+                return Ok(result.Value);
+
+            if (result.Error == Errors.General.NotFound())
+                return NotFound(result.Error);
+
+            return BadRequest(result.Error);
         }
 
         [HttpPost]

@@ -8,6 +8,9 @@ using Xunit;
 using TicketPusher.API.Tickets.Queries;
 using TicketPusher.Domain.Tests.Utils;
 using CSharpFunctionalExtensions;
+using System;
+using TicketPusher.API.Utils;
+using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tests.Tickets
 {
@@ -39,6 +42,24 @@ namespace TicketPusher.API.Tests.Tickets
 
                 // Assert
                 actual.Value.Should().BeEquivalentTo(expected);
+            }
+        }
+
+        [Fact]
+        public async Task ReturnNotFoundError_WhenTicketDoesNotExist()
+        {
+            using (var context = new TicketPusherContext(_dbContextOptions))
+            {
+                // Arrange
+                var repository = new TicketPusherRepository(context);
+                var sutQueryHandler = new GetTicketQueryHandler(repository, _mapper.Instance);
+                var invalidId = Guid.NewGuid();
+
+                // Act
+                var actual = await sutQueryHandler.Handle(new GetTicketQuery(invalidId), new CancellationToken());
+
+                // Assert
+                actual.Error.Should().Be(Errors.General.NotFound());
             }
         }
     }
