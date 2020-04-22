@@ -1,9 +1,11 @@
 using System;
+using CSharpFunctionalExtensions;
 using MediatR;
+using TicketPusher.API.Utils;
 
 namespace TicketPusher.API.Tickets.Commands
 {
-    public class SubmitTicketCommand : IRequest<TicketDto>
+    public class SubmitTicketCommand : IRequest<Result<TicketDto, Error>>
     {
         public SubmitTicketCommand(string owner, string description, DateTime dueDate, Guid projectId)
         {

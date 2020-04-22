@@ -55,8 +55,8 @@ namespace TicketPusher.API.Tests.Tickets
             httpResponse.EnsureSuccessStatusCode();
 
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            var ticket = JsonConvert.DeserializeObject<TicketDto>(stringResponse);
-            Assert.Equal(submitTicketDto.Description, ticket.Description);
+            var envelope = JsonConvert.DeserializeObject<Envelope<TicketDto>>(stringResponse);
+            Assert.Equal(submitTicketDto.Description, envelope.Result.Description);
         }
 
         [Fact]

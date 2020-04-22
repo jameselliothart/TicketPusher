@@ -61,7 +61,7 @@ namespace TicketPusher.API.Tests.Tickets
                 var result = await handler.Handle(command, new CancellationToken());
 
                 // Assert
-                result.Should().BeOfType(typeof(TicketDto)).And
+                result.Value.Should().BeOfType(typeof(TicketDto)).And
                     .BeEquivalentTo(new { Description = command.Description }, opt => opt.ExcludingMissingMembers());
             }
         }

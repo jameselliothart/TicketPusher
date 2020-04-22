@@ -50,10 +50,14 @@ namespace TicketPusher.API.Tickets
         {
             var command = new SubmitTicketCommand(ticket.Owner, ticket.Description, ticket.DueDate, ticket.ProjectId);
             var result = await _mediator.Send(command);
-            
-            return CreatedAtAction(nameof(GetTicket),
-                new { id = result.Id },
-                result);
+
+            if (result.IsSuccess)
+                return Ok(Envelope.Ok(result.Value));
+
+            if (result.Error == Errors.General.NotFound())
+                return NotFound(Envelope.Error(result.Error.Message));
+
+            return BadRequest(Envelope.Error(result.Error.Message));
         }
     }
 }
