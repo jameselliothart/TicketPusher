@@ -11,9 +11,8 @@ using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tickets
 {
-    [ApiController]
     [Route("api/tickets")]
-    public sealed class TicketsController : ControllerBase
+    public sealed class TicketsController : ApiController
     {
         private readonly IMediator _mediator;
 
@@ -23,41 +22,29 @@ namespace TicketPusher.API.Tickets
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TicketDto>>> GetTicketList()
+        public async Task<IActionResult> GetTicketList()
         {
             var query = new GetTicketListQuery();
             var result = await _mediator.Send(query);
-            return Ok(Envelope.Ok(result.Value));
+            return Ok(result.Value);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TicketDto>> GetTicket(Guid id)
+        public async Task<IActionResult> GetTicket(Guid id)
         {
             var query = new GetTicketQuery(id);
             var result = await _mediator.Send(query);
 
-            if (result.IsSuccess)
-                return Ok(Envelope.Ok(result.Value));
-
-            if (result.Error == Errors.General.NotFound())
-                return NotFound(Envelope.Error(result.Error.Message));
-
-            return BadRequest(Envelope.Error(result.Error.Message));
+            return FromResultWithValue(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<TicketDto>> CreateTicket([FromBody] SubmitTicketDto ticket)
+        public async Task<IActionResult> CreateTicket([FromBody] SubmitTicketDto ticket)
         {
             var command = new SubmitTicketCommand(ticket.Owner, ticket.Description, ticket.DueDate, ticket.ProjectId);
             var result = await _mediator.Send(command);
 
-            if (result.IsSuccess)
-                return Ok(Envelope.Ok(result.Value));
-
-            if (result.Error == Errors.General.NotFound())
-                return NotFound(Envelope.Error(result.Error.Message));
-
-            return BadRequest(Envelope.Error(result.Error.Message));
+            return FromResultWithValue(result);
         }
     }
 }

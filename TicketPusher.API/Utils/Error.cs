@@ -3,7 +3,7 @@ using CSharpFunctionalExtensions;
 
 namespace TicketPusher.API.Utils
 {
-    public sealed class Error : ValueObject
+    public class Error : ValueObject
     {
         public string Code { get; }
         public string Message { get; }
