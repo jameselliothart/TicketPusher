@@ -37,12 +37,12 @@ namespace TicketPusher.API.Tickets
             var result = await _mediator.Send(query);
 
             if (result.IsSuccess)
-                return Ok(result.Value);
+                return Ok(Envelope.Ok(result.Value));
 
             if (result.Error == Errors.General.NotFound())
-                return NotFound(result.Error);
+                return NotFound(Envelope.Error(result.Error.Message));
 
-            return BadRequest(result.Error);
+            return BadRequest(Envelope.Error(result.Error.Message));
         }
 
         [HttpPost]

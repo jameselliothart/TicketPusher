@@ -10,6 +10,7 @@ using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
 using TicketPusher.API.Tickets.Commands;
+using TicketPusher.API.Utils;
 using TicketPusher.Domain.Tests.Utils;
 using Xunit;
 
@@ -77,8 +78,8 @@ namespace TicketPusher.API.Tests.Tickets
             // Assert
             httpResponse.EnsureSuccessStatusCode();
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            var ticketDto = JsonConvert.DeserializeObject<TicketDto>(stringResponse);
-            Assert.Equal(ticket.Id, ticketDto.Id);
+            var envelope = JsonConvert.DeserializeObject<Envelope<TicketDto>>(stringResponse);
+            Assert.Equal(ticket.Id, envelope.Result.Id);
         }
 
         [Fact]
