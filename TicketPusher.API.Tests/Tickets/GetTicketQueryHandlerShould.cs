@@ -35,7 +35,7 @@ namespace TicketPusher.API.Tests.Tickets
                 var sutQueryHandler = new GetTicketQueryHandler(repository, _mapper.Instance);
 
                 // Act
-                Result<TicketDto> actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
+                var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
 
                 // Assert
                 actual.Value.Should().BeEquivalentTo(expected);
