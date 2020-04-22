@@ -6,39 +6,42 @@ using FluentAssertions;
 using TicketPusher.API.Utils;
 using Xunit;
 
-public sealed class ErrorsShould
+namespace TicketPusher.API.Tests
 {
-    [Fact]
-    public void BeUnique()
+public sealed class ErrorsShould
     {
-        List<MethodInfo> methods = typeof(Error)
-            .GetMethods(BindingFlags.Static | BindingFlags.Public)
-            .Where(x => x.ReturnType == typeof(Error))
-            .ToList();
+        [Fact]
+        public void BeUnique()
+        {
+            List<MethodInfo> methods = typeof(Error)
+                .GetMethods(BindingFlags.Static | BindingFlags.Public)
+                .Where(x => x.ReturnType == typeof(Error))
+                .ToList();
 
-        int numberOfUniqueCodes = methods.Select(x => GetErrorCode(x))
-            .Distinct()
-            .Count();
+            int numberOfUniqueCodes = methods.Select(x => GetErrorCode(x))
+                .Distinct()
+                .Count();
 
-        numberOfUniqueCodes.Should().Be(methods.Count);
-    }
+            numberOfUniqueCodes.Should().Be(methods.Count);
+        }
 
-    private string GetErrorCode(MethodInfo method)
-    {
-        object[] parameters = method.GetParameters()
-            .Select<ParameterInfo, object>(x =>
-            {
-                if (x.ParameterType == typeof(string))
-                    return string.Empty;
+        private string GetErrorCode(MethodInfo method)
+        {
+            object[] parameters = method.GetParameters()
+                .Select<ParameterInfo, object>(x =>
+                {
+                    if (x.ParameterType == typeof(string))
+                        return string.Empty;
 
-                if (x.ParameterType == typeof(long))
-                    return 0;
+                    if (x.ParameterType == typeof(long))
+                        return 0;
 
-                throw new Exception();
-            })
-            .ToArray();
+                    throw new Exception();
+                })
+                .ToArray();
 
-        var error = (Error)method.Invoke(null, parameters);
-        return error.Code;
+            var error = (Error)method.Invoke(null, parameters);
+            return error.Code;
+        }
     }
 }
