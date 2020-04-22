@@ -1,17 +1,13 @@
 using System;
-using CSharpFunctionalExtensions;
-using MediatR;
-using TicketPusher.API.Utils;
+using TicketPusher.API.Common;
 
 namespace TicketPusher.API.Tickets.Queries
 {
-    public class GetTicketQuery : IRequest<Result<TicketDto, Error>>
+    public class GetTicketQuery : GetEntityQuery<TicketDto>
     {
-        public GetTicketQuery(Guid ticketId)
+        public GetTicketQuery(Guid ticketId) : base(ticketId)
         {
-            TicketId = ticketId;
         }
 
-        public Guid TicketId { get; }
     }
 }
