@@ -39,7 +39,7 @@ namespace TicketPusher.API.Tests.Tickets
                 var actual = await sutQueryHandler.Handle(new GetTicketListQuery(), new CancellationToken());
 
                 // Assert
-                actual.Should().BeEquivalentTo(expected);
+                actual.Value.Should().BeEquivalentTo(expected);
             }
         }
     }

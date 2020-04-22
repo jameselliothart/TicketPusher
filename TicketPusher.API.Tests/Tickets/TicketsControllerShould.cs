@@ -102,8 +102,8 @@ namespace TicketPusher.API.Tests.Tickets
 
             httpResponse.EnsureSuccessStatusCode();
             var stringResponse = await httpResponse.Content.ReadAsStringAsync();
-            var tickets = JsonConvert.DeserializeObject<IEnumerable<TicketDto>>(stringResponse);
-            tickets.Should().BeEmpty();
+            var envelope = JsonConvert.DeserializeObject<Envelope<IEnumerable<TicketDto>>>(stringResponse);
+            envelope.Result.Should().BeEmpty();
 
         }
     }

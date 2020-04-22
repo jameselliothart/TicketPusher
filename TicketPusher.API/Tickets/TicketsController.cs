@@ -27,7 +27,7 @@ namespace TicketPusher.API.Tickets
         {
             var query = new GetTicketListQuery();
             var result = await _mediator.Send(query);
-            return Ok(result);
+            return Ok(Envelope.Ok(result.Value));
         }
 
         [HttpGet("{id}")]
