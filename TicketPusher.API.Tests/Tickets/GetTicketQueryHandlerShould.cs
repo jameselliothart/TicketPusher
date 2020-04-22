@@ -7,6 +7,7 @@ using FluentAssertions;
 using Xunit;
 using TicketPusher.API.Tickets.Queries;
 using TicketPusher.Domain.Tests.Utils;
+using CSharpFunctionalExtensions;
 
 namespace TicketPusher.API.Tests.Tickets
 {
@@ -34,10 +35,10 @@ namespace TicketPusher.API.Tests.Tickets
                 var sutQueryHandler = new GetTicketQueryHandler(repository, _mapper.Instance);
 
                 // Act
-                var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
+                Result<TicketDto> actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
 
                 // Assert
-                actual.Should().BeEquivalentTo(expected);
+                actual.Value.Should().BeEquivalentTo(expected);
             }
         }
     }

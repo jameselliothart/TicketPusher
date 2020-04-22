@@ -34,8 +34,8 @@ namespace TicketPusher.API.Tickets
         {
             var query = new GetTicketQuery(id);
             var result = await _mediator.Send(query);
-            if (result == null) return NotFound();
-            return Ok(result);
+            if (result.IsFailure) return NotFound();
+            return Ok(result.Value);
         }
 
         [HttpPost]
