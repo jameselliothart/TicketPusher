@@ -28,7 +28,7 @@ namespace TicketPusher.API.Data
                     p.Property(pp => pp.SubmitDate).HasColumnName("submit_date").IsRequired();
                     p.Property(pp => pp.DueDate).HasColumnName("due_date").IsRequired();
                 });
-                x.HasOne(p => p.Project).WithMany();
+                x.HasOne(p => p.Project).WithMany().IsRequired();
             });
 
             modelBuilder.Entity<CompletedTicket>(x =>
@@ -42,7 +42,7 @@ namespace TicketPusher.API.Data
                     p.Property(pp => pp.SubmitDate).HasColumnName("submit_date").IsRequired();
                     p.Property(pp => pp.DueDate).HasColumnName("due_date").IsRequired();
                 });
-                x.HasOne(p => p.Project).WithMany();
+                x.HasOne(p => p.Project).WithMany().IsRequired();
                 x.OwnsOne(p => p.CompletedDetails, p =>
                 {
                     p.Property(pp => pp.CompletionDate).HasColumnName("completion_date").IsRequired();
