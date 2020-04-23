@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TicketPusher.API.Common;
 using TicketPusher.API.Tickets.Commands;
 using TicketPusher.API.Tickets.Queries;
-using TicketPusher.API.Utils;
-using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tickets
 {

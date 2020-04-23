@@ -1,7 +1,8 @@
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Mvc;
+using TicketPusher.API.Utils;
 
-namespace TicketPusher.API.Utils
+namespace TicketPusher.API.Common
 {
     [ApiController]
     public class ApiController: ControllerBase
