@@ -15,5 +15,6 @@ namespace TicketPusher.API.Data
         bool SaveChanges();
         Task<bool> SaveChangesAsync();
         Task<Project> GetProjectAsync(Guid projectId);
+        void CreateProject(Project project);
     }
 }

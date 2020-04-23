@@ -46,6 +46,11 @@ namespace TicketPusher.API.Data
             _context.Tickets.Remove(ticket);
         }
 
+        public void CreateProject(Project project)
+        {
+            _context.Projects.Add(project);
+        }
+
         public bool SaveChanges()
         {
             return _context.SaveChanges() > 0;
