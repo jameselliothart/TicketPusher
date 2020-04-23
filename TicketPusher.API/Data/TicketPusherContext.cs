@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TicketPusher.Domain.CompletedTickets;
 using TicketPusher.Domain.Projects;
 using TicketPusher.Domain.Tickets;
 
@@ -12,6 +13,7 @@ namespace TicketPusher.API.Data
         }
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Project> Projects { get; set; }
+        public DbSet<CompletedTicket> CompletedTickets { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +29,25 @@ namespace TicketPusher.API.Data
                     p.Property(pp => pp.DueDate).HasColumnName("due_date").IsRequired();
                 });
                 x.HasOne(p => p.Project).WithMany();
+            });
+
+            modelBuilder.Entity<CompletedTicket>(x =>
+            {
+                x.ToTable("completed_tickets").HasKey(k => k.Id);
+                x.Property(p => p.Id).HasColumnName("completed_ticket_id");
+                x.Property(p => p.Owner).HasColumnName("owner").IsRequired();
+                x.OwnsOne(p => p.TicketDetails, p =>
+                {
+                    p.Property(pp => pp.Description).HasColumnName("description").IsRequired();
+                    p.Property(pp => pp.SubmitDate).HasColumnName("submit_date").IsRequired();
+                    p.Property(pp => pp.DueDate).HasColumnName("due_date").IsRequired();
+                });
+                x.HasOne(p => p.Project).WithMany();
+                x.OwnsOne(p => p.CompletedDetails, p =>
+                {
+                    p.Property(pp => pp.CompletionDate).HasColumnName("completion_date").IsRequired();
+                    p.Property(pp => pp.Resolution).HasColumnName("resolution").IsRequired();
+                });
             });
 
             modelBuilder.Entity<Project>(x =>
