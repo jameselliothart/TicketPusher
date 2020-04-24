@@ -6,6 +6,7 @@ using Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using TicketPusher.Domain.CompletedTickets;
 using TicketPusher.Domain.Projects;
 using TicketPusher.Domain.Tickets;
 
@@ -70,6 +71,11 @@ namespace TicketPusher.API.Data
         public async Task<Project> GetProjectAsync(Guid projectId)
         {
             return await _context.Projects.Where(p => p.Id == projectId).FirstOrDefaultAsync();
+        }
+
+        public void CreateCompletedTicket(CompletedTicket completedTicket)
+        {
+            _context.CompletedTickets.Add(completedTicket);
         }
     }
 }
