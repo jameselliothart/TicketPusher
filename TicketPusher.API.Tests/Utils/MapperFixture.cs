@@ -1,5 +1,6 @@
 using AutoMapper;
 using TicketPusher.API.Tickets;
+using System.Reflection;
 
 namespace TicketPusher.API.Tests.Utils
 {
@@ -10,7 +11,7 @@ namespace TicketPusher.API.Tests.Utils
         {
             var config = new MapperConfiguration(cfg =>
             {
-                cfg.AddProfile(new TicketMapper());
+                cfg.AddMaps(Assembly.GetAssembly(typeof(TicketMapper)));
             });
             Instance = config.CreateMapper();
         }
