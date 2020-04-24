@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using TicketPusher.Domain.CompletedTickets;
 using TicketPusher.Domain.Projects;
@@ -17,6 +18,10 @@ namespace TicketPusher.API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var propNameProjectFK = "ProjectFK";
+
+            modelBuilder.Entity<Ticket>().Property<Guid>(propNameProjectFK).HasColumnName("project_id");
+
             modelBuilder.Entity<Ticket>(x =>
             {
                 x.ToTable("tickets").HasKey(k => k.Id);
@@ -28,8 +33,10 @@ namespace TicketPusher.API.Data
                     p.Property(pp => pp.SubmitDate).HasColumnName("submit_date").IsRequired();
                     p.Property(pp => pp.DueDate).HasColumnName("due_date").IsRequired();
                 });
-                x.HasOne(p => p.Project).WithMany().IsRequired();
+                x.HasOne(p => p.Project).WithMany().HasForeignKey(propNameProjectFK).IsRequired();
             });
+
+            modelBuilder.Entity<CompletedTicket>().Property<Guid>(propNameProjectFK).HasColumnName("project_id");
 
             modelBuilder.Entity<CompletedTicket>(x =>
             {
@@ -42,7 +49,7 @@ namespace TicketPusher.API.Data
                     p.Property(pp => pp.SubmitDate).HasColumnName("submit_date").IsRequired();
                     p.Property(pp => pp.DueDate).HasColumnName("due_date").IsRequired();
                 });
-                x.HasOne(p => p.Project).WithMany().IsRequired();
+                x.HasOne(p => p.Project).WithMany().HasForeignKey(propNameProjectFK).IsRequired();
                 x.OwnsOne(p => p.CompletedDetails, p =>
                 {
                     p.Property(pp => pp.CompletionDate).HasColumnName("completion_date").IsRequired();
