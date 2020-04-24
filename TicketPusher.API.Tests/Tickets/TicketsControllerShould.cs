@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using TicketPusher.API.CompletedTickets;
 using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
@@ -123,6 +124,34 @@ namespace TicketPusher.API.Tests.Tickets
             var envelope = JsonConvert.DeserializeObject<Envelope<IEnumerable<TicketDto>>>(stringResponse);
             envelope.Result.Should().BeEmpty();
 
+        }
+
+        [Fact]
+        public async Task ReturnACompletedTicket_WhenClosed()
+        {
+            // Arrange
+            var ticket = TicketTestData.DefaultTicket();
+            var client = _factory.WithWebHostBuilder(
+                WebApplicationFixture.BuildWebHost(db =>
+                {
+                    db.Tickets.Add(ticket);
+                    db.SaveChanges();
+                }))
+                .CreateClient();
+
+            var closeTicketDto = new CloseTicketDto
+            {
+                Resolution = Guid.NewGuid().ToString()
+            };
+
+            // Act
+            var httpResponse = await client.PostAsync($"/api/tickets/{ticket.Id}/close", closeTicketDto.JsonContent());
+
+            // Assert
+            httpResponse.EnsureSuccessStatusCode();
+            var stringResponse = await httpResponse.Content.ReadAsStringAsync();
+            var envelope = JsonConvert.DeserializeObject<Envelope<CompletedTicketDto>>(stringResponse);
+            Assert.Equal(closeTicketDto.Resolution, envelope.Result.CompletedDetails.Resolution);
         }
     }
 }

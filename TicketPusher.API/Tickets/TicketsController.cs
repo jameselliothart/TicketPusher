@@ -43,5 +43,14 @@ namespace TicketPusher.API.Tickets
 
             return FromResultWithValue(result);
         }
+
+        [HttpPost("{id}/close")]
+        public async Task<IActionResult> CloseTicket(Guid id, [FromBody] CloseTicketDto closeTicketDto)
+        {
+            var command = new CloseTicketCommand(id, closeTicketDto.Resolution);
+            var result = await _mediator.Send(command);
+
+            return FromResultWithValue(result);
+        }
     }
 }
