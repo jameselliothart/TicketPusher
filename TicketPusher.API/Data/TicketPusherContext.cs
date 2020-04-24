@@ -24,7 +24,7 @@ namespace TicketPusher.API.Data
 
             modelBuilder.Entity<Ticket>(x =>
             {
-                x.ToTable("tickets").HasKey(k => k.Id);
+                x.ToTable("ticket").HasKey(k => k.Id);
                 x.Property(p => p.Id).HasColumnName("ticket_id");
                 x.Property(p => p.Owner).HasColumnName("owner").IsRequired();
                 x.OwnsOne(p => p.TicketDetails, p =>
@@ -40,7 +40,7 @@ namespace TicketPusher.API.Data
 
             modelBuilder.Entity<CompletedTicket>(x =>
             {
-                x.ToTable("completed_tickets").HasKey(k => k.Id);
+                x.ToTable("completed_ticket").HasKey(k => k.Id);
                 x.Property(p => p.Id).HasColumnName("completed_ticket_id");
                 x.Property(p => p.Owner).HasColumnName("owner").IsRequired();
                 x.OwnsOne(p => p.TicketDetails, p =>
@@ -59,7 +59,7 @@ namespace TicketPusher.API.Data
 
             modelBuilder.Entity<Project>(x =>
             {
-                x.ToTable("projects").HasKey(k => k.Id);
+                x.ToTable("project").HasKey(k => k.Id);
                 x.Property(p => p.Id).HasColumnName("project_id");
                 x.Property(p => p.Name).HasColumnName("name").IsRequired();
             });
