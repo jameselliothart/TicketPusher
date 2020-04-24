@@ -35,6 +35,7 @@ namespace TicketPusher.Domain.Tests
 
             using (new AssertionScope())
             {
+                sutTicket.Id.Should().Be(actual.Id);
                 sutTicket.TicketDetails.Should().Be(actual.TicketDetails);
                 sutTicket.Owner.Should().Be(actual.Owner);
                 sutTicket.Project.Should().Be(actual.Project);

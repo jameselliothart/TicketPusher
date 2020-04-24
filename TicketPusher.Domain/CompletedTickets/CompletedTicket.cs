@@ -13,8 +13,8 @@ namespace TicketPusher.Domain.CompletedTickets
 
         private CompletedTicket() {}
 
-        public CompletedTicket(string owner, Project project, TicketDetails ticketDetails, CompletedDetails completedDetails)
-            : base()
+        public CompletedTicket(Guid id, string owner, Project project, TicketDetails ticketDetails, CompletedDetails completedDetails)
+            : base(id)
         {
             Owner = owner ?? throw new ArgumentNullException(nameof(owner));
             Project = project ?? throw new ArgumentNullException(nameof(project));

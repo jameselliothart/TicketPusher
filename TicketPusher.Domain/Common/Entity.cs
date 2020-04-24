@@ -12,6 +12,12 @@ namespace TicketPusher.Domain.Common
             Id = Guid.NewGuid();
         }
 
+        protected Entity(Guid id)
+        {
+            if (id == Guid.Empty) throw new ArgumentException("Cannot create entity with empty id");
+            Id = id;
+        }
+
         public override bool Equals(object obj)
         {
             var other = obj as Entity;
