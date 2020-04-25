@@ -5,26 +5,23 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CSharpFunctionalExtensions;
 using MediatR;
+using TicketPusher.API.Common;
 using TicketPusher.API.Data;
 using TicketPusher.API.Utils;
+using TicketPusher.Domain.CompletedTickets;
 
 namespace TicketPusher.API.CompletedTickets.Queries
 {
-    public class GetCompletedTicketListQueryHandler : IRequestHandler<GetCompletedTicketListQuery, Result<IEnumerable<CompletedTicketDto>>>
+    public class GetCompletedTicketListQueryHandler : GetEntityListQueryHandler<GetCompletedTicketListQuery, CompletedTicketDto, CompletedTicket>
     {
-        private readonly ITicketPusherRepository _repository;
-        private readonly IMapper _mapper;
-
         public GetCompletedTicketListQueryHandler(ITicketPusherRepository repository, IMapper mapper)
+            : base(repository, mapper)
         {
-            _repository = repository ?? throw new ArgumentNullException(nameof(repository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<Result<IEnumerable<CompletedTicketDto>>> Handle(GetCompletedTicketListQuery request, CancellationToken cancellationToken)
+        protected override async Task<List<CompletedTicket>> GetEntitiesListAsync()
         {
-            var tickets = await _repository.GetCompletedTicketsAsync();
-            return Result.Success(_mapper.Map<IEnumerable<CompletedTicketDto>>(tickets));
+            return await _repository.GetCompletedTicketsAsync();
         }
     }
 }

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 using MediatR;
+using TicketPusher.API.Common;
 
 namespace TicketPusher.API.CompletedTickets.Queries
 {
-    public class GetCompletedTicketListQuery : IRequest<Result<IEnumerable<CompletedTicketDto>>>
+    public class GetCompletedTicketListQuery : GetEntityListQuery<CompletedTicketDto>
     {
-        public GetCompletedTicketListQuery()
+        public GetCompletedTicketListQuery() : base()
         {
         }
     }
