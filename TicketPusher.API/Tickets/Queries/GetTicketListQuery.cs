@@ -1,12 +1,11 @@
-using System.Collections.Generic;
-using CSharpFunctionalExtensions;
-using MediatR;
-using TicketPusher.API.Utils;
+using TicketPusher.API.Common;
 
 namespace TicketPusher.API.Tickets.Queries
 {
-    public class GetTicketListQuery : IRequest<Result<IEnumerable<TicketDto>>>
+    public class GetTicketListQuery : GetEntityListQuery<TicketDto>
     {
-        
+        public GetTicketListQuery() : base()
+        {
+        }
     }
 }
