@@ -1,5 +1,5 @@
 using System;
-using TicketPusher.API.Common;
+using TicketPusher.API.Tickets;
 
 namespace TicketPusher.API.CompletedTickets
 {

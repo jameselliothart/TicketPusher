@@ -1,6 +1,6 @@
 using System;
 
-namespace TicketPusher.API.Common
+namespace TicketPusher.API.Tickets
 {
     public class TicketDetailsDto
     {

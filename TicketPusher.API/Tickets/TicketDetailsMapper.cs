@@ -1,7 +1,7 @@
 using AutoMapper;
 using TicketPusher.Domain.Common;
 
-namespace TicketPusher.API.Common
+namespace TicketPusher.API.Tickets
 {
     public class TicketDetailsMapper : Profile
     {
