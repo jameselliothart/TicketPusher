@@ -1,5 +1,5 @@
 using AutoMapper;
-using TicketPusher.Domain.Common;
+using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tickets
 {

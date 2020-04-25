@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using CSharpFunctionalExtensions;
 
-namespace TicketPusher.Domain.Common
+namespace TicketPusher.Domain.Tickets
 {
     public class TicketDetails : ValueObject
     {

@@ -1,6 +1,7 @@
 using System;
 using TicketPusher.Domain.Common;
 using TicketPusher.Domain.Projects;
+using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.Domain.CompletedTickets
 {
