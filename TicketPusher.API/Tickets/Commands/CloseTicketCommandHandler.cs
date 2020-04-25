@@ -26,11 +26,14 @@ namespace TicketPusher.API.Tickets.Commands
         public async Task<Result<CompletedTicketDto, Error>> Handle(CloseTicketCommand request, CancellationToken cancellationToken)
         {
             var ticketToClose = await _repository.GetTicketAsync(request.TicketId);
-            var completedTicket = _repository.CloseTicket(ticketToClose, request.Resolution);
-            await _repository.SaveChangesAsync();
+            var result = await Result
+                .SuccessIf(ticketToClose != null, ticketToClose, Errors.General.NotFound(nameof(Ticket), request.TicketId))
+                .Map(t => _repository.CloseTicket(t, request.Resolution))
+                .Tap(async () => await _repository.SaveChangesAsync())
+                .Map(ct => _mapper.Map<CompletedTicketDto>(ct))
+                ;
 
-            var completedTicketToReturn = _mapper.Map<CompletedTicketDto>(completedTicket);
-            return Result.SuccessIf(completedTicketToReturn != null, completedTicketToReturn, Errors.General.NotFound(nameof(Ticket), request.TicketId));
+            return result;
         }
     }
 }
