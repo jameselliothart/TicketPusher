@@ -46,7 +46,7 @@ namespace TicketPusher.API.Tests.Projects
         }
 
         [Fact]
-        public async Task RetrieveATicket()
+        public async Task RetrieveAProject()
         {
             // Arrange
             var project = TicketTestData.DefaultProject;
