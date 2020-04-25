@@ -1,0 +1,22 @@
+@page "/projects"
+
+@inherits ProjectsBase
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var project in projects)
+        {
+            <tr @key="@project.Id">
+                <td title="@project.Id">@project.Id.ToString().Split("-")[0]</td>
+                <td>@project.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
