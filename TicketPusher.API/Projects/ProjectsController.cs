@@ -18,6 +18,15 @@ namespace TicketPusher.API.Projects
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetProjectList()
+        {
+            var query = new GetProjectListQuery();
+            var result = await _mediator.Send(query);
+
+            return Ok(result.Value);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProject(Guid id)
         {
