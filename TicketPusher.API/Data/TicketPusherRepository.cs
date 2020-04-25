@@ -85,5 +85,10 @@ namespace TicketPusher.API.Data
             CreateCompletedTicket(completedTicket);
             return completedTicket;
         }
+
+        public async Task<List<CompletedTicket>> GetCompletedTicketsAsync()
+        {
+            return await _context.CompletedTickets.Include(t => t.Project).ToListAsync();
+        }
     }
 }

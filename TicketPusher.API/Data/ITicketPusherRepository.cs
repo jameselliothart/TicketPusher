@@ -19,5 +19,6 @@ namespace TicketPusher.API.Data
         void CreateProject(Project project);
         void CreateCompletedTicket(CompletedTicket completedTicket);
         CompletedTicket CloseTicket(Ticket ticket, string resolution);
+        Task<List<CompletedTicket>> GetCompletedTicketsAsync();
     }
 }
