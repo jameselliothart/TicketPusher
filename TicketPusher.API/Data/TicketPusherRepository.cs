@@ -77,5 +77,13 @@ namespace TicketPusher.API.Data
         {
             _context.CompletedTickets.Add(completedTicket);
         }
+
+        public CompletedTicket CloseTicket(Ticket ticket, string resolution)
+        {
+            var completedTicket = ticket.Close(resolution);
+            RemoveTicket(ticket);
+            CreateCompletedTicket(completedTicket);
+            return completedTicket;
+        }
     }
 }

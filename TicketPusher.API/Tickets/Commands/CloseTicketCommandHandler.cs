@@ -26,9 +26,7 @@ namespace TicketPusher.API.Tickets.Commands
         public async Task<Result<CompletedTicketDto, Error>> Handle(CloseTicketCommand request, CancellationToken cancellationToken)
         {
             var ticketToClose = await _repository.GetTicketAsync(request.TicketId);
-            var completedTicket = ticketToClose.Close(request.Resolution);
-            _repository.RemoveTicket(ticketToClose);
-            _repository.CreateCompletedTicket(completedTicket);
+            var completedTicket = _repository.CloseTicket(ticketToClose, request.Resolution);
             await _repository.SaveChangesAsync();
 
             var completedTicketToReturn = _mapper.Map<CompletedTicketDto>(completedTicket);
