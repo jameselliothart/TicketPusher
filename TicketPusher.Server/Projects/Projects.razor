@@ -20,3 +20,12 @@
         }
     </tbody>
 </table>
+
+<EditForm Model="@ProjectModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="ProjectModel.Name" />
+
+    <button type="submit">Add Project</button>
+</EditForm>

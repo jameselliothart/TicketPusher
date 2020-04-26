@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.API.Projects;
+using TicketPusher.API.Projects.Commands;
 using TicketPusher.API.Utils;
 using TicketPusher.Server.Shared;
 
@@ -23,6 +24,12 @@ namespace TicketPusher.Server.Projects
         public async Task<EnvelopeDto<List<ProjectDto>>> GetProjectListAsync()
         {
             var data = await _httpClient.GetJsonAsync<EnvelopeDto<List<ProjectDto>>>("projects");
+            return data;
+        }
+
+        public async Task<EnvelopeDto<ProjectDto>> CreateProjectAsync(CreateProjectDto project)
+        {
+            var data = await _httpClient.PostJsonAsync<EnvelopeDto<ProjectDto>>("projects", project);
             return data;
         }
     }
