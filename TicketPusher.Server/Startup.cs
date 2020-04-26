@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazored.Toast;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -58,6 +59,7 @@ namespace TicketPusher.Server
                     }
                     return handler;
                 });
+                services.AddBlazoredToast();
             };
 
             RegisterTypedClient<IProjectDataService, ProjectDataService>(ticketPusherApi);
