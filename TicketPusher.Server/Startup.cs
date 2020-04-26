@@ -17,12 +17,19 @@ namespace TicketPusher.Server
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostEnvironment env)
         {
-            Configuration = configuration;
+            Configuration = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            HostingEnvironment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostEnvironment HostingEnvironment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -41,12 +48,14 @@ namespace TicketPusher.Server
                 {
                     client.BaseAddress = apiBaseUri;
                 })
-                // TODO bypass cert validation only in dev
                 .ConfigurePrimaryHttpMessageHandler(() =>
                 {
                     var handler = new HttpClientHandler();
-                    handler.ServerCertificateCustomValidationCallback =
-                        (message, cert, chain, errors) => true;
+                    if (HostingEnvironment.IsDevelopment())
+                    {
+                        handler.ServerCertificateCustomValidationCallback =
+                            (message, cert, chain, errors) => true;
+                    }
                     return handler;
                 });
             };
