@@ -29,9 +29,9 @@ else
                 <tr>
                     <td title="@ticket.Id">@ticket.Id.ToString().Split("-")[0]</td>
                     <td>@ticket.Owner</td>
-                    <td>@ticket.Description</td>
-                    <td>@ticket.SubmitDate.ToShortDateString()</td>
-                    <td>@ticket.DueDate.ToShortDateString()</td>
+                    <td>@ticket.TicketDetails.Description</td>
+                    <td>@ticket.TicketDetails.SubmitDate.ToShortDateString()</td>
+                    <td>@ticket.TicketDetails.DueDate.ToShortDateString()</td>
                 </tr>
             }
         </tbody>

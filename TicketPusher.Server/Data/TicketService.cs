@@ -16,10 +16,13 @@ namespace TicketPusher.Server.Data
                 {
                     Id = Guid.NewGuid(),
                     Owner = "Unassigned",
-                    Description = $"Ticket {i}",
-                    SubmitDate = DateTime.Now,
-                    DueDate = DateTime.Now.AddDays(i),
-                    ProjectId = Guid.NewGuid()
+                    ProjectId = Guid.NewGuid(),
+                    TicketDetails = new TicketDetailsDto()
+                    {
+                        Description = $"Ticket {i}",
+                        SubmitDate = DateTime.Now,
+                        DueDate = DateTime.Now.AddDays(i),
+                    },
                 };
             });
             return Task.FromResult(tickets);
