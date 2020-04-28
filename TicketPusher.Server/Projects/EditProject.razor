@@ -1,0 +1,28 @@
+@inherits ProjectsBase
+@using TicketPusher.API.Projects;
+
+<EditForm Model="@ProjectModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="ProjectModel.Name" />
+
+    <button type="submit">Add Project</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public List<ProjectDto> ParentProjects { get; set; }
+
+    [Parameter]
+    public EventCallback<List<ProjectDto>> ParentProjectsChanged { get; set; }
+
+    protected async void HandleValidSubmit()
+    {
+        var addedProject = await projectDataService.CreateProjectAsync(ProjectModel);
+        _toastService.ShowSuccess($"Added project {addedProject.Result.Id}", "Success!");
+        var projectList = await projectDataService.GetProjectListAsync();
+        ParentProjects = projectList.Result;
+        await ParentProjectsChanged.InvokeAsync(ParentProjects);
+    }
+}

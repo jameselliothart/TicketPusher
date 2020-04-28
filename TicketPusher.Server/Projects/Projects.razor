@@ -2,30 +2,22 @@
 
 @inherits ProjectsBase
 
-
-<table class="table">
-    <thead>
-        <tr>
+@if (projects != null)
+{
+    <TableTemplate Items="projects" Context="project">
+        <TableHeader>
             <th>Id</th>
             <th>Name</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var project in projects)
-        {
-            <tr @key="@project.Id">
+        </TableHeader>
+        <RowTemplate>
                 <td title="@project.Id">@project.Id.ToString().Split("-")[0]</td>
                 <td>@project.Name</td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </RowTemplate>
+    </TableTemplate>
+}
+else
+{
+    <p><em>loading...</em></p>
+}
 
-<EditForm Model="@ProjectModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <InputText id="name" @bind-Value="ProjectModel.Name" />
-
-    <button type="submit">Add Project</button>
-</EditForm>
+<EditProject @bind-ParentProjects="projects" @bind-ParentProjects:event="ParentProjectsChanged" />
