@@ -5,25 +5,17 @@ using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.API.Projects;
 using TicketPusher.API.Projects.Commands;
+using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
 {
-    public class ProjectsBase : ComponentBase
+    public class ProjectsBase : EntityBase<ProjectDto, IProjectDataService>
     {
-        [Inject]
-        private IProjectDataService projectDataService { get; set; }
-
-        public List<ProjectDto> projects;
-
-        protected override async Task OnInitializedAsync()
+        protected override async Task<List<ProjectDto>> RefreshData()
         {
-            projects = await RefreshData();
-        }
-
-        protected async Task<List<ProjectDto>> RefreshData()
-        {
-            var data = await projectDataService.GetProjectListAsync();
+            var data = await EntityDataService.GetProjectListAsync();
             return data.Result;
         }
+
     }
 }

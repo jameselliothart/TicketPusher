@@ -1,10 +1,11 @@
 @page "/projects"
 
+@using TicketPusher.Server.Utils
 @inherits ProjectsBase
 
-@if (projects != null)
+@if (Entities != null)
 {
-    <TableTemplate Items="projects" Context="project">
+    <TableTemplate Items="Entities" Context="project">
         <TableHeader>
             <th>Id</th>
             <th>Name</th>
@@ -20,4 +21,4 @@ else
     <p><em>loading...</em></p>
 }
 
-<EditProject @bind-ParentProjects="projects" @bind-ParentProjects:event="ParentProjectsChanged" />
+<EditProject @bind-ParentProjects="Entities" @bind-ParentProjects:event="ParentProjectsChanged" />
