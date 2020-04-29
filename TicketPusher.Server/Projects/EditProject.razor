@@ -5,7 +5,10 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <InputText id="name" @bind-Value="ProjectModel.Name" />
+    <label>
+        Project Name:
+        <InputText id="name" @bind-Value="ProjectModel.Name" />
+    </label>
 
     <button type="submit">Add Project</button>
 </EditForm>
@@ -23,7 +26,7 @@
     [Inject]
     private IProjectDataService projectDataService { get; set; }
 
-    protected CreateProjectDto ProjectModel = new CreateProjectDto();
+    protected CreateProjectDto ProjectModel { get; set;} = new CreateProjectDto();
 
     protected async void HandleValidSubmit()
     {
