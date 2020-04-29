@@ -10,7 +10,7 @@
             <th>Name</th>
         </TableHeader>
         <RowTemplate>
-                <td title="@project.Id">@project.Id.ToString().Split("-")[0]</td>
+                <td title="@project.Id">@project.Id.ToShortGuid()</td>
                 <td>@project.Name</td>
         </RowTemplate>
     </TableTemplate>
