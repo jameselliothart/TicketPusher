@@ -1,5 +1,5 @@
-@inherits ProjectsBase
 @using TicketPusher.API.Projects;
+@using TicketPusher.API.Projects.Commands;
 
 <EditForm Model="@ProjectModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -16,6 +16,14 @@
 
     [Parameter]
     public EventCallback<List<ProjectDto>> ParentProjectsChanged { get; set; }
+
+    [Inject]
+    private IToastService _toastService { get; set; }
+
+    [Inject]
+    private IProjectDataService projectDataService { get; set; }
+
+    protected CreateProjectDto ProjectModel = new CreateProjectDto();
 
     protected async void HandleValidSubmit()
     {

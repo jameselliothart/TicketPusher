@@ -11,24 +11,19 @@ namespace TicketPusher.Server.Projects
     public class ProjectsBase : ComponentBase
     {
         [Inject]
-        protected IProjectDataService projectDataService { get; set; }
-        [Inject]
-        protected IToastService _toastService { get; set; }
+        private IProjectDataService projectDataService { get; set; }
 
-        // private List<ProjectDto> _projects = new List<ProjectDto>();
         public List<ProjectDto> projects;
-
-        protected CreateProjectDto ProjectModel = new CreateProjectDto();
 
         protected override async Task OnInitializedAsync()
         {
-            await RefreshData();
+            projects = await RefreshData();
         }
 
-        protected async Task RefreshData()
+        protected async Task<List<ProjectDto>> RefreshData()
         {
             var data = await projectDataService.GetProjectListAsync();
-            projects = data.Result;
+            return data.Result;
         }
     }
 }
