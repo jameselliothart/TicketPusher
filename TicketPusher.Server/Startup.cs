@@ -41,7 +41,6 @@ namespace TicketPusher.Server
             services.AddSingleton<TicketService>();
 
             var ticketPusherApi = new Uri(Configuration["TicketPusherApi"]);
-
             void RegisterTypedClient<TClient, TImplementation>(Uri apiBaseUri)
                 where TClient : class where TImplementation : class, TClient
             {
@@ -59,10 +58,10 @@ namespace TicketPusher.Server
                     }
                     return handler;
                 });
-                services.AddBlazoredToast();
             };
-
             RegisterTypedClient<IProjectDataService, ProjectDataService>(ticketPusherApi);
+
+            services.AddBlazoredToast();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
