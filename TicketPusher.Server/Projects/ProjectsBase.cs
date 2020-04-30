@@ -23,7 +23,7 @@ namespace TicketPusher.Server.Projects
 
         public void AddProject()
         {
-            _modal.Show(typeof(EditProject), "Add Project");
+            _modal.Show<EditProject>("Add Project");
         }
 
     }
