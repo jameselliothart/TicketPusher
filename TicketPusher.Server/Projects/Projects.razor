@@ -21,5 +21,4 @@ else
     <p><em>loading...</em></p>
 }
 
-<EditProject @bind-ParentProjects="Entities" @bind-ParentProjects:event="ParentProjectsChanged" />
-<button @onclick="@(() => AddProject())">Add Project</button>
+<button @onclick="@(() => AddProject())" class="btn btn-primary">Add Project</button>

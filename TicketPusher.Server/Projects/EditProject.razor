@@ -14,11 +14,10 @@
 </EditForm>
 
 @code {
-    [Parameter]
-    public List<ProjectDto> ParentProjects { get; set; }
+    [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
 
     [Parameter]
-    public EventCallback<List<ProjectDto>> ParentProjectsChanged { get; set; }
+    public ProjectDto ParentProjects { get; set; }
 
     [Inject]
     private IToastService _toastService { get; set; }
@@ -32,8 +31,7 @@
     {
         var addedProject = await projectDataService.CreateProjectAsync(ProjectModel);
         _toastService.ShowSuccess($"Added project {addedProject.Result.Id}", "Success!");
-        var projectList = await projectDataService.GetProjectListAsync();
-        ParentProjects = projectList.Result;
-        await ParentProjectsChanged.InvokeAsync(ParentProjects);
+
+        BlazoredModal.Close();
     }
 }

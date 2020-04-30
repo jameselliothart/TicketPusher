@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Blazored.Modal.Services;
-using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.API.Projects;
-using TicketPusher.API.Projects.Commands;
 using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
@@ -21,9 +18,13 @@ namespace TicketPusher.Server.Projects
             return data.Result;
         }
 
-        public void AddProject()
+        public async Task AddProject()
         {
-            _modal.Show<EditProject>("Add Project");
+            var formModal = _modal.Show<EditProject>("Add Project");
+            var result = await formModal.Result;
+            if (!result.Cancelled) {
+                Entities = await RefreshData();
+            }
         }
 
     }
