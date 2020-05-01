@@ -21,13 +21,13 @@ namespace TicketPusher.Server.Projects
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
         }
 
-        public async Task<EnvelopeDto<List<ProjectDto>>> GetProjectListAsync()
+        public async Task<EnvelopeDto<List<ProjectDto>>> GetEntityListAsync()
         {
             var data = await _httpClient.GetJsonAsync<EnvelopeDto<List<ProjectDto>>>("projects");
             return data;
         }
 
-        public async Task<EnvelopeDto<ProjectDto>> CreateProjectAsync(CreateProjectDto project)
+        public async Task<EnvelopeDto<ProjectDto>> CreateEntityAsync(CreateProjectDto project)
         {
             var data = await _httpClient.PostJsonAsync<EnvelopeDto<ProjectDto>>("projects", project);
             return data;

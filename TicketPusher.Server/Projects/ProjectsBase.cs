@@ -14,7 +14,7 @@ namespace TicketPusher.Server.Projects
 
         protected override async Task<List<ProjectDto>> RetrieveData()
         {
-            var data = await EntityDataService.GetProjectListAsync();
+            var data = await EntityDataService.GetEntityListAsync();
             return data.Result;
         }
 
