@@ -1,6 +1,8 @@
 @using TicketPusher.API.Projects;
 @using TicketPusher.API.Projects.Commands;
 
+@inherits EditProjectBase
+
 <EditForm Model="@ProjectModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -12,26 +14,3 @@
 
     <button type="submit">Add Project</button>
 </EditForm>
-
-@code {
-    [CascadingParameter] public BlazoredModalInstance BlazoredModal { get; set; }
-
-    [Parameter]
-    public ProjectDto ParentProjects { get; set; }
-
-    [Inject]
-    private IToastService _toastService { get; set; }
-
-    [Inject]
-    private IProjectDataService projectDataService { get; set; }
-
-    protected CreateProjectDto ProjectModel { get; set;} = new CreateProjectDto();
-
-    protected async void HandleValidSubmit()
-    {
-        var addedProject = await projectDataService.CreateProjectAsync(ProjectModel);
-        _toastService.ShowSuccess($"Added project {addedProject.Result.Id}", "Success!");
-
-        BlazoredModal.Close();
-    }
-}
