@@ -13,9 +13,14 @@ namespace TicketPusher.Server.Templates
 
         protected override async Task OnInitializedAsync()
         {
-            Entities = await RefreshData();
+            await RefreshData();
         }
 
-        protected abstract Task<List<T>> RefreshData();
+        protected async Task RefreshData()
+        {
+            Entities = await RetrieveData();
+        }
+
+        protected abstract Task<List<T>> RetrieveData();
     }
 }

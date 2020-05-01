@@ -12,7 +12,7 @@ namespace TicketPusher.Server.Projects
         [Inject]
         private IModalService _modal { get; set; }
 
-        protected override async Task<List<ProjectDto>> RefreshData()
+        protected override async Task<List<ProjectDto>> RetrieveData()
         {
             var data = await EntityDataService.GetProjectListAsync();
             return data.Result;
@@ -23,7 +23,7 @@ namespace TicketPusher.Server.Projects
             var formModal = _modal.Show<EditProject>("Add Project");
             var result = await formModal.Result;
             if (!result.Cancelled) {
-                Entities = await RefreshData();
+                await RefreshData();
             }
         }
 
