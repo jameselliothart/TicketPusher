@@ -7,16 +7,10 @@ using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
 {
-    public class ProjectsBase : EntityBase<ProjectDto, IProjectDataService>
+    public class ProjectsBase : EntityBase<ProjectDto, IProjectReadDataService>
     {
         [Inject]
         private IModalService _modal { get; set; }
-
-        protected override async Task<List<ProjectDto>> RetrieveData()
-        {
-            var data = await EntityDataService.GetEntityListAsync();
-            return data.Result;
-        }
 
         public async Task AddProject()
         {

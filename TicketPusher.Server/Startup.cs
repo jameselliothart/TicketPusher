@@ -60,7 +60,8 @@ namespace TicketPusher.Server
                     return handler;
                 });
             };
-            RegisterTypedClient<IProjectDataService, ProjectDataService>(ticketPusherApi);
+            RegisterTypedClient<IProjectWriteDataService, ProjectWriteDataService>(ticketPusherApi);
+            RegisterTypedClient<IProjectReadDataService, ProjectReadDataService>(ticketPusherApi);
 
             services.AddBlazoredToast();
             services.AddBlazoredModal();

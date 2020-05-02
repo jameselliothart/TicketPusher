@@ -5,9 +5,9 @@ using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
 {
-    public class EditProjectBase : EditEntityBase<ProjectDto, CreateProjectDto, IProjectDataService>
+    public class EditProjectBase : EditEntityBase<ProjectDto, CreateProjectDto, IProjectWriteDataService>
     {
-        protected override string GetEntityIdentifier(EnvelopeDto<ProjectDto> envelope) =>
-            envelope.Result.Id.ToString();
+        protected override string GetSuccessMessage(EnvelopeDto<ProjectDto> envelope) =>
+            $"Added project {envelope.Result.Id.ToString()}";
     }
 }

@@ -7,7 +7,7 @@ namespace TicketPusher.Server.Templates
 {
     public abstract class EditEntityBase<TDto, TCreateDto, TDataService> : ComponentBase
         where TCreateDto : new()
-        where TDataService : IEntityDataService<TDto, TCreateDto>
+        where TDataService : IEntityWriteDataService<TDto, TCreateDto>
     {
         [CascadingParameter]
         public BlazoredModalInstance BlazoredModal { get; set; }
@@ -26,12 +26,12 @@ namespace TicketPusher.Server.Templates
         protected async void HandleValidSubmit()
         {
             var addedProject = await ProjectDataService.CreateEntityAsync(ProjectModel);
-            var identifier = GetEntityIdentifier(addedProject);
-            ToastService.ShowSuccess($"Added project {identifier}", "Success!");
+            var successMessage = GetSuccessMessage(addedProject);
+            ToastService.ShowSuccess($"{successMessage}", "Success!");
 
             BlazoredModal.Close();
         }
 
-        protected abstract string GetEntityIdentifier(EnvelopeDto<TDto> envelope);
+        protected abstract string GetSuccessMessage(EnvelopeDto<TDto> envelope);
     }
 }

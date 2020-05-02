@@ -4,7 +4,7 @@ using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
 {
-    public interface IProjectDataService : IEntityDataService<ProjectDto, CreateProjectDto>
+    public interface IProjectWriteDataService : IEntityWriteDataService<ProjectDto, CreateProjectDto>
     {
     }
 }

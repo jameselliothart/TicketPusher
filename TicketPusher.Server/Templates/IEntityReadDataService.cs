@@ -4,9 +4,8 @@ using TicketPusher.Server.Shared;
 
 namespace TicketPusher.Server.Templates
 {
-    public interface IEntityDataService<TDto, TCreateDto>
+    public interface IEntityReadDataService<TDto>
     {
-        Task<EnvelopeDto<TDto>> CreateEntityAsync(TCreateDto project);
         Task<EnvelopeDto<List<TDto>>> GetEntityListAsync();
     }
 }
