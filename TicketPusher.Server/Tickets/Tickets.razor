@@ -1,0 +1,23 @@
+@page "/tickets"
+
+@using TicketPusher.Server.Utils
+@inherits TicketsBase
+
+<TableTemplate Items="Entities" Context="ticket">
+    <TableHeader>
+        <th>Id</th>
+        <th>Project</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Submit Date</th>
+        <th>Due Date</th>
+    </TableHeader>
+    <RowTemplate>
+        <td title="@ticket.Id">@ticket.Id.ToShortGuid()</td>
+        <td>@DecodeProjectId(@ticket.ProjectId)</td>
+        <td>@ticket.Owner</td>
+        <td>@ticket.TicketDetails.Description</td>
+        <td>@ticket.TicketDetails.SubmitDate</td>
+        <td>@ticket.TicketDetails.DueDate</td>
+    </RowTemplate>
+</TableTemplate>

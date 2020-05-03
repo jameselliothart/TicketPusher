@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TicketPusher.Server.Data;
 using TicketPusher.Server.Projects;
+using TicketPusher.Server.Tickets;
 
 namespace TicketPusher.Server
 {
@@ -62,6 +63,7 @@ namespace TicketPusher.Server
             };
             RegisterTypedClient<IProjectWriteDataService, ProjectWriteDataService>(ticketPusherApi);
             RegisterTypedClient<IProjectReadDataService, ProjectReadDataService>(ticketPusherApi);
+            RegisterTypedClient<ITicketReadDataService, TicketReadDataService>(ticketPusherApi);
 
             services.AddBlazoredToast();
             services.AddBlazoredModal();
