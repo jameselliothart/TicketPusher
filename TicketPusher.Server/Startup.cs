@@ -64,6 +64,7 @@ namespace TicketPusher.Server
             RegisterTypedClient<IProjectWriteDataService, ProjectWriteDataService>(ticketPusherApi);
             RegisterTypedClient<IProjectReadDataService, ProjectReadDataService>(ticketPusherApi);
             RegisterTypedClient<ITicketReadDataService, TicketReadDataService>(ticketPusherApi);
+            RegisterTypedClient<ITicketWriteDataService, TicketWriteDataService>(ticketPusherApi);
 
             services.AddBlazoredToast();
             services.AddBlazoredModal();

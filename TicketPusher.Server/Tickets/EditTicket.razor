@@ -1,0 +1,34 @@
+
+@inherits EditTicketBase
+
+<EditForm Model="@EntityModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+@*
+    <label>
+        Project:
+        <InputSelect id="project" @bind-Value="EntityModel.ProjectId" >
+            @foreach (var project in @Projects)
+            {
+                <option value="@project.Id">@project.Name</option>
+            }
+        </InputSelect>
+    </label> *@
+@* *@
+    <label>
+        Owner:
+        <InputText id="owner" Value="Unassigned" ValueExpression="@(() => EntityModel.Owner)" readonly />
+    </label>
+
+    <label>
+        Description:
+        <InputTextArea id="description" @bind-Value="EntityModel.Description" />
+    </label>
+
+    <label>
+        Due Date:
+        <InputDate id="dueDate" @bind-Value="EntityModel.DueDate" />
+    </label>
+
+    <button type="submit">Add Ticket</button>
+</EditForm>

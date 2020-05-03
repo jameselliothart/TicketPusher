@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blazored.Modal;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.API.Projects;
@@ -19,6 +20,21 @@ namespace TicketPusher.Server.Tickets
         [Inject]
         private IProjectReadDataService _projectReadDataService { get; set; }
 
+        [Inject]
+        private IModalService _modal { get; set; }
+
+        public async Task AddTicket(List<ProjectDto> projects)
+        {
+            var parameters = new ModalParameters();
+            parameters.Add(nameof(EditTicket.Projects), projects);
+            var formModal = _modal.Show<EditTicket>("Add Ticket", parameters);
+            var result = await formModal.Result;
+            if (!result.Cancelled)
+            {
+                await RefreshData();
+            }
+        }
+
         protected override async Task RefreshData()
         {
             Entities = await RetrieveMainEntities();
@@ -28,17 +44,5 @@ namespace TicketPusher.Server.Tickets
         protected string DecodeProjectId(Guid projectId) =>
             Projects.Find(p => p.Id == projectId).Name;
 
-        // [Inject]
-        // private IModalService _modal { get; set; }
-
-        // public async Task AddTicket()
-        // {
-        //     var formModal = _modal.Show<EditTicket>("Add Ticket");
-        //     var result = await formModal.Result;
-        //     if (!result.Cancelled)
-        //     {
-        //         await RefreshData();
-        //     }
-        // }
     }
 }
