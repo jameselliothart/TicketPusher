@@ -1,13 +1,20 @@
 @typeparam TItem
 
-<table class="table">
-    <thead>
-        <tr>@TableHeader</tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Items)
-        {
-            <tr >@RowTemplate(item)</tr>
-        }
-    </tbody>
-</table>
+@if (Items != null)
+{
+    <table class="table">
+        <thead>
+            <tr>@TableHeader</tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                <tr >@RowTemplate(item)</tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><em>loading...</em></p>
+}
