@@ -21,5 +21,9 @@ namespace TicketPusher.Server.Projects
             }
         }
 
+        protected override async Task RefreshData()
+        {
+            Entities = await RetrieveMainEntities();
+        }
     }
 }

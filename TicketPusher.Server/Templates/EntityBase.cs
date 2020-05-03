@@ -17,12 +17,9 @@ namespace TicketPusher.Server.Templates
             await RefreshData();
         }
 
-        protected async Task RefreshData()
-        {
-            Entities = await RetrieveData();
-        }
+        protected abstract Task RefreshData();
 
-        protected async Task<List<T>> RetrieveData()
+        protected async Task<List<T>> RetrieveMainEntities()
         {
             var data = await EntityDataService.GetEntityListAsync();
             return data.Result;
