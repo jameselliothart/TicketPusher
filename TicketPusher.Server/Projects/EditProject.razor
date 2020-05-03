@@ -3,13 +3,13 @@
 
 @inherits EditProjectBase
 
-<EditForm Model="@ProjectModel" OnValidSubmit="HandleValidSubmit">
+<EditForm Model="@EntityModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <label>
         Project Name:
-        <InputText id="name" @bind-Value="ProjectModel.Name" />
+        <InputText id="name" @bind-Value="EntityModel.Name" />
     </label>
 
     <button type="submit">Add Project</button>

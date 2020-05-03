@@ -13,20 +13,20 @@ namespace TicketPusher.Server.Templates
         public BlazoredModalInstance BlazoredModal { get; set; }
 
         [Parameter]
-        public TDto ParentProjects { get; set; }
+        public TDto ParentEntity { get; set; }
 
         [Inject]
         protected IToastService ToastService { get; set; }
 
         [Inject]
-        protected TDataService ProjectDataService { get; set; }
+        protected TDataService EntityDataService { get; set; }
 
-        protected TCreateDto ProjectModel { get; set;} = new TCreateDto();
+        protected TCreateDto EntityModel { get; set;} = new TCreateDto();
 
         protected async void HandleValidSubmit()
         {
-            var addedProject = await ProjectDataService.CreateEntityAsync(ProjectModel);
-            var successMessage = GetSuccessMessage(addedProject);
+            var addedEntity = await EntityDataService.CreateEntityAsync(EntityModel);
+            var successMessage = GetSuccessMessage(addedEntity);
             ToastService.ShowSuccess($"{successMessage}", "Success!");
 
             BlazoredModal.Close();
