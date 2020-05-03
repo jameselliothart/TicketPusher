@@ -4,20 +4,21 @@
 <EditForm Model="@EntityModel" OnValidSubmit="HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
-@*
+
     <label>
         Project:
-        <InputSelect id="project" @bind-Value="EntityModel.ProjectId" >
+        <CustomInputSelect id="project" @bind-Value="EntityModel.ProjectId"
+            ValidationFor="@(() => EntityModel.ProjectId)">
             @foreach (var project in @Projects)
             {
                 <option value="@project.Id">@project.Name</option>
             }
-        </InputSelect>
-    </label> *@
-@* *@
+        </CustomInputSelect>
+    </label>
+
     <label>
         Owner:
-        <InputText id="owner" Value="Unassigned" ValueExpression="@(() => EntityModel.Owner)" readonly />
+        <InputText id="owner" @bind-Value="EntityModel.Owner" readonly />
     </label>
 
     <label>

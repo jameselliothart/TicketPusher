@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.API.Projects;
 using TicketPusher.API.Tickets;
@@ -15,5 +16,12 @@ namespace TicketPusher.Server.Tickets
 
         protected override string GetSuccessMessage(EnvelopeDto<TicketDto> envelope) =>
             $"Added ticket {envelope.Result.Id.ToString()}";
+
+        protected override Task OnInitializedAsync()
+        {
+            // TODO: get owner from dropdown of registered users
+            EntityModel = new SubmitTicketDto() { Owner = "Unassigned" };
+            return Task.CompletedTask;
+        }
     }
 }
