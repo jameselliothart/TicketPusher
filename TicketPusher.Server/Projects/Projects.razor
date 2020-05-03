@@ -3,22 +3,16 @@
 @using TicketPusher.Server.Utils
 @inherits ProjectsBase
 
-@if (Entities != null)
-{
-    <TableTemplate Items="Entities" Context="project">
-        <TableHeader>
-            <th>Id</th>
-            <th>Name</th>
-        </TableHeader>
-        <RowTemplate>
-                <td title="@project.Id">@project.Id.ToShortGuid()</td>
-                <td>@project.Name</td>
-        </RowTemplate>
-    </TableTemplate>
-}
-else
-{
-    <p><em>loading...</em></p>
-}
+<TableTemplate Items="Entities" Context="project">
+    <TableHeader>
+        <th>Id</th>
+        <th>Name</th>
+    </TableHeader>
+    <RowTemplate>
+            <td title="@project.Id">@project.Id.ToShortGuid()</td>
+            <td>@project.Name</td>
+    </RowTemplate>
+</TableTemplate>
+
 
 <button @onclick="@(() => AddProject())" class="btn btn-primary">Add Project</button>
