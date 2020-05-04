@@ -21,8 +21,8 @@
         <td>@ticket.ProjectId.ToProjectName(@Projects)</td>
         <td>@ticket.Owner</td>
         <td>@ticket.TicketDetails.Description</td>
-        <td>@ticket.TicketDetails.SubmitDate</td>
-        <td>@ticket.TicketDetails.DueDate</td>
+        <td>@ticket.TicketDetails.SubmitDate.ToShortDateString()</td>
+        <td>@ticket.TicketDetails.DueDate.ToShortDateString()</td>
     </RowTemplate>
 </TableTemplate>
 
