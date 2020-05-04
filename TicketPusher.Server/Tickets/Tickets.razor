@@ -18,7 +18,7 @@
             <span title="Close" class="oi oi-circle-check" @onclick="@(() => Close(@ticket.Id))"></span>
         </td>
         <td title="@ticket.Id">@ticket.Id.ToShortGuid()</td>
-        <td>@DecodeProjectId(@ticket.ProjectId)</td>
+        <td>@ticket.ProjectId.ToProjectName(@Projects)</td>
         <td>@ticket.Owner</td>
         <td>@ticket.TicketDetails.Description</td>
         <td>@ticket.TicketDetails.SubmitDate</td>

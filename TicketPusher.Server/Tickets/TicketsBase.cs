@@ -53,8 +53,5 @@ namespace TicketPusher.Server.Tickets
             Projects = (await _projectReadDataService.GetEntityListAsync()).Result;
         }
 
-        protected string DecodeProjectId(Guid projectId) =>
-            Projects.Find(p => p.Id == projectId).Name;
-
     }
 }
