@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TicketPusher.Server.CompletedTickets;
 using TicketPusher.Server.Projects;
 using TicketPusher.Server.Tickets;
 
@@ -63,6 +64,7 @@ namespace TicketPusher.Server
             RegisterTypedClient<IProjectReadDataService, ProjectReadDataService>(ticketPusherApi);
             RegisterTypedClient<ITicketReadDataService, TicketReadDataService>(ticketPusherApi);
             RegisterTypedClient<ITicketWriteDataService, TicketWriteDataService>(ticketPusherApi);
+            RegisterTypedClient<ICompletedTicketReadDataService, CompletedTicketReadDataService>(ticketPusherApi);
 
             services.AddBlazoredToast();
             services.AddBlazoredModal();
