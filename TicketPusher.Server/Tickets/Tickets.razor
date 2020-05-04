@@ -5,6 +5,7 @@
 
 <TableTemplate Items="Entities" Context="ticket">
     <TableHeader>
+        <th></th>
         <th>Id</th>
         <th>Project</th>
         <th>Owner</th>
@@ -13,6 +14,9 @@
         <th>Due Date</th>
     </TableHeader>
     <RowTemplate>
+        <td>
+            <span title="Close" class="oi oi-circle-check" @onclick="@(() => Close(@ticket.Id))"></span>
+        </td>
         <td title="@ticket.Id">@ticket.Id.ToShortGuid()</td>
         <td>@DecodeProjectId(@ticket.ProjectId)</td>
         <td>@ticket.Owner</td>
