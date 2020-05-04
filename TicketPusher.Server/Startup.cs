@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using TicketPusher.Server.Data;
 using TicketPusher.Server.Projects;
 using TicketPusher.Server.Tickets;
 
@@ -40,7 +39,6 @@ namespace TicketPusher.Server
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<TicketService>();
 
             var ticketPusherApi = new Uri(Configuration["TicketPusherApi"]);
             void RegisterTypedClient<TClient, TImplementation>(Uri apiBaseUri)
