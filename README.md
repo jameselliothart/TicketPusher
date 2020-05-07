@@ -15,7 +15,11 @@ TicketPusher is served via two Docker containers: one for the API, one for the B
 - API: `docker build -f api.dockerfile -t api .`
 - Web: `docker build -f web.dockerfile -t web .`
 
-Running the containers:
+Running the containers individually:
 
-- API: `docker run --rm -d -p 8080:80 --name tp-api api`
+- API: `docker run --rm -d -p 8080:80 -e CUSTOMCONNSTR_TicketPusherDb="host=172.17.0.1;database=TicketPusherDb;user id=postgres;password=docker;" --name tp-api api`
 - Web: `docker run --rm -d -p 8080:80 --name tp-web web`
+
+Running with Docker Compose:
+
+`docker-compose up --build`
