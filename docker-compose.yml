@@ -2,13 +2,13 @@ version: '3.4'
 
 services:
     ticketpusherapi:
-        image: ${DOCKER_REGISTRY}ticketpusherapi
+        image: ticketpusherregistry.azurecr.io/ticketpusherapi
         build:
             context: .
             dockerfile: api.dockerfile
 
     ticketpusherweb:
-        image: ${DOCKER_REGISTRY}ticketpusherweb
+        image: ticketpusherregistry.azurecr.io/ticketpusherweb
         build:
             context: .
             dockerfile: web.dockerfile
