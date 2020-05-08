@@ -23,3 +23,14 @@ Running the containers individually:
 Running with Docker Compose:
 
 `docker-compose up --build`
+
+## Azure
+
+Pushing containers to ACR manually
+
+```sh
+az login
+az acr login --name ticketpusherregistry
+docker push ticketpusherregistry.azurecr.io/ticketpusherapi
+docker push ticketpusherregistry.azurecr.io/ticketpusherweb
+```
