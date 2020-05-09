@@ -1,0 +1,2 @@
+docker build -f api.dockerfile -t api .
+docker build -f web.dockerfile -t web .

@@ -1,0 +1,13 @@
+@inherits CloseTicketBase
+
+<EditForm Model="CloseTicketModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label>
+        Resolution:
+        <InputTextArea id="resolution" @bind-Value="CloseTicketModel.Resolution" />
+    </label>
+
+    <button type="submit">Close Ticket</button>
+</EditForm>

@@ -1,0 +1,16 @@
+@using TicketPusher.API.Projects;
+@using TicketPusher.API.Projects.Commands;
+
+@inherits EditProjectBase
+
+<EditForm Model="@EntityModel" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <label>
+        Project Name:
+        <InputText id="name" @bind-Value="EntityModel.Name" />
+    </label>
+
+    <button type="submit">Add Project</button>
+</EditForm>

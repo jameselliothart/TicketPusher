@@ -1,0 +1,27 @@
+@page "/completedtickets"
+
+@using TicketPusher.Server.Utils
+@inherits CompletedTicketsBase
+
+<TableTemplate Items="Entities" Context="completedTicket">
+    <TableHeader>
+        <th>Id</th>
+        <th>Project</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Submit Date</th>
+        <th>Due Date</th>
+        <th>Resolution</th>
+        <th>Completion Date</th>
+    </TableHeader>
+    <RowTemplate>
+        <td title="@completedTicket.Id">@completedTicket.Id.ToShortGuid()</td>
+        <td>@completedTicket.ProjectId.ToProjectName(@Projects)</td>
+        <td>@completedTicket.Owner</td>
+        <td>@completedTicket.TicketDetails.Description</td>
+        <td>@completedTicket.TicketDetails.SubmitDate.ToShortDateString()</td>
+        <td>@completedTicket.TicketDetails.DueDate.ToShortDateString()</td>
+        <td>@completedTicket.CompletedDetails.Resolution</td>
+        <td>@completedTicket.CompletedDetails.CompletionDate.ToShortDateString()</td>
+    </RowTemplate>
+</TableTemplate>

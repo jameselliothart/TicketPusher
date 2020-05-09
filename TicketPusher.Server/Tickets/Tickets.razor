@@ -1,0 +1,29 @@
+@page "/tickets"
+
+@using TicketPusher.Server.Utils
+@inherits TicketsBase
+
+<TableTemplate Items="Entities" Context="ticket">
+    <TableHeader>
+        <th></th>
+        <th>Id</th>
+        <th>Project</th>
+        <th>Owner</th>
+        <th>Description</th>
+        <th>Submit Date</th>
+        <th>Due Date</th>
+    </TableHeader>
+    <RowTemplate>
+        <td>
+            <span title="Close" class="oi oi-circle-check" @onclick="@(() => Close(@ticket.Id))"></span>
+        </td>
+        <td title="@ticket.Id">@ticket.Id.ToShortGuid()</td>
+        <td>@ticket.ProjectId.ToProjectName(@Projects)</td>
+        <td>@ticket.Owner</td>
+        <td>@ticket.TicketDetails.Description</td>
+        <td>@ticket.TicketDetails.SubmitDate.ToShortDateString()</td>
+        <td>@ticket.TicketDetails.DueDate.ToShortDateString()</td>
+    </RowTemplate>
+</TableTemplate>
+
+<button @onclick="@(() => AddTicket(@Projects))" class="btn btn-primary">Add Ticket</button>

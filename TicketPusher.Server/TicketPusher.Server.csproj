@@ -1,5 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <ProjectReference Include="..\TicketPusher.API\TicketPusher.API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="4.1.0" />
+    <PackageReference Include="Blazored.Toast" Version="2.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.2.0-preview3.20168.3" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>

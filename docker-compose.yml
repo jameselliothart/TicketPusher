@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+    ticketpusherapi:
+        image: ticketpusherregistry.azurecr.io/ticketpusherapi
+        build:
+            context: .
+            dockerfile: api.dockerfile
+
+    ticketpusherweb:
+        image: ticketpusherregistry.azurecr.io/ticketpusherweb
+        build:
+            context: .
+            dockerfile: web.dockerfile
+        depends_on:
+            - "ticketpusherapi"
+        ports:
+            - "80:80"
