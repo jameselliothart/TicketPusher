@@ -7,12 +7,12 @@ name: CI
 on:
   push:
     branches: [ master ]
-    paths: 
+    paths:
     - 'TicketPusher.*/**'
     - '!TicketPusher.*.Tests/**'
   pull_request:
     branches: [ master ]
-    paths: 
+    paths:
     - 'TicketPusher.*/**'
     - '!TicketPusher.*.Tests/**'
 
@@ -31,25 +31,27 @@ jobs:
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: echo Hello, world!
-      
+
     - name: Replace tokens
       uses: cschleiden/replace-tokens@v1.0
       with:
         files: '["**/appsettings.json"]'
-      env: 
+      env:
         TicketPusherDb: ${{ secrets.TicketPusherDb }}
-    
+        OktaClientId: ${{ secrets.OktaClientId }}
+        OktaClientSecret: ${{ secrets.OktaClientSecret }}
+
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    
+
     - uses: azure/docker-login@v1
       with:
         login-server: ${{ secrets.ACR_LOGIN_SERVER }}
         username: ${{ secrets.ACR_USERNAME }}
         password: ${{ secrets.ACR_PASSWORD }}
-    
+
     - run: |
         docker build . -f api.dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherapi:${{ github.sha }}
         docker build . -f web.dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherweb:${{ github.sha }}
