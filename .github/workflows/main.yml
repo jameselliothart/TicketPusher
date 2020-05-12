@@ -53,10 +53,12 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
 
     - run: |
-        docker build . -f api.dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherapi:${{ github.sha }}
-        docker build . -f web.dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherweb:${{ github.sha }}
+        docker build . -f api.dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherapi:${{ github.sha }} -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherapi
+        docker build . -f web.dockerfile -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherweb:${{ github.sha }} -t ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherweb
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherapi:${{ github.sha }}
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherapi
         docker push ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherweb:${{ github.sha }}
+        docker push ${{ secrets.ACR_LOGIN_SERVER }}/ticketpusherweb
 
     - name: Azure logout
       run: |
