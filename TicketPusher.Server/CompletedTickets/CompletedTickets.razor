@@ -2,6 +2,7 @@
 
 @using TicketPusher.Server.Utils
 @inherits CompletedTicketsBase
+@attribute [Authorize]
 
 <TableTemplate Items="Entities" Context="completedTicket">
     <TableHeader>

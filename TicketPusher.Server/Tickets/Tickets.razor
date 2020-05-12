@@ -2,6 +2,7 @@
 
 @using TicketPusher.Server.Utils
 @inherits TicketsBase
+@attribute [Authorize]
 
 <TableTemplate Items="Entities" Context="ticket">
     <TableHeader>

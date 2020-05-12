@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.Modal;
 using Blazored.Toast;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -63,6 +65,28 @@ namespace TicketPusher.Server
 
             services.AddBlazoredToast();
             services.AddBlazoredModal();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignOutScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+            })
+            .AddOpenIdConnect(options =>
+            {
+                options.ClientId = Configuration["Okta:ClientId"];
+                options.ClientSecret = Configuration["Okta:ClientSecret"];
+                options.CallbackPath = "/authorization-code/callback";
+                options.Authority = Configuration["Okta:Issuer"];
+                options.ResponseType = "code";
+                options.SaveTokens = true;
+                options.Scope.Add("openid");
+                options.Scope.Add("profile");
+                options.TokenValidationParameters.ValidateIssuer = false;
+                options.TokenValidationParameters.NameClaimType = "name";
+            })
+            .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,10 +106,14 @@ namespace TicketPusher.Server
             // app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
