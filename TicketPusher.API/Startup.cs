@@ -33,7 +33,7 @@ namespace TicketPusher.API
 
             services.AddDbContext<TicketPusherContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("TicketPusherDb"));
+                options.UseSqlServer(Configuration.GetConnectionString("TicketPusherDb"));
             });
 
             services.AddScoped<ITicketPusherRepository, TicketPusherRepository>();

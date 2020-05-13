@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TicketPusher.API.Data;
 
 namespace TicketPusher.API.Migrations
@@ -15,25 +15,25 @@ namespace TicketPusher.API.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "3.1.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("TicketPusher.Domain.CompletedTickets.CompletedTicket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("completed_ticket_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnName("owner")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ProjectFK")
                         .HasColumnName("project_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -47,12 +47,12 @@ namespace TicketPusher.API.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("project_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnName("name")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -64,16 +64,16 @@ namespace TicketPusher.API.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ticket_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Owner")
                         .IsRequired()
                         .HasColumnName("owner")
-                        .HasColumnType("text");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ProjectFK")
                         .HasColumnName("project_id")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -90,23 +90,19 @@ namespace TicketPusher.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("TicketPusher.Domain.Common.TicketDetails", "TicketDetails", b1 =>
+                    b.OwnsOne("TicketPusher.Domain.CompletedTickets.CompletedDetails", "CompletedDetails", b1 =>
                         {
                             b1.Property<Guid>("CompletedTicketId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
-                            b1.Property<string>("Description")
+                            b1.Property<DateTime>("CompletionDate")
+                                .HasColumnName("completion_date")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Resolution")
                                 .IsRequired()
-                                .HasColumnName("description")
-                                .HasColumnType("text");
-
-                            b1.Property<DateTime>("DueDate")
-                                .HasColumnName("due_date")
-                                .HasColumnType("timestamp without time zone");
-
-                            b1.Property<DateTime>("SubmitDate")
-                                .HasColumnName("submit_date")
-                                .HasColumnType("timestamp without time zone");
+                                .HasColumnName("resolution")
+                                .HasColumnType("nvarchar(max)");
 
                             b1.HasKey("CompletedTicketId");
 
@@ -116,19 +112,23 @@ namespace TicketPusher.API.Migrations
                                 .HasForeignKey("CompletedTicketId");
                         });
 
-                    b.OwnsOne("TicketPusher.Domain.CompletedTickets.CompletedDetails", "CompletedDetails", b1 =>
+                    b.OwnsOne("TicketPusher.Domain.Tickets.TicketDetails", "TicketDetails", b1 =>
                         {
                             b1.Property<Guid>("CompletedTicketId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
-                            b1.Property<DateTime>("CompletionDate")
-                                .HasColumnName("completion_date")
-                                .HasColumnType("timestamp without time zone");
-
-                            b1.Property<string>("Resolution")
+                            b1.Property<string>("Description")
                                 .IsRequired()
-                                .HasColumnName("resolution")
-                                .HasColumnType("text");
+                                .HasColumnName("description")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<DateTime>("DueDate")
+                                .HasColumnName("due_date")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("SubmitDate")
+                                .HasColumnName("submit_date")
+                                .HasColumnType("datetime2");
 
                             b1.HasKey("CompletedTicketId");
 
@@ -147,23 +147,23 @@ namespace TicketPusher.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("TicketPusher.Domain.Common.TicketDetails", "TicketDetails", b1 =>
+                    b.OwnsOne("TicketPusher.Domain.Tickets.TicketDetails", "TicketDetails", b1 =>
                         {
                             b1.Property<Guid>("TicketId")
-                                .HasColumnType("uuid");
+                                .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("Description")
                                 .IsRequired()
                                 .HasColumnName("description")
-                                .HasColumnType("text");
+                                .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("DueDate")
                                 .HasColumnName("due_date")
-                                .HasColumnType("timestamp without time zone");
+                                .HasColumnType("datetime2");
 
                             b1.Property<DateTime>("SubmitDate")
                                 .HasColumnName("submit_date")
-                                .HasColumnType("timestamp without time zone");
+                                .HasColumnType("datetime2");
 
                             b1.HasKey("TicketId");
 
