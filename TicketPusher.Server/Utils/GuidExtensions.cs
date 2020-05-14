@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TicketPusher.API.Projects;
+using TicketPusher.Server.Projects;
 
 namespace TicketPusher.Server.Utils
 {

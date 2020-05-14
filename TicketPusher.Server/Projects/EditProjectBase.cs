@@ -1,5 +1,3 @@
-using TicketPusher.API.Projects;
-using TicketPusher.API.Projects.Commands;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 

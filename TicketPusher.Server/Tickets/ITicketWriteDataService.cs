@@ -1,8 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using TicketPusher.API.CompletedTickets;
-using TicketPusher.API.Tickets;
-using TicketPusher.API.Tickets.Commands;
+using TicketPusher.Server.CompletedTickets;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 

@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.API.Projects;
-using TicketPusher.API.Tickets;
-using TicketPusher.API.Tickets.Commands;
+using TicketPusher.Server.Projects;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 

@@ -1,9 +1,7 @@
 using System;
-using System.Threading.Tasks;
 using Blazored.Modal;
 using Blazored.Toast.Services;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.API.Tickets.Commands;
 
 namespace TicketPusher.Server.Tickets
 {

@@ -2,9 +2,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.API.CompletedTickets;
-using TicketPusher.API.Tickets;
-using TicketPusher.API.Tickets.Commands;
+using TicketPusher.Server.CompletedTickets;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 

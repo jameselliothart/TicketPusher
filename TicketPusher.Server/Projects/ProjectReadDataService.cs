@@ -1,5 +1,4 @@
 using System.Net.Http;
-using TicketPusher.API.Projects;
 using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects

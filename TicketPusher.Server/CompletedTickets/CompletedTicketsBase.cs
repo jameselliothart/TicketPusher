@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.API.CompletedTickets;
-using TicketPusher.API.Projects;
 using TicketPusher.Server.Projects;
 using TicketPusher.Server.Templates;
 

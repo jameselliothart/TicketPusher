@@ -1,8 +1,6 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.API.Projects;
 using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
