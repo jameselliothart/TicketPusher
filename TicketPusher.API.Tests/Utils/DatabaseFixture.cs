@@ -28,7 +28,7 @@ namespace TicketPusher.API.Tests.Utils
             configBuilder.AddInMemoryCollection(settings);
 
             var options = new DbContextOptionsBuilder<TicketPusherContext>()
-                .UseNpgsql(_connectionForTests)
+                .UseSqlServer(_connectionForTests)
                 .Options;
 
             context = new TicketPusherContext(options);
@@ -41,7 +41,7 @@ namespace TicketPusher.API.Tests.Utils
         {
             // need to switch the context to a new database to drop the temp one
             var options = new DbContextOptionsBuilder<TicketPusherContext>()
-                .UseNpgsql(_connectionForCleanup)
+                .UseSqlServer(_connectionForCleanup)
                 .Options;
             context = new TicketPusherContext(options);
 
