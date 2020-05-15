@@ -16,20 +16,17 @@
         </CustomInputSelect>
     </label>
 
-    <label>
-        Owner:
-        <InputText id="owner" @bind-Value="EntityModel.Owner" readonly />
-    </label>
+    <p>
+        <MatStringField ReadOnly="true" @bind-Value="EntityModel.Owner" Label="Owner" ></MatStringField>
+    </p>
 
-    <label>
-        Description:
-        <InputTextArea id="description" @bind-Value="EntityModel.Description" />
-    </label>
+    <p>
+        <MatStringField TextArea="true" @bind-Value="EntityModel.Description" Label="Description"></MatStringField>
+    </p>
 
-    <label>
-        Due Date:
-        <InputDate id="dueDate" @bind-Value="EntityModel.DueDate" />
-    </label>
+    <p>
+        <MatDatePicker @bind-Value="EntityModel.DueDate" Label="Due Date" />
+    </p>
 
-    <button type="submit">Add Ticket</button>
+    <MatButton type="submit">Add Ticket</MatButton>
 </EditForm>
