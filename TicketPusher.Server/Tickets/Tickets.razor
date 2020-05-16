@@ -27,4 +27,4 @@
     </RowTemplate>
 </TableTemplate>
 
-<button @onclick="@(() => AddTicket(@Projects))" class="btn btn-primary">Add Ticket</button>
+<EditTicket Projects="@Projects" OnSubmitTicket="RefreshData" />

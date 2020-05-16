@@ -11,7 +11,10 @@ namespace TicketPusher.Server.Tickets
         [Required]
         public string Description { get; set; }
         public DateTime DueDate { get; set; } = NoSetDate.Instance;
+        public Guid ProjectId => Guid.Parse(_projectIdAsString);
+
         [Required]
-        public Guid ProjectId { get; set; }
+        [Display(Name = "Project")]
+        public string _projectIdAsString { get; set; }
     }
 }

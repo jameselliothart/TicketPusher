@@ -1,32 +1,43 @@
 
 @inherits EditTicketBase
 
-<EditForm Model="@EntityModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<MatButton OnClick="@OpenDialog" Raised="true">New Ticket</MatButton>
+@if (@Projects != null)
+{
+    <MatDialog @bind-IsOpen="@DialogIsOpen">
+        <MatDialogTitle>New Ticket</MatDialogTitle>
+        <MatDialogContent>
+            <EditForm Model="@EntityModel" OnValidSubmit="SubmitTicket">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-    <label>
-        Project:
-        <CustomInputSelect id="project" @bind-Value="EntityModel.ProjectId"
-            ValidationFor="@(() => EntityModel.ProjectId)">
-            @foreach (var project in @Projects)
-            {
-                <option value="@project.Id">@project.Name</option>
-            }
-        </CustomInputSelect>
-    </label>
+                <div class="form-group row">
+                    <MatSelect Label="Project" @bind-Value="EntityModel._projectIdAsString">
+                        @foreach (var project in @Projects)
+                        {
+                            <MatOptionString value="@project.Id.ToString()">@project.Name</MatOptionString>
+                        }
+                    </MatSelect>
+                </div>
 
-    <p>
-        <MatStringField ReadOnly="true" @bind-Value="EntityModel.Owner" Label="Owner" ></MatStringField>
-    </p>
+                <div class="form-group row">
+                    <MatStringField ReadOnly="true" @bind-Value="EntityModel.Owner" Label="Owner" ></MatStringField>
+                </div>
 
-    <p>
-        <MatStringField TextArea="true" @bind-Value="EntityModel.Description" Label="Description"></MatStringField>
-    </p>
+                <div class="form-group row">
+                    <MatStringField TextArea="true" @bind-Value="EntityModel.Description" Label="Description"></MatStringField>
+                </div>
 
-    <p>
-        <MatDatePicker @bind-Value="EntityModel.DueDate" Label="Due Date" />
-    </p>
+                <div class="form-group row">
+                    <MatDatePicker @bind-Value="EntityModel.DueDate" Label="Due Date" />
+                </div>
 
-    <MatButton type="submit">Add Ticket</MatButton>
-</EditForm>
+                <MatButton OnClick="@(e => { DialogIsOpen = false; })">No Thanks</MatButton>
+                <MatButton type="submit">Submit</MatButton>
+
+            </EditForm>
+        </MatDialogContent>
+        <MatDialogActions>
+        </MatDialogActions>
+    </MatDialog>
+}

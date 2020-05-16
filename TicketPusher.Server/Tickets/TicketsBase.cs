@@ -19,18 +19,6 @@ namespace TicketPusher.Server.Tickets
         [Inject]
         private IModalService _modal { get; set; }
 
-        public async Task AddTicket(List<ProjectDto> projects)
-        {
-            var parameters = new ModalParameters();
-            parameters.Add(nameof(EditTicket.Projects), projects);
-            var formModal = _modal.Show<EditTicket>("Add Ticket", parameters);
-            var result = await formModal.Result;
-            if (!result.Cancelled)
-            {
-                await RefreshData();
-            }
-        }
-
         public async Task Close(Guid ticketId)
         {
             var parameters = new ModalParameters();
@@ -47,6 +35,7 @@ namespace TicketPusher.Server.Tickets
         {
             Entities = await RetrieveMainEntities();
             Projects = (await _projectReadDataService.GetEntityListAsync()).Result;
+            StateHasChanged();
         }
 
     }

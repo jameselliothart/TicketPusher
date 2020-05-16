@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
@@ -12,14 +13,27 @@ namespace TicketPusher.Server.Tickets
         [Parameter]
         public List<ProjectDto> Projects { get; set; }
 
+        public bool DialogIsOpen { get; set; } = false;
+
+        [Parameter]
+        public Func<Task> OnSubmitTicket { get; set; }
+
         protected override string GetSuccessMessage(EnvelopeDto<TicketDto> envelope) =>
             $"Added ticket {envelope.Result.Id.ToString()}";
 
-        protected override Task OnInitializedAsync()
+        protected void OpenDialog()
         {
             // TODO: get owner from dropdown of registered users
             EntityModel = new SubmitTicketDto() { Owner = "Unassigned" };
-            return Task.CompletedTask;
+            DialogIsOpen = true;
+        }
+
+        protected async void SubmitTicket()
+        {
+            var addedEntity = await EntityDataService.CreateEntityAsync(EntityModel);
+            await OnSubmitTicket?.Invoke();
+            DialogIsOpen = false;
+            StateHasChanged();
         }
     }
 }
