@@ -16,7 +16,9 @@
     </TableHeader>
     <RowTemplate>
         <td>
-            <span title="Close" class="oi oi-circle-check" @onclick="@(() => Close(@ticket.Id))"></span>
+            <MatIconButton>
+                <i title="Close" class="oi oi-check" @onclick="@(() => Close(@ticket.Id))"></i>
+            </MatIconButton>
         </td>
         <td title="@ticket.Id">@ticket.Id.ToShortGuid()</td>
         <td>@ticket.ProjectId.ToProjectName(@Projects)</td>
