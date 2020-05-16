@@ -6,7 +6,7 @@
 
 <TableTemplate Items="Entities" Context="ticket">
     <TableHeader>
-        <th></th>
+        <th><EditTicket Projects="@Projects" OnSubmitTicket="RefreshData" /></th>
         <th>Id</th>
         <th>Project</th>
         <th>Owner</th>
@@ -29,4 +29,3 @@
     </RowTemplate>
 </TableTemplate>
 
-<EditTicket Projects="@Projects" OnSubmitTicket="RefreshData" />

@@ -1,7 +1,11 @@
 
 @inherits EditTicketBase
 
-<MatButton OnClick="@OpenDialog" Raised="true">New Ticket</MatButton>
+<MatFAB Mini="true" OnClick="@OpenDialog" >
+    <MatIcon>
+        <i class="oi oi-plus"></i>
+    </MatIcon>
+</MatFAB>
 @if (@Projects != null)
 {
     <MatDialog @bind-IsOpen="@DialogIsOpen">
