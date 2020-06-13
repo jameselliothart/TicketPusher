@@ -1,13 +1,25 @@
 @inherits EditProjectBase
 
-<EditForm Model="@EntityModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<MatFAB Mini="true" OnClick="@OpenDialog" >
+    <MatIcon>
+        <i class="oi oi-plus"></i>
+    </MatIcon>
+</MatFAB>
+<MatDialog @bind-IsOpen="@DialogIsOpen">
+    <MatDialogTitle>New Project</MatDialogTitle>
+    <MatDialogContent>
+        <EditForm Model="@EntityModel" OnValidSubmit="SubmitProject">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-    <label>
-        Project Name:
-        <InputText id="name" @bind-Value="EntityModel.Name" />
-    </label>
+            <div class="form-group row">
+                <MatStringField @bind-Value="EntityModel.Name" Label="Name" ></MatStringField>
+            </div>
 
-    <button type="submit">Add Project</button>
-</EditForm>
+            <MatButton type="submit">Submit</MatButton>
+
+        </EditForm>
+    </MatDialogContent>
+    <MatDialogActions>
+    </MatDialogActions>
+</MatDialog>

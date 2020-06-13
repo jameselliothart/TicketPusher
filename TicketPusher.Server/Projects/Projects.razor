@@ -6,14 +6,15 @@
 
 <TableTemplate Items="Entities" Context="project">
     <TableHeader>
+        <th><EditProject OnSubmitProject="RefreshData" /></th>
         <th>Id</th>
         <th>Name</th>
     </TableHeader>
     <RowTemplate>
+            <MatIconButton>
+                <i title="Edit" class="oi oi-ellipses" ></i>
+            </MatIconButton>
             <td title="@project.Id">@project.Id.ToShortGuid()</td>
             <td>@project.Name</td>
     </RowTemplate>
 </TableTemplate>
-
-
-<button @onclick="@(() => AddProject())" class="btn btn-primary">Add Project</button>

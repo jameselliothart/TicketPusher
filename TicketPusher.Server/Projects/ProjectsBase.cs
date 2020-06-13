@@ -10,18 +10,10 @@ namespace TicketPusher.Server.Projects
         [Inject]
         private IModalService _modal { get; set; }
 
-        public async Task AddProject()
-        {
-            var formModal = _modal.Show<EditProject>("Add Project");
-            var result = await formModal.Result;
-            if (!result.Cancelled) {
-                await RefreshData();
-            }
-        }
-
         protected override async Task RefreshData()
         {
             Entities = await RetrieveMainEntities();
+            StateHasChanged();
         }
     }
 }
