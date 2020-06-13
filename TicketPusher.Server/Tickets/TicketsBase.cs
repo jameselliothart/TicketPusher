@@ -19,18 +19,6 @@ namespace TicketPusher.Server.Tickets
         [Inject]
         private IModalService _modal { get; set; }
 
-        public async Task Close(Guid ticketId)
-        {
-            var parameters = new ModalParameters();
-            parameters.Add(nameof(CloseTicket.Id), ticketId);
-            var formModal = _modal.Show<CloseTicket>("Close Ticket", parameters);
-            var result = await formModal.Result;
-            if (!result.Cancelled)
-            {
-                await RefreshData();
-            }
-        }
-
         protected override async Task RefreshData()
         {
             Entities = await RetrieveMainEntities();

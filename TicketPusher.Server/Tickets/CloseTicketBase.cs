@@ -1,17 +1,11 @@
 using System;
-using Blazored.Modal;
-using Blazored.Toast.Services;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
 namespace TicketPusher.Server.Tickets
 {
     public class CloseTicketBase : ComponentBase
     {
-        [CascadingParameter]
-        public BlazoredModalInstance BlazoredModal { get; set; }
-
-        [Inject]
-        protected IToastService ToastService { get; set; }
 
         [Inject]
         protected ITicketWriteDataService TicketWriteDataService { get; set; }
@@ -19,15 +13,23 @@ namespace TicketPusher.Server.Tickets
         [Parameter]
         public Guid Id { get; set; }
 
+        [Parameter]
+        public Func<Task> OnHandleValidSubmit { get; set; }
+        public bool DialogIsOpen { get; set; } = false;
+
         protected CloseTicketDto CloseTicketModel { get; set; } =
             new CloseTicketDto() { Resolution = string.Empty };
-
         protected async void HandleValidSubmit()
         {
             var completedTicket = await TicketWriteDataService.CloseTicketAsync(Id, CloseTicketModel);
-            ToastService.ShowSuccess($"Closed ticket {Id}", "Success!");
+            await OnHandleValidSubmit?.Invoke();
+            DialogIsOpen = false;
+            StateHasChanged();
+        }
 
-            BlazoredModal.Close();
+        protected void OpenDialog()
+        {
+            DialogIsOpen = true;
         }
     }
 }

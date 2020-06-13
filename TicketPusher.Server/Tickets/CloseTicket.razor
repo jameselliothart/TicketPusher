@@ -1,13 +1,26 @@
 @inherits CloseTicketBase
 
-<EditForm Model="CloseTicketModel" OnValidSubmit="HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+<MatIconButton OnClick="@OpenDialog" >
+    <MatIcon>
+        <i class="oi oi-check"></i>
+    </MatIcon>
+</MatIconButton>
+<MatDialog @bind-IsOpen="@DialogIsOpen">
+    <MatDialogTitle>New Project</MatDialogTitle>
+    <MatDialogContent>
+        <EditForm Model="@CloseTicketModel" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-    <label>
-        Resolution:
-        <InputTextArea id="resolution" @bind-Value="CloseTicketModel.Resolution" />
-    </label>
+            <br/>
+            <div class="form-group row">
+                <MatStringField TextArea="true" @bind-Value="CloseTicketModel.Resolution" Label="Resolution" ></MatStringField>
+            </div>
 
-    <button type="submit">Close Ticket</button>
-</EditForm>
+            <MatButton type="submit">Close Ticket</MatButton>
+
+        </EditForm>
+    </MatDialogContent>
+    <MatDialogActions>
+    </MatDialogActions>
+</MatDialog>

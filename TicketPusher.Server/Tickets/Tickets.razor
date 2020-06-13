@@ -15,11 +15,7 @@
         <th>Due Date</th>
     </TableHeader>
     <RowTemplate>
-        <td>
-            <MatIconButton>
-                <i title="Close" class="oi oi-check" @onclick="@(() => Close(@ticket.Id))"></i>
-            </MatIconButton>
-        </td>
+        <td><CloseTicket Id="@ticket.Id" OnHandleValidSubmit="RefreshData" /></td>
         <td title="@ticket.Id">@ticket.Id.ToShortGuid()</td>
         <td>@ticket.ProjectId.ToProjectName(@Projects)</td>
         <td>@ticket.Owner</td>
