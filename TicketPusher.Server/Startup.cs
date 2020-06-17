@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Blazored.Modal;
-using Blazored.Toast;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -62,9 +60,6 @@ namespace TicketPusher.Server
             RegisterTypedClient<ITicketReadDataService, TicketReadDataService>(ticketPusherApi);
             RegisterTypedClient<ITicketWriteDataService, TicketWriteDataService>(ticketPusherApi);
             RegisterTypedClient<ICompletedTicketReadDataService, CompletedTicketReadDataService>(ticketPusherApi);
-
-            services.AddBlazoredToast();
-            services.AddBlazoredModal();
 
             services.AddAuthentication(options =>
             {

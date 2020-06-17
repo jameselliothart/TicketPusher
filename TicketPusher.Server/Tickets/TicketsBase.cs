@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blazored.Modal;
-using Blazored.Modal.Services;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.Server.Projects;
 using TicketPusher.Server.Templates;
@@ -15,9 +12,6 @@ namespace TicketPusher.Server.Tickets
 
         [Inject]
         private IProjectReadDataService _projectReadDataService { get; set; }
-
-        [Inject]
-        private IModalService _modal { get; set; }
 
         protected override async Task RefreshData()
         {
