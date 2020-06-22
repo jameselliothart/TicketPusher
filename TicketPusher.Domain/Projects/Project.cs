@@ -7,24 +7,31 @@ namespace TicketPusher.Domain.Projects
     public class Project : Entity
     {
         public string Name { get; private set; }
-        public Maybe<Project> ParentProject { get; private set; }
+        public Project ParentProject { get; private set; }
+
+        public static readonly Project None = new Project(Guid.Parse("11111111-1111-1111-1111-111111111111"), string.Empty);
 
         private Project() {}
 
-        public Project(string name) : this(name, Maybe<Project>.None)
+        private Project(Guid id, string name) : base(id)
+        {
+            Name = name;
+        }
+
+        public Project(string name) : this(name, None)
         {
         }
 
-        public Project(string name, Maybe<Project> parentProject) : base()
+        public Project(string name, Project parentProject) : base()
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
-            ParentProject = parentProject;
+            SetParentProject(parentProject);
         }
 
-        public void UpdateParentProject(Maybe<Project> project)
+        public void SetParentProject(Maybe<Project> project)
         {
             if (project == this) throw new InvalidOperationException($"Cannot set a project as its own parent: {Id}|{Name}");
-            ParentProject = project;
+            ParentProject = project.Unwrap(None);
         }
 
     }
