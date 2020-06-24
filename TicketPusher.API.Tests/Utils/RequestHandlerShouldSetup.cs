@@ -9,7 +9,7 @@ namespace TicketPusher.API.Tests.Utils
 {
     public abstract class RequestHandlerShouldSetup : IClassFixture<MapperFixture>
     {
-        protected readonly MapperFixture _mapper;
+        protected static MapperFixture _mapper;
         protected readonly DbContextOptions<TicketPusherContext> _dbContextOptions;
 
         public RequestHandlerShouldSetup()

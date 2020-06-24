@@ -25,11 +25,11 @@ namespace TicketPusher.API.Tests.Projects
         private Func<TicketPusherContext, string, Task<Project>> GetProjectFromDb = (ctx, projectName) =>
             ctx.Projects.Where(p => p.Name == projectName).Include(p => p.ParentProject).SingleAsync();
 
-        private Func<TicketPusherRepository, IMapper, CreateProjectCommand, Task<Result<ProjectDto, Error>>> HandleCommand =
-            async (repo, mapper, command) =>
+        private Func<TicketPusherRepository, CreateProjectCommand, Task<Result<ProjectDto, Error>>> HandleCommand =
+            async (repo, command) =>
             {
-                var handler = new CreateProjectCommandHandler(repo, mapper);
-                return await handler.Handle(command, new CancellationToken());
+                var commandHandler = new CreateProjectCommandHandler(repo, _mapper.Instance);
+                return await commandHandler.Handle(command, new CancellationToken());
             };
 
         [Fact]
@@ -40,7 +40,7 @@ namespace TicketPusher.API.Tests.Projects
 
             ActWithRepository(async repo =>
             {
-                await HandleCommand(repo, _mapper.Instance, command);
+                await HandleCommand(repo, command);
             });
 
             AssertWithContext(async ctx =>
@@ -62,7 +62,7 @@ namespace TicketPusher.API.Tests.Projects
             {
                 repo.CreateProject(parentProject);
                 await repo.SaveChangesAsync();
-                await HandleCommand(repo, _mapper.Instance, command);
+                await HandleCommand(repo, command);
             });
 
             AssertWithContext(async ctx =>
@@ -80,7 +80,7 @@ namespace TicketPusher.API.Tests.Projects
 
             ActWithRepository(async repo =>
             {
-                var result = await HandleCommand(repo, _mapper.Instance, command);
+                var result = await HandleCommand(repo, command);
 
                 // Assert
                 result.Error.Should().Be(Errors.General.NotFound());
@@ -101,7 +101,7 @@ namespace TicketPusher.API.Tests.Projects
 
             ActWithRepository(async repo =>
             {
-                Result<ProjectDto, Error> result = await HandleCommand(repo, _mapper.Instance, command);
+                Result<ProjectDto, Error> result = await HandleCommand(repo, command);
 
                 // Assert
                 result.Value.Name.Should().Be(projectName);
