@@ -15,7 +15,7 @@ using FluentAssertions.Execution;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketQueryHandlerShould : QueryHandlerTestSetup, IClassFixture<MapperFixture>
+    public class GetTicketQueryHandlerShould : RequestHandlerShouldSetup, IClassFixture<MapperFixture>
     {
         public GetTicketQueryHandlerShould(MapperFixture mapper) : base(mapper)
         {

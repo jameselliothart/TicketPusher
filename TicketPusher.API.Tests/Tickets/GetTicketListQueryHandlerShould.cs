@@ -12,7 +12,7 @@ using Xunit;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketListQueryHandlerShould : QueryHandlerTestSetup, IClassFixture<MapperFixture>
+    public class GetTicketListQueryHandlerShould : RequestHandlerShouldSetup, IClassFixture<MapperFixture>
     {
         public GetTicketListQueryHandlerShould(MapperFixture mapper) : base(mapper)
         {
