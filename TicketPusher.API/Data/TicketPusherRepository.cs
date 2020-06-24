@@ -67,7 +67,7 @@ namespace TicketPusher.API.Data
 
         public async Task<Project> GetProjectAsync(Guid projectId)
         {
-            return await _context.Projects.Where(p => p.Id == projectId).FirstOrDefaultAsync();
+            return await _context.Projects.Where(p => p.Id == projectId).Include(p => p.ParentProject).FirstOrDefaultAsync();
         }
 
         public void UpdateProject(Project project)
@@ -95,7 +95,7 @@ namespace TicketPusher.API.Data
 
         public async Task<List<Project>> GetProjectsListAsync()
         {
-            return await _context.Projects.ToListAsync();
+            return await _context.Projects.Include(p => p.ParentProject).ToListAsync();
         }
     }
 }
