@@ -1,4 +1,8 @@
 using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using TicketPusher.Domain.CompletedTickets;
 using TicketPusher.Domain.Projects;
@@ -57,12 +61,30 @@ namespace TicketPusher.API.Data
                 });
             });
 
+            modelBuilder.Entity<Project>().Property<Guid?>(propNameProjectFK).HasColumnName("parent_project_id").IsRequired(false);
+
             modelBuilder.Entity<Project>(x =>
             {
                 x.ToTable("project").HasKey(k => k.Id);
                 x.Property(p => p.Id).HasColumnName("project_id");
                 x.Property(p => p.Name).HasColumnName("name").IsRequired();
+                x.HasOne(p => p.ParentProject).WithMany().HasForeignKey(propNameProjectFK).IsRequired(false);
             });
+
+            modelBuilder.Entity<Project>().HasData(Project.None);
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            var referenceData = ChangeTracker.Entries()
+                .Where(x => x.Entity is Project && (Project)x.Entity == Project.None);
+            foreach (var referenceDatum in referenceData)
+            {
+                referenceDatum.State = EntityState.Unchanged;
+            }
+
+            int result = await base.SaveChangesAsync(cancellationToken);
+            return result;
         }
     }
 }

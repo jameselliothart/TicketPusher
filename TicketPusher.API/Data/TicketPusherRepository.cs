@@ -70,6 +70,11 @@ namespace TicketPusher.API.Data
             return await _context.Projects.Where(p => p.Id == projectId).FirstOrDefaultAsync();
         }
 
+        public void UpdateProject(Project project)
+        {
+            _context.Projects.Update(project);
+        }
+
         public void CreateCompletedTicket(CompletedTicket completedTicket)
         {
             _context.CompletedTickets.Add(completedTicket);
