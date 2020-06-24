@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace TicketPusher.API.Projects.Commands
@@ -6,5 +7,7 @@ namespace TicketPusher.API.Projects.Commands
     {
         [Required]
         public string Name { get; set; }
+
+        public Guid ParentProject { get; set; }
     }
 }

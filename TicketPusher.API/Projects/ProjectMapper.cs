@@ -7,7 +7,11 @@ namespace TicketPusher.API.Projects
     {
         public ProjectMapper()
         {
-            CreateMap<Project, ProjectDto>();
+            CreateMap<Project, ProjectDto>()
+                .ForMember(
+                    dest => dest.ParentProject,
+                    opt => opt.MapFrom(src => src.ParentProject.Id)
+                );
         }
     }
 }

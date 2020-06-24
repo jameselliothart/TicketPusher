@@ -6,5 +6,6 @@ namespace TicketPusher.API.Projects
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public Guid ParentProject { get; set; }
     }
 }

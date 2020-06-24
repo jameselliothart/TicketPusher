@@ -39,7 +39,7 @@ namespace TicketPusher.API.Projects
         [HttpPost]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto project)
         {
-            var command = new CreateProjectCommand(project.Name);
+            var command = new CreateProjectCommand(project.Name, project.ParentProject);
             var result = await _mediator.Send(command);
 
             return Ok(result.Value);
