@@ -22,8 +22,8 @@ namespace TicketPusher.API.Tests.Projects
         {
         }
 
-        private Func<TicketPusherContext, string, Task<Project>> GetProjectFromDb = (ctx, projectName) =>
-            ctx.Projects.Where(p => p.Name == projectName).Include(p => p.ParentProject).SingleAsync();
+        private Func<TicketPusherContext, string, Task<Project>> GetProjectFromDb = async (ctx, projectName) =>
+            await ctx.Projects.Where(p => p.Name == projectName).Include(p => p.ParentProject).SingleOrDefaultAsync();
 
         private Func<TicketPusherRepository, CreateProjectCommand, Task<Result<ProjectDto, Error>>> HandleCommand =
             async (repo, command) =>
@@ -35,15 +35,18 @@ namespace TicketPusher.API.Tests.Projects
         [Fact]
         public void CreateAProject_WithNoParent()
         {
+            // Arrange
             var projectName = Guid.NewGuid().ToString();
             var command = new CreateProjectCommand(projectName, Guid.Empty);
 
+            // Act
             ActWithRepository(async repo =>
             {
                 await HandleCommand(repo, command);
             });
 
-            AssertWithContext(async ctx =>
+            // Assert
+            ActWithContext(async ctx =>
             {
                 var projectFromDb = await GetProjectFromDb(ctx, projectName);
                 projectFromDb.ParentProject.Should().Be(Project.None);
@@ -54,10 +57,12 @@ namespace TicketPusher.API.Tests.Projects
         [Fact]
         public void CreateAProject_WithAParent()
         {
+            // Arrange
             var parentProject = new Project("Parent");
             var projectName = Guid.NewGuid().ToString();
             var command = new CreateProjectCommand(projectName, parentProject.Id);
 
+            // Act
             ActWithRepository(async repo =>
             {
                 repo.CreateProject(parentProject);
@@ -65,7 +70,8 @@ namespace TicketPusher.API.Tests.Projects
                 await HandleCommand(repo, command);
             });
 
-            AssertWithContext(async ctx =>
+            // Assert
+            ActWithContext(async ctx =>
             {
                 var projectFromDb = await GetProjectFromDb(ctx, projectName);
                 projectFromDb.ParentProject.Should().Be(parentProject);
@@ -75,32 +81,37 @@ namespace TicketPusher.API.Tests.Projects
         [Fact]
         public void ReturnNotFound_WhenParentDoesNotExist()
         {
+            // Arrange
             var projectName = Guid.NewGuid().ToString();
             var command = new CreateProjectCommand(projectName, Guid.NewGuid());
 
             ActWithRepository(async repo =>
             {
+                // Act
                 var result = await HandleCommand(repo, command);
 
                 // Assert
                 result.Error.Should().Be(Errors.General.NotFound());
             });
 
-            AssertWithContext(ctx =>
+            // Assert
+            ActWithContext(async ctx =>
             {
-                Func<Task<Project>> act = async () => await GetProjectFromDb(ctx, projectName);
-                act.Should().Throw<InvalidOperationException>("because a project with nonexistent parent should not be saved");
+                var project = await GetProjectFromDb(ctx, projectName);
+                project.Should().BeNull("because a project with nonexistent parent should not be saved");
             });
         }
 
         [Fact]
         public void ReturnAProjectDto_WhenSuccessful()
         {
+            // Arrange
             var projectName = Guid.NewGuid().ToString();
             var command = new CreateProjectCommand(projectName, Guid.Empty);
 
             ActWithRepository(async repo =>
             {
+                // Act
                 Result<ProjectDto, Error> result = await HandleCommand(repo, command);
 
                 // Assert
