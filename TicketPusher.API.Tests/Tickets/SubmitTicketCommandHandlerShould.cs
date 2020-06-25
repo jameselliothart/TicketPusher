@@ -2,11 +2,14 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Tickets;
 using TicketPusher.API.Tickets.Commands;
+using TicketPusher.API.Utils;
 using TicketPusher.Domain.Projects;
 using TicketPusher.Domain.Tests.Utils;
 using Xunit;
@@ -19,57 +22,61 @@ namespace TicketPusher.API.Tests.Tickets
         {
         }
 
-        [Fact]
-        public async Task CreateATicket()
+        private SubmitTicketCommand DefaultSubmitTicketCommand() =>
+            new SubmitTicketCommand("Unassigned", Guid.NewGuid().ToString(), DateTime.Now.AddDays(7), Project.None.Id);
+
+        private Func<TicketPusherRepository, SubmitTicketCommand, Task<Result<TicketDto, Error>>> HandleCommand =
+            async (repo, command) =>
         {
-            // Arrange
+            var commandHandler = new SubmitTicketCommandHandler(repo, _mapper.Instance);
+            return await commandHandler.Handle(command, new CancellationToken());
+        };
+
+        [Fact]
+        public void CreateATicket()
+        {
             var command = DefaultSubmitTicketCommand();
 
-            using (var context = new TicketPusherContext(_dbContextOptions))
+            ActWithRepository(async repo =>
             {
-                var repository = new TicketPusherRepository(context);
-                var handler = new SubmitTicketCommandHandler(repository, _mapper.Instance);
-                context.Projects.Add(TicketTestData.DefaultProject);
-                await context.SaveChangesAsync();
-
-                // Act
-                await handler.Handle(command, new CancellationToken());
-            }
+                await HandleCommand(repo, command);
+            });
 
             // Assert
-            using (var context = new TicketPusherContext(_dbContextOptions))
+            ActWithContext(async ctx =>
             {
-                var ticketFromDb = context.Tickets.Where(t => t.TicketDetails.Description == command.Description).Single();
+                var ticketFromDb = await ctx.Tickets.Where(t => t.TicketDetails.Description == command.Description).SingleAsync();
                 ticketFromDb.Should().NotBeNull();
-            }
+            });
         }
 
         [Fact]
-        public async Task ReturnATicketDto()
+        public void ReturnATicketDto()
         {
-            // Arrange
             var command = DefaultSubmitTicketCommand();
 
-            using (var context = new TicketPusherContext(_dbContextOptions))
+            ActWithRepository(async repo =>
             {
-                var repository = new TicketPusherRepository(context);
-                var handler = new SubmitTicketCommandHandler(repository, _mapper.Instance);
-                context.Projects.Add(TicketTestData.DefaultProject);
-                await context.SaveChangesAsync();
-
-                // Act
-                var result = await handler.Handle(command, new CancellationToken());
+                Result<TicketDto, Error> result = await HandleCommand(repo, command);
 
                 // Assert
-                result.Value.Should().BeOfType(typeof(TicketDto)).And
-                    .BeEquivalentTo(new { Description = command.Description }, opt => opt.ExcludingMissingMembers());
-            }
+                result.Value.TicketDetails.Description.Should().Be(command.Description);
+            });
+
         }
 
-        private SubmitTicketCommand DefaultSubmitTicketCommand()
+        [Fact]
+        public void ReturnNotFound_GivenInvalidProject()
         {
-            var project = TicketTestData.DefaultProject;
-            return new SubmitTicketCommand("Unassigned", $"{Guid.NewGuid().ToString()}", DateTime.Now.AddDays(7), project.Id);
+            var command = new SubmitTicketCommand("Unassigned", "Test", DateTime.Now, Guid.NewGuid());
+
+            ActWithRepository(async repo =>
+            {
+                Result<TicketDto, Error> result = await HandleCommand(repo, command);
+
+                // Assert
+                result.Error.Should().Be(Errors.General.NotFound());
+            });
         }
     }
 }

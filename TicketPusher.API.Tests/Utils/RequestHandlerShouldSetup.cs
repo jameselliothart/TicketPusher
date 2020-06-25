@@ -39,11 +39,11 @@ namespace TicketPusher.API.Tests.Utils
             }
         }
 
-        public void AssertWithContext(Action<TicketPusherContext> assert)
+        public void ActWithContext(Action<TicketPusherContext> act)
         {
             using (var context = new TicketPusherContext(_dbContextOptions))
             {
-                assert(context);
+                act(context);
             }
         }
 
