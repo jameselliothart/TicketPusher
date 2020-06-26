@@ -18,6 +18,7 @@ namespace TicketPusher.API.Tests.Utils
             var connection = new SqliteConnection(connStringBuilder.ToString());
             _dbContextOptions = new DbContextOptionsBuilder<TicketPusherContext>()
                 .UseSqlite(connection)
+                .EnableSensitiveDataLogging()
                 .Options;
 
             using var context = new TicketPusherContext(_dbContextOptions);
