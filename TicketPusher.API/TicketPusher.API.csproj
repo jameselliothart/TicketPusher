@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TicketPusher.Domain\TicketPusher.Domain.csproj" />
+    <ProjectReference Include="..\TicketPusher.DataTransfer\TicketPusher.DataTransfer.csproj" />
   </ItemGroup>
 
 
