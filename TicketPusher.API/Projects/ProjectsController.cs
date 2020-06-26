@@ -37,7 +37,7 @@ namespace TicketPusher.API.Projects
             var query = new GetProjectQuery(id);
             Result<ProjectDto, Error> result = await _mediator.Send(query);
 
-            return FromResultWithValue(result);
+            return FromValueOrError(result);
         }
 
         [HttpPost]
@@ -46,7 +46,7 @@ namespace TicketPusher.API.Projects
             var command = new CreateProjectCommand(project.Name, project.ParentProject);
             Result<ProjectDto, Error> result = await _mediator.Send(command);
 
-            return FromResultWithValue(result);
+            return FromValueOrError(result);
         }
 
         [HttpPut("{id}")]
@@ -55,7 +55,7 @@ namespace TicketPusher.API.Projects
             var command = new UpdateProjectCommand(id, project.Name, project.ParentProject);
             Result<ProjectDto, Error> result = await _mediator.Send(command);
 
-            return FromResultWithValue(result);
+            return FromValueOrError(result);
         }
     }
 }

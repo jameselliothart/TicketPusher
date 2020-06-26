@@ -17,7 +17,7 @@ namespace TicketPusher.API.Common
             return base.Ok(Envelope.Ok(result));
         }
 
-        protected IActionResult FromResultWithValue<T, E>(Result<T, E> result)
+        protected IActionResult FromValueOrError<T, E>(Result<T, E> result)
             where E : Error
         {
             if (result.IsSuccess)
