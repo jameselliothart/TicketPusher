@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPusher.API", "TicketP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPusher.API.Tests", "TicketPusher.API.Tests\TicketPusher.API.Tests.csproj", "{9A5D9C09-CAAB-4154-8D56-A818687E3C59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketPusher.DataTransfer", "TicketPusher.DataTransfer\TicketPusher.DataTransfer.csproj", "{33D5E454-D39D-4F64-9BC7-B91837D1134F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{9A5D9C09-CAAB-4154-8D56-A818687E3C59}.Release|x64.Build.0 = Release|Any CPU
 		{9A5D9C09-CAAB-4154-8D56-A818687E3C59}.Release|x86.ActiveCfg = Release|Any CPU
 		{9A5D9C09-CAAB-4154-8D56-A818687E3C59}.Release|x86.Build.0 = Release|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Debug|x64.Build.0 = Debug|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Debug|x86.Build.0 = Debug|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Release|x64.ActiveCfg = Release|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Release|x64.Build.0 = Release|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Release|x86.ActiveCfg = Release|Any CPU
+		{33D5E454-D39D-4F64-9BC7-B91837D1134F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
