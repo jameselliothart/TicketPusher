@@ -44,5 +44,31 @@ namespace TicketPusher.Domain.Tests
 
             act.Should().Throw<InvalidOperationException>();
         }
+
+        [Fact]
+        public void ReturnHierarchy_GivenNoParent()
+        {
+            var sutProject = Project.None;
+
+            sutProject.GetHierarchy().Should().Be("/");
+        }
+
+        [Fact]
+        public void ReturnHierarchy_GivenOneParent()
+        {
+            var sutProject = new Project("SUT", Project.None);
+
+            sutProject.GetHierarchy().Should().Be("/SUT");
+        }
+
+        [Fact]
+        public void ReturnHierarchy_GivenMultipleNesting()
+        {
+            var grandParentProject = new Project("Grand Parent", Project.None);
+            var parentProject = new Project("Parent", grandParentProject);
+            var sutProject = new Project("SUT", parentProject);
+
+            sutProject.GetHierarchy().Should().Be("/Grand Parent/Parent/SUT");
+        }
     }
 }

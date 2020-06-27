@@ -34,5 +34,10 @@ namespace TicketPusher.Domain.Projects
             ParentProject = project.Unwrap(None);
         }
 
+        public string GetHierarchy()
+        {
+            return HierarchyBuilder.GetHierarchy(this);
+        }
+
     }
 }
