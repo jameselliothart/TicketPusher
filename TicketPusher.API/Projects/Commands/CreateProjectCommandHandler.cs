@@ -22,18 +22,10 @@ namespace TicketPusher.API.Projects.Commands
         }
         public async Task<Result<ProjectDto, Error>> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
         {
-            var parentProject = request.ParentProject != Guid.Empty ?
-                await _repository.GetProjectAsync(request.ParentProject) :
-                Project.None;
-
-            Result<ProjectDto, Error> result = await Result.SuccessIf(
-                parentProject != null,
-                parentProject,
-                Errors.General.NotFound(nameof(Project), request.ParentProject))
-                .Map(async p => await CreateProject(request.Name, parentProject))
+            return await
+                (await _repository.EntityOrNotFound(request.ParentProjectId, async id => await _repository.GetProjectAsync(id)))
+                .Map(async p => await CreateProject(request.Name, p))
             ;
-
-            return result;
         }
 
         private async Task<ProjectDto> CreateProject(string name, Project parentProject)
