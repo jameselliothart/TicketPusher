@@ -23,19 +23,14 @@ namespace TicketPusher.API.Projects.Commands
 
         public async Task<Result<ProjectDto, Error>> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
         {
-            var project = await _repository.GetProjectAsync(request.ProjectId);
-            Result<ProjectDto, Error> projectResult = Result.FailureIf(
-                project == null,
-                _mapper.Map<ProjectDto>(project),
-                Errors.General.NotFound(nameof(Project), request.ProjectId));
+            // TODO: enable this
+            // var name = string.IsNullOrWhiteSpace(request.Name) ? project.Name : request.Name;
+            // project.UpdateName(name);
 
-            if (projectResult.IsFailure)
-                return projectResult;
-
-            var name = string.IsNullOrWhiteSpace(request.Name) ? project.Name : request.Name;
-            // project.UpdateName(name);  TODO: enable this
-
-            Result<ProjectDto, Error> result = await UpdateParentProject(request, project);
+            Result<ProjectDto, Error> result =
+                await _repository.EntityOrNotFound(request.ProjectId, async id => await _repository.GetProjectAsync(id))
+                .Bind(async p => await UpdateParentProject(request, p))
+                ;
 
             return result;
         }
