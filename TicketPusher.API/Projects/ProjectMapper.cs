@@ -12,6 +12,10 @@ namespace TicketPusher.API.Projects
                 .ForMember(
                     dest => dest.ParentProjectId,
                     opt => opt.MapFrom(src => src.ParentProject.Id)
+                )
+                .ForMember(
+                    dest => dest.Hierarchy,
+                    opt => opt.MapFrom(src => src.GetHierarchy())
                 );
         }
     }
