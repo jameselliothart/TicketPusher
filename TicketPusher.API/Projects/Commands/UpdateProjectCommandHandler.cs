@@ -27,39 +27,29 @@ namespace TicketPusher.API.Projects.Commands
             // var name = string.IsNullOrWhiteSpace(request.Name) ? project.Name : request.Name;
             // project.UpdateName(name);
 
-            Result<ProjectDto, Error> result =
-                await _repository.EntityOrNotFound(request.ProjectId, async id => await _repository.GetProjectAsync(id))
-                .Bind(async p => await UpdateParentProject(request, p))
+            return await _repository.EntityOrNotFound(request.ProjectId, async id => await _repository.GetProjectAsync(id))
+                .Bind(async p => await UpdateProject(request, p))
                 ;
-
-            return result;
         }
 
-        private async Task<Result<ProjectDto, Error>> UpdateParentProject(UpdateProjectCommand request, Project project)
+        private async Task<Result<ProjectDto, Error>> UpdateProject(UpdateProjectCommand request, Project project)
         {
-            if (request.ParentProjectId != project.ParentProject.Id)
-            {
-                var parentProject = request.ParentProjectId != Guid.Empty ?
-                    await _repository.GetProjectAsync(request.ParentProjectId) :
-                    Project.None;
-
-                return await Result.SuccessIf(
-                    parentProject != null,
-                    parentProject,
-                    Errors.General.NotFound(nameof(Project), request.ParentProjectId))
-                    .Map(async parent =>
-                    {
-                        project.SetParentProject(parent);
-                        _repository.UpdateProject(project);
-                        await _repository.SaveChangesAsync();
-                        return _mapper.Map<ProjectDto>(project);
-                    });
-            }
-            else
+            if (request.ParentProjectId == project.ParentProject.Id)
             {
                 ProjectDto projectToReturn = _mapper.Map<ProjectDto>(project);
                 return Result.SuccessIf(projectToReturn != null, projectToReturn, Errors.General.NotFound());
             }
+
+            return await
+                (await _repository.EntityOrNotFound(request.ParentProjectId, async id => await _repository.GetProjectAsync(id)))
+                .Map(async parent =>
+                {
+                    project.SetParentProject(parent);
+                    _repository.UpdateProject(project);
+                    await _repository.SaveChangesAsync();
+                    return _mapper.Map<ProjectDto>(project);
+                })
+            ;
         }
     }
 }
