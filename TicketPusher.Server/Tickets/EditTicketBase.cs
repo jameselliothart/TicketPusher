@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.Server.Projects;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 

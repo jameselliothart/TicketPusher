@@ -2,6 +2,7 @@ using System;
 using CSharpFunctionalExtensions;
 using MediatR;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Domain.Projects;
 
 namespace TicketPusher.API.Projects.Commands

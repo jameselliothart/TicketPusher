@@ -1,4 +1,5 @@
 using TicketPusher.API.Common;
+using TicketPusher.DataTransfer.Projects;
 
 namespace TicketPusher.API.Projects.Queries
 {

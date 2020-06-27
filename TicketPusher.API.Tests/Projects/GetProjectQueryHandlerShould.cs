@@ -1,14 +1,13 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using TicketPusher.API.Data;
-using TicketPusher.API.Projects;
 using TicketPusher.API.Projects.Queries;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Domain.Projects;
 using Xunit;
 

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using TicketPusher.API.Common;
 using TicketPusher.API.Data;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Domain.Projects;
 
 namespace TicketPusher.API.Projects.Queries

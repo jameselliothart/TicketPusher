@@ -2,15 +2,14 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using TicketPusher.API.Data;
-using TicketPusher.API.Projects;
 using TicketPusher.API.Projects.Commands;
 using TicketPusher.API.Tests.Utils;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Domain.Projects;
 using Xunit;
 

@@ -1,11 +1,11 @@
 using System;
 
-namespace TicketPusher.API.Projects
+namespace TicketPusher.DataTransfer.Projects
 {
     public class ProjectDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid ParentProject { get; set; }
+        public Guid ParentProjectId { get; set; }
     }
 }

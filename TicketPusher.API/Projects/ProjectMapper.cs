@@ -1,4 +1,5 @@
 using AutoMapper;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Domain.Projects;
 
 namespace TicketPusher.API.Projects
@@ -9,7 +10,7 @@ namespace TicketPusher.API.Projects
         {
             CreateMap<Project, ProjectDto>()
                 .ForMember(
-                    dest => dest.ParentProject,
+                    dest => dest.ParentProjectId,
                     opt => opt.MapFrom(src => src.ParentProject.Id)
                 );
         }
