@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace TicketPusher.API.Projects.Commands
+namespace TicketPusher.DataTransfer.Projects
 {
     public class CreateProjectDto
     {

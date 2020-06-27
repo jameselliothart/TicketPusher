@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 
