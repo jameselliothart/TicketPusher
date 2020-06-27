@@ -36,7 +36,7 @@ namespace TicketPusher.API.Tickets
             var query = new GetTicketQuery(id);
             Result<TicketDto, Error> result = await _mediator.Send(query);
 
-            return FromValueOrError(result);
+            return ValueOrError(result);
         }
 
         [HttpPost]
@@ -45,7 +45,7 @@ namespace TicketPusher.API.Tickets
             var command = new SubmitTicketCommand(ticket.Owner, ticket.Description, ticket.DueDate, ticket.ProjectId);
             Result<TicketDto, Error> result = await _mediator.Send(command);
 
-            return FromValueOrError(result);
+            return ValueOrError(result);
         }
 
         [HttpPost("{id}/close")]
@@ -54,7 +54,7 @@ namespace TicketPusher.API.Tickets
             var command = new CloseTicketCommand(id, closeTicketDto.Resolution);
             Result<CompletedTicketDto, Error> result = await _mediator.Send(command);
 
-            return FromValueOrError(result);
+            return ValueOrError(result);
         }
     }
 }
