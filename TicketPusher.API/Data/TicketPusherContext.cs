@@ -61,7 +61,9 @@ namespace TicketPusher.API.Data
                 });
             });
 
-            modelBuilder.Entity<Project>().Property<Guid?>(propNameProjectFK).HasColumnName("parent_project_id").IsRequired(false);
+            modelBuilder.Entity<Project>().Property<Guid?>(propNameProjectFK).HasColumnName("parent_project_id")
+                .IsRequired(false)
+                .HasDefaultValue(Project.None.Id);
 
             modelBuilder.Entity<Project>(x =>
             {
