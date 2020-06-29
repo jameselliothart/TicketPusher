@@ -38,3 +38,6 @@ msbuild.wrn
 
 # ignore appsettings.Production.json to be able to mimic Prod locally
 appsettings.Production.json
+
+# F# extension
+.ionide/
