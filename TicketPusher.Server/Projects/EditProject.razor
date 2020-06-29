@@ -16,6 +16,15 @@
                 <MatStringField @bind-Value="EntityModel.Name" Label="Name" ></MatStringField>
             </div>
 
+            <div class="form-group row">
+                <MatSelect Label="Parent Project" @bind-Value="EntityModel._parentProjectIdAsString">
+                    @foreach (var project in @Projects)
+                    {
+                        <MatOptionString value="@project.Id.ToString()">@project.Hierarchy</MatOptionString>
+                    }
+                </MatSelect>
+            </div>
+
             <MatButton type="submit">Submit</MatButton>
 
         </EditForm>

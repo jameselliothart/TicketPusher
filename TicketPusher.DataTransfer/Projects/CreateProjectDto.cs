@@ -8,6 +8,10 @@ namespace TicketPusher.DataTransfer.Projects
         [Required]
         public string Name { get; set; }
 
-        public Guid ParentProject { get; set; }
+        public Guid ParentProjectId => Guid.Parse(_parentProjectIdAsString);
+
+        [Required]
+        [Display(Name = "Parent Project")]
+        public string _parentProjectIdAsString { get; set; }
     }
 }

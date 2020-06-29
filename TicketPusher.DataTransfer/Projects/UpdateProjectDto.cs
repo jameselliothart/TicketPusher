@@ -6,6 +6,6 @@ namespace TicketPusher.DataTransfer.Projects
     {
         public string Name { get; set; }
 
-        public Guid ParentProject { get; set; }
+        public Guid ParentProjectId { get; set; }
     }
 }

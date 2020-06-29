@@ -43,7 +43,7 @@ namespace TicketPusher.API.Projects
         [HttpPost]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto project)
         {
-            var command = new CreateProjectCommand(project.Name, project.ParentProject);
+            var command = new CreateProjectCommand(project.Name, project.ParentProjectId);
             Result<ProjectDto, Error> result = await _mediator.Send(command);
 
             return ValueOrError(result);
@@ -52,7 +52,7 @@ namespace TicketPusher.API.Projects
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProject(Guid id, [FromBody] UpdateProjectDto project)
         {
-            var command = new UpdateProjectCommand(id, project.Name, project.ParentProject);
+            var command = new UpdateProjectCommand(id, project.Name, project.ParentProjectId);
             Result<ProjectDto, Error> result = await _mediator.Send(command);
 
             return ValueOrError(result);

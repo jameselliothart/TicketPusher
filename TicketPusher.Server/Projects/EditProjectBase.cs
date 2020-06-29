@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.DataTransfer.Projects;
+using TicketPusher.Domain.Projects;
 using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 
@@ -14,12 +16,15 @@ namespace TicketPusher.Server.Projects
         [Parameter]
         public Func<Task> OnSubmitProject { get; set; }
 
+        [Parameter]
+        public List<ProjectDto> Projects { get; set; }
+
         protected override string GetSuccessMessage(EnvelopeDto<ProjectDto> envelope) =>
             $"Added project {envelope.Result.Id.ToString()}";
 
         protected void OpenDialog()
         {
-            EntityModel = new CreateProjectDto();
+            EntityModel = new CreateProjectDto() { _parentProjectIdAsString = Project.None.Id.ToString() };
             DialogIsOpen = true;
         }
 
