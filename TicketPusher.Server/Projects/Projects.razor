@@ -9,6 +9,7 @@
         <th><EditProject OnSubmitProject="RefreshData" /></th>
         <th>Id</th>
         <th>Name</th>
+        <th>Hierarchy</th>
     </TableHeader>
     <RowTemplate>
             <MatIconButton>
@@ -16,5 +17,6 @@
             </MatIconButton>
             <td title="@project.Id">@project.Id.ToShortGuid()</td>
             <td>@project.Name</td>
+            <td>@project.Hierarchy</td>
     </RowTemplate>
 </TableTemplate>
