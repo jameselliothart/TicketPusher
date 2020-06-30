@@ -19,6 +19,9 @@ namespace TicketPusher.Server.Projects
         [Parameter]
         public List<ProjectDto> Projects { get; set; }
 
+        [Parameter]
+        public RenderFragment Button { get; set; }
+
         protected override string GetSuccessMessage(EnvelopeDto<ProjectDto> envelope) =>
             $"Added project {envelope.Result.Id.ToString()}";
 

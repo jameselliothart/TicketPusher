@@ -6,7 +6,15 @@
 
 <TableTemplate Items="Entities" Context="project">
     <TableHeader>
-        <th><EditProject OnSubmitProject="RefreshData" Projects="Entities" /></th>
+        <th>
+            <EditProject OnSubmitProject="RefreshData" Projects="Entities" >
+                <Button>
+                    <MatIcon>
+                        <i title="New" class="oi oi-plus"></i>
+                    </MatIcon>
+                </Button>
+            </EditProject>
+        </th>
         <th>Id</th>
         <th>Name</th>
         <th>Hierarchy</th>
