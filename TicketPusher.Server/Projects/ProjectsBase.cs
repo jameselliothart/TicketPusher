@@ -14,7 +14,7 @@ namespace TicketPusher.Server.Projects
 
         protected override async Task RefreshData()
         {
-            Entities = await RetrieveMainEntities();
+            Entities = (await RetrieveMainEntities()).OrderBy(e => e.Hierarchy).ToList();
             StateHasChanged();
         }
     }
