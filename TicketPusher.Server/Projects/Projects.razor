@@ -4,7 +4,7 @@
 @inherits ProjectsBase
 @attribute [Authorize]
 
-<TableTemplate Items="Entities" Context="project">
+<TableTemplate Items="EditableProjects" Context="project">
     <TableHeader>
         <th>
             <EditProject OnSubmitProject="RefreshData" Projects="Entities" >
