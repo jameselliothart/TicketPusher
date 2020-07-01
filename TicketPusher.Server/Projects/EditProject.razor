@@ -16,7 +16,7 @@
 
             <div class="form-group row">
                 <MatSelect Label="Parent Project" @bind-Value="EntityModel._parentProjectIdAsString">
-                    @foreach (var project in @Projects)
+                    @foreach (var project in @Projects.OrderBy(p => p.Hierarchy))
                     {
                         <MatOptionString value="@project.Id.ToString()">@project.Hierarchy</MatOptionString>
                     }
