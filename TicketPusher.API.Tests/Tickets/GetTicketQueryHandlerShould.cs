@@ -10,62 +10,58 @@ using TicketPusher.Domain.Tests.Utils;
 using CSharpFunctionalExtensions;
 using System;
 using TicketPusher.API.Utils;
-using TicketPusher.Domain.Tickets;
-using FluentAssertions.Execution;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketQueryHandlerShould : QueryHandlerTestSetup, IClassFixture<MapperFixture>
+    public class GetTicketQueryHandlerShould : RequestHandlerShouldSetup, IClassFixture<MapperFixture>
     {
         public GetTicketQueryHandlerShould(MapperFixture mapper) : base(mapper)
         {
         }
 
+        private Func<TicketPusherRepository, GetTicketQuery, Task<Result<TicketDto, Error>>> HandleQuery =
+            async (repo, query) =>
+            {
+                var queryHandler = new GetTicketQueryHandler(repo, _mapper.Instance);
+                return await queryHandler.Handle(query, new CancellationToken());
+            };
+
         [Fact]
-        public async Task GetTicketById()
+        public void GetTicketById()
         {
             // Arrange
             var ticket = TicketTestData.DefaultTicket();
-            var expected = _mapper.Instance.Map<TicketDto>(ticket);
-            using (var context = new TicketPusherContext(_dbContextOptions))
-            {
-                context.Tickets.Add(ticket);
-                context.SaveChanges();
-            }
+            var query = new GetTicketQuery(ticket.Id);
 
-            using (var context = new TicketPusherContext(_dbContextOptions))
-            {
-                var repository = new TicketPusherRepository(context);
-                var sutQueryHandler = new GetTicketQueryHandler(repository, _mapper.Instance);
+            ActWithContext(async ctx => {
+                ctx.Tickets.Add(ticket);
+                await ctx.SaveChangesAsync();
+            });
 
+            ActWithRepository(async repo =>
+            {
                 // Act
-                var actual = await sutQueryHandler.Handle(new GetTicketQuery(expected.Id), new CancellationToken());
+                Result<TicketDto, Error> result = await HandleQuery(repo, query);
 
                 // Assert
-                actual.Value.Should().BeEquivalentTo(expected);
-            }
+                result.Value.Id.Should().Be(ticket.Id);
+            });
         }
 
         [Fact]
-        public async Task ReturnNotFoundError_WhenTicketDoesNotExist()
+        public void ReturnNotFoundError_WhenTicketDoesNotExist()
         {
-            using (var context = new TicketPusherContext(_dbContextOptions))
+            ActWithRepository(async repo =>
             {
                 // Arrange
-                var repository = new TicketPusherRepository(context);
-                var sutQueryHandler = new GetTicketQueryHandler(repository, _mapper.Instance);
-                var invalidId = Guid.NewGuid();
+                var query = new GetTicketQuery(Guid.NewGuid());
 
                 // Act
-                var actual = await sutQueryHandler.Handle(new GetTicketQuery(invalidId), new CancellationToken());
+                Result<TicketDto, Error> result = await HandleQuery(repo, query);
 
                 // Assert
-                using (new AssertionScope())
-                {
-                    actual.Error.Should().Be(Errors.General.NotFound());
-                    actual.Error.Message.Should().Be($"'{nameof(Ticket)}' not found for Id '{invalidId}'");
-                }
-            }
+                result.Error.Should().Be(Errors.General.NotFound());
+            });
         }
     }
 }

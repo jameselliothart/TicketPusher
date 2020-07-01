@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TicketPusher.API.Common;
 using TicketPusher.API.Projects.Commands;
 using TicketPusher.API.Projects.Queries;
+using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.Projects;
 
 namespace TicketPusher.API.Projects
 {
@@ -22,7 +26,7 @@ namespace TicketPusher.API.Projects
         public async Task<IActionResult> GetProjectList()
         {
             var query = new GetProjectListQuery();
-            var result = await _mediator.Send(query);
+            Result<IEnumerable<ProjectDto>> result = await _mediator.Send(query);
 
             return Ok(result.Value);
         }
@@ -31,18 +35,27 @@ namespace TicketPusher.API.Projects
         public async Task<IActionResult> GetProject(Guid id)
         {
             var query = new GetProjectQuery(id);
-            var result = await _mediator.Send(query);
+            Result<ProjectDto, Error> result = await _mediator.Send(query);
 
-            return FromResultWithValue(result);
+            return ValueOrError(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateProject([FromBody] CreateProjectDto project)
         {
-            var command = new CreateProjectCommand(project.Name);
-            var result = await _mediator.Send(command);
+            var command = new CreateProjectCommand(project.Name, project.ParentProjectId);
+            Result<ProjectDto, Error> result = await _mediator.Send(command);
 
-            return Ok(result.Value);
+            return ValueOrError(result);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateProject(Guid id, [FromBody] UpdateProjectDto project)
+        {
+            var command = new UpdateProjectCommand(id, project.Name, project.ParentProjectId);
+            Result<ProjectDto, Error> result = await _mediator.Send(command);
+
+            return ValueOrError(result);
         }
     }
 }

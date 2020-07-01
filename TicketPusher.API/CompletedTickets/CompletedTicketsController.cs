@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TicketPusher.API.Common;
@@ -21,7 +23,7 @@ namespace TicketPusher.API.CompletedTickets
         public async Task<IActionResult> GetCompletedTicketList()
         {
             var query = new GetCompletedTicketListQuery();
-            var result = await _mediator.Send(query);
+            Result<IEnumerable<CompletedTicketDto>> result = await _mediator.Send(query);
             return Ok(result.Value);
         }
     }

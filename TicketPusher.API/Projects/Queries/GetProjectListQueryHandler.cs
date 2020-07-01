@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using TicketPusher.API.Common;
 using TicketPusher.API.Data;
+using TicketPusher.DataTransfer.Projects;
 using TicketPusher.Domain.Projects;
 
 namespace TicketPusher.API.Projects.Queries
@@ -15,7 +17,7 @@ namespace TicketPusher.API.Projects.Queries
 
         protected override async Task<List<Project>> GetEntitiesListAsync()
         {
-            return await _repository.GetProjectsListAsync();
+            return (await _repository.GetProjectsListAsync()).OrderBy(p => p.GetHierarchy()).ToList();
         }
     }
 }

@@ -19,7 +19,7 @@
                     <MatSelect Label="Project" @bind-Value="EntityModel._projectIdAsString">
                         @foreach (var project in @Projects)
                         {
-                            <MatOptionString value="@project.Id.ToString()">@project.Name</MatOptionString>
+                            <MatOptionString value="@project.Id.ToString()">@project.Hierarchy</MatOptionString>
                         }
                     </MatSelect>
                 </div>

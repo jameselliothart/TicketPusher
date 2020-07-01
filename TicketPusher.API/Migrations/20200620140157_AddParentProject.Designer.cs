@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketPusher.API.Data;
 
 namespace TicketPusher.API.Migrations
 {
     [DbContext(typeof(TicketPusherContext))]
-    partial class TicketPusherContextModelSnapshot : ModelSnapshot
+    [Migration("20200620140157_AddParentProject")]
+    partial class AddParentProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,8 +58,7 @@ namespace TicketPusher.API.Migrations
 
                     b.Property<Guid?>("ProjectFK")
                         .HasColumnName("parent_project_id")
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("11111111-1111-1111-1111-111111111111"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 

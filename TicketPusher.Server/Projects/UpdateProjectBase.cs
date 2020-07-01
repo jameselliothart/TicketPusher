@@ -9,7 +9,7 @@ using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects
 {
-    public class EditProjectBase : EditEntityBase<ProjectDto, CreateProjectDto, IProjectWriteDataService>
+    public class UpdateProjectBase : ComponentBase
     {
         public bool DialogIsOpen { get; set; } = false;
 
@@ -22,18 +22,27 @@ namespace TicketPusher.Server.Projects
         [Parameter]
         public RenderFragment Button { get; set; }
 
-        protected override string GetSuccessMessage(EnvelopeDto<ProjectDto> envelope) =>
-            $"Added project {envelope.Result.Id.ToString()}";
+        [Parameter]
+        public ProjectDto Project { get; set; }
 
-        protected void OpenDialog()
+        [Inject]
+        protected IProjectWriteDataService EntityDataService { get; set; }
+
+        protected UpdateProjectDto EntityModel { get; set;} = new UpdateProjectDto();
+
+        protected void OpenDialog(ProjectDto project)
         {
-            EntityModel = new CreateProjectDto() { _parentProjectIdAsString = Project.None.Id.ToString() };
+            EntityModel = new UpdateProjectDto()
+            {
+                Name = project.Name,
+                ParentProjectId = project.ParentProjectId
+            };
             DialogIsOpen = true;
         }
 
-        protected async void SubmitProject()
+        protected async void SubmitProject(Guid projectId)
         {
-            var addedEntity = await EntityDataService.CreateEntityAsync(EntityModel);
+            var addedEntity = await EntityDataService.UpdateProjectAsync(projectId, EntityModel);
             await OnSubmitProject?.Invoke();
             DialogIsOpen = false;
             StateHasChanged();

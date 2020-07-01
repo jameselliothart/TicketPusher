@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketPusher.API.Data;
 
 namespace TicketPusher.API.Migrations
 {
     [DbContext(typeof(TicketPusherContext))]
-    partial class TicketPusherContextModelSnapshot : ModelSnapshot
+    [Migration("20200627232728_DefaultParentProject")]
+    partial class DefaultParentProject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

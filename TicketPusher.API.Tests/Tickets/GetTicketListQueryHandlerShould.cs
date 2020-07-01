@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using FluentAssertions;
 using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
@@ -12,35 +13,34 @@ using Xunit;
 
 namespace TicketPusher.API.Tests.Tickets
 {
-    public class GetTicketListQueryHandlerShould : QueryHandlerTestSetup, IClassFixture<MapperFixture>
+    public class GetTicketListQueryHandlerShould : RequestHandlerShouldSetup, IClassFixture<MapperFixture>
     {
         public GetTicketListQueryHandlerShould(MapperFixture mapper) : base(mapper)
         {
         }
 
         [Fact]
-        public async Task GetAllTickets_WhenPassedNoParameters()
+        public void GetAllTickets_WhenPassedNoParameters()
         {
             // Arrange
+            var query = new GetTicketListQuery();
             var seed = TicketTestData.TicketList().ToList();
-            var expected = _mapper.Instance.Map<IEnumerable<TicketDto>>(seed);
-            using (var context = new TicketPusherContext(_dbContextOptions))
-            {
-                context.Tickets.AddRange(seed);
-                context.SaveChanges();
-            }
 
-            using (var context = new TicketPusherContext(_dbContextOptions))
+            ActWithContext(async ctx =>
             {
-                var repository = new TicketPusherRepository(context);
-                var sutQueryHandler = new GetTicketListQueryHandler(repository, _mapper.Instance);
+                ctx.Tickets.AddRange(seed);
+                await ctx.SaveChangesAsync();
+            });
 
+            ActWithRepository(async repo =>
+            {
                 // Act
-                var actual = await sutQueryHandler.Handle(new GetTicketListQuery(), new CancellationToken());
+                var queryHandler = new GetTicketListQueryHandler(repo, _mapper.Instance);
+                Result<IEnumerable<TicketDto>> actual = await queryHandler.Handle(query, new CancellationToken());
 
                 // Assert
-                actual.Value.Should().BeEquivalentTo(expected);
-            }
+                actual.Value.Select(t => t.Id).Should().BeEquivalentTo(seed.Select(t => t.Id));
+            });
         }
     }
 }

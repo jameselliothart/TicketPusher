@@ -9,6 +9,13 @@ COPY TicketPusher.Domain/ ./TicketPusher.Domain/
 RUN dotnet build TicketPusher.Domain
 
 # Copy csproj and restore as distinct layers
+COPY TicketPusher.DataTransfer/*.csproj ./TicketPusher.DataTransfer/
+RUN dotnet restore TicketPusher.DataTransfer
+
+COPY TicketPusher.DataTransfer/ ./TicketPusher.DataTransfer/
+RUN dotnet build TicketPusher.DataTransfer
+
+# Copy csproj and restore as distinct layers
 COPY TicketPusher.Server/*.csproj ./TicketPusher.Server/
 RUN dotnet restore TicketPusher.Server
 

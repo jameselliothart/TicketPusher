@@ -8,6 +8,15 @@ A local MSSQL database instance is required for running and testing the applicat
 docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=dockerP@ss' -u 0:0 -p 1433:1433 --name tp-sql -v $HOME/dockervolumes/TicketPusherSQL:/var/opt/mssql -d mcr.microsoft.com/mssql/server
 ```
 
+To run TicketPusher.Server locally, set the Okta configurations as environment variables before running:
+
+```sh
+$ cd TicketPusher.Server
+$ export Okta__ClientId=TheClientId
+$ export Okta__ClientSecret=TheClientSecret
+$ dotnet run
+```
+
 ## Docker
 
 TicketPusher is served via two Docker containers: one for the API, one for the Blazor front end. The images can be built from the solution root with the below commands

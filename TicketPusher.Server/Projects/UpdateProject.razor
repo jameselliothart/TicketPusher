@@ -1,12 +1,12 @@
-@inherits EditProjectBase
+@inherits UpdateProjectBase
 
-<MatButton OnClick="@OpenDialog" >
+<MatButton OnClick="@(() => OpenDialog(@Project))" >
     @Button
 </MatButton>
 <MatDialog @bind-IsOpen="@DialogIsOpen">
-    <MatDialogTitle>New Project</MatDialogTitle>
+    <MatDialogTitle>Update Project</MatDialogTitle>
     <MatDialogContent>
-        <EditForm Model="@EntityModel" OnValidSubmit="SubmitProject">
+        <EditForm Model="@EntityModel" OnValidSubmit="@(() => SubmitProject(@Project.Id))">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
