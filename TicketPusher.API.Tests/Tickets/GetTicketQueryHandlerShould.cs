@@ -2,7 +2,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
-using TicketPusher.API.Tickets;
 using FluentAssertions;
 using Xunit;
 using TicketPusher.API.Tickets.Queries;
@@ -10,6 +9,7 @@ using TicketPusher.Domain.Tests.Utils;
 using CSharpFunctionalExtensions;
 using System;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.Tickets;
 
 namespace TicketPusher.API.Tests.Tickets
 {

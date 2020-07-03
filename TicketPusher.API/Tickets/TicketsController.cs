@@ -5,10 +5,11 @@ using CSharpFunctionalExtensions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TicketPusher.API.Common;
-using TicketPusher.API.CompletedTickets;
 using TicketPusher.API.Tickets.Commands;
 using TicketPusher.API.Tickets.Queries;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.CompletedTickets;
+using TicketPusher.DataTransfer.Tickets;
 
 namespace TicketPusher.API.Tickets
 {

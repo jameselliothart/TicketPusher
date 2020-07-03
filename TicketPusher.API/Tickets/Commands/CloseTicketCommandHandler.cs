@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CSharpFunctionalExtensions;
 using MediatR;
-using TicketPusher.API.CompletedTickets;
 using TicketPusher.API.Data;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.CompletedTickets;
 using TicketPusher.Domain.Tickets;
 
 namespace TicketPusher.API.Tickets.Commands

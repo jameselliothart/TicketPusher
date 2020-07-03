@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TicketPusher.API.Common;
 using TicketPusher.API.CompletedTickets.Queries;
+using TicketPusher.DataTransfer.CompletedTickets;
 
 namespace TicketPusher.API.CompletedTickets
 {

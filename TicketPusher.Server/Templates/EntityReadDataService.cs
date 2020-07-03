@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TicketPusher.Server.Shared;
+using TicketPusher.DataTransfer;
 
 namespace TicketPusher.Server.Templates
 {

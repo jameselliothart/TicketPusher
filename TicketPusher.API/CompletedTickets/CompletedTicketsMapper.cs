@@ -1,4 +1,5 @@
 using AutoMapper;
+using TicketPusher.DataTransfer.CompletedTickets;
 using TicketPusher.Domain.CompletedTickets;
 
 namespace TicketPusher.API.CompletedTickets

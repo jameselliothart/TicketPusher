@@ -2,6 +2,7 @@ using System;
 using CSharpFunctionalExtensions;
 using MediatR;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.Tickets;
 
 namespace TicketPusher.API.Tickets.Commands
 {

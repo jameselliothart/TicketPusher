@@ -3,10 +3,9 @@ using System.Linq;
 using System.Threading;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
-using TicketPusher.API.CompletedTickets;
 using TicketPusher.API.CompletedTickets.Queries;
 using TicketPusher.API.Tests.Utils;
-using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.CompletedTickets;
 using TicketPusher.Domain.Tests.Utils;
 using Xunit;
 

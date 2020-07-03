@@ -1,6 +1,6 @@
 using System;
 
-namespace TicketPusher.API.CompletedTickets
+namespace TicketPusher.DataTransfer.CompletedTickets
 {
     public class CompletedDetailsDto
     {

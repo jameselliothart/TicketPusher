@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using FluentAssertions;
-using TicketPusher.API.Data;
 using TicketPusher.API.Tests.Utils;
-using TicketPusher.API.Tickets;
 using TicketPusher.API.Tickets.Queries;
+using TicketPusher.DataTransfer.Tickets;
 using TicketPusher.Domain.Tests.Utils;
 using Xunit;
 

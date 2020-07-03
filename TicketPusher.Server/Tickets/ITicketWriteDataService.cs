@@ -1,7 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using TicketPusher.Server.CompletedTickets;
-using TicketPusher.Server.Shared;
+using TicketPusher.DataTransfer;
+using TicketPusher.DataTransfer.CompletedTickets;
+using TicketPusher.DataTransfer.Tickets;
 using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Tickets

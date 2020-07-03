@@ -1,8 +1,8 @@
 using System;
 using CSharpFunctionalExtensions;
 using MediatR;
-using TicketPusher.API.CompletedTickets;
 using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.CompletedTickets;
 
 namespace TicketPusher.API.Tickets.Commands
 {

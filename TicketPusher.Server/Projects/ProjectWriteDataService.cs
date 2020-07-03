@@ -2,8 +2,8 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using TicketPusher.DataTransfer;
 using TicketPusher.DataTransfer.Projects;
-using TicketPusher.Server.Shared;
 using TicketPusher.Server.Templates;
 
 namespace TicketPusher.Server.Projects

@@ -1,6 +1,6 @@
 using System;
 
-namespace TicketPusher.Server.Tickets
+namespace TicketPusher.DataTransfer.Tickets
 {
     public class TicketDto
     {

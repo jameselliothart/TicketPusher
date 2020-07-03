@@ -6,7 +6,7 @@ using CSharpFunctionalExtensions;
 using MediatR;
 using TicketPusher.API.Data;
 using TicketPusher.API.Utils;
-using TicketPusher.Domain.Common;
+using TicketPusher.DataTransfer.Tickets;
 using TicketPusher.Domain.Projects;
 using TicketPusher.Domain.Tickets;
 

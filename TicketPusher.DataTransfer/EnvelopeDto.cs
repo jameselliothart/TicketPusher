@@ -1,6 +1,6 @@
 using System;
 
-namespace TicketPusher.Server.Shared
+namespace TicketPusher.DataTransfer
 {
     public class EnvelopeDto<T>
     {

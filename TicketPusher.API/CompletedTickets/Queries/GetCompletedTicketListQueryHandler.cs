@@ -1,13 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using CSharpFunctionalExtensions;
-using MediatR;
 using TicketPusher.API.Common;
 using TicketPusher.API.Data;
-using TicketPusher.API.Utils;
+using TicketPusher.DataTransfer.CompletedTickets;
 using TicketPusher.Domain.CompletedTickets;
 
 namespace TicketPusher.API.CompletedTickets.Queries

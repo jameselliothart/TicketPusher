@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using TicketPusher.Domain.SharedKernel;
 
-namespace TicketPusher.Server.Tickets
+namespace TicketPusher.DataTransfer.Tickets
 {
     public class SubmitTicketDto
     {

@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using CSharpFunctionalExtensions;
-using MediatR;
 using TicketPusher.API.Common;
+using TicketPusher.DataTransfer.CompletedTickets;
 
 namespace TicketPusher.API.CompletedTickets.Queries
 {

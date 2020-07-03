@@ -1,7 +1,7 @@
 using System;
-using TicketPusher.API.Tickets;
+using TicketPusher.DataTransfer.Tickets;
 
-namespace TicketPusher.API.CompletedTickets
+namespace TicketPusher.DataTransfer.CompletedTickets
 {
     public class CompletedTicketDto
     {

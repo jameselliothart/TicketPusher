@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using TicketPusher.Server.Shared;
+using TicketPusher.DataTransfer;
 
 namespace TicketPusher.Server.Templates
 {

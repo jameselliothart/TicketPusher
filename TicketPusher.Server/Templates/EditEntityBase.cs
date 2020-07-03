@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Components;
-using TicketPusher.Server.Shared;
+using TicketPusher.DataTransfer;
 
 namespace TicketPusher.Server.Templates
 {

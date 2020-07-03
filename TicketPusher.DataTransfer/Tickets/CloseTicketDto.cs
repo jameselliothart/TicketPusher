@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace TicketPusher.API.Tickets.Commands
+namespace TicketPusher.DataTransfer.Tickets
 {
     public class CloseTicketDto
     {
