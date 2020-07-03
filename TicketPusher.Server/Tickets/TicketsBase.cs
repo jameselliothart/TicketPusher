@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using TicketPusher.DataTransfer.Projects;
@@ -17,7 +18,7 @@ namespace TicketPusher.Server.Tickets
 
         protected override async Task RefreshData()
         {
-            Entities = await RetrieveMainEntities();
+            Entities = (await RetrieveMainEntities()).OrderBy(e => e.ProjectId).ToList();
             Projects = (await _projectReadDataService.GetEntityListAsync()).Result;
             StateHasChanged();
         }
